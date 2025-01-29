@@ -1,0 +1,36 @@
+import 'package:cash_van_app/core/validation.dart';
+import 'package:flutter/material.dart';
+
+import '../../../core/utils.dart';
+import '../auth/custom_text_filed.dart';
+
+class FromDateWidget extends StatelessWidget {
+  final TextEditingController fromDateController;
+
+  final TextEditingController toDateController;
+
+  const FromDateWidget(
+      {super.key,
+      required this.fromDateController,
+      required this.toDateController});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: CustomTextFiledWidget(
+        readOnly: true,
+        validator: (text) => Validation.isRequired(text),
+        suffixIcon: const Icon(Icons.calendar_month_outlined),
+        onTap: () async {
+          String data = await Utils.fromDateSelected(
+              fromDateController, toDateController, context);
+          if (data.isNotEmpty) {
+            fromDateController.text = data;
+          }
+        },
+        controller: fromDateController,
+        label: 'From Date',
+      ),
+    );
+  }
+}

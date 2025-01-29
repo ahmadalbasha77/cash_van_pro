@@ -1,0 +1,25 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'customers_model.g.dart';
+
+@JsonSerializable()
+class CustomersModel {
+  final int id;
+  final String aName;
+  final String telephone1;
+
+  @JsonKey(defaultValue: 0.0) // ✅ تعيين قيمة افتراضية
+  final double customerBalance;
+
+  CustomersModel({
+    required this.id,
+    required this.aName,
+    required this.telephone1,
+    this.customerBalance = 0.0, // ✅ تعيين قيمة افتراضية
+  });
+
+  factory CustomersModel.fromJson(Map<String, dynamic> json) =>
+      _$CustomersModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CustomersModelToJson(this);
+}

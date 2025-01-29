@@ -1,0 +1,36 @@
+class CashVoucherReportModel {
+  int voucherId;
+  int voucherNumber;
+  DateTime voucherDate;
+  String sourceName;
+  double cashAmount;
+  String receiverName;
+
+  CashVoucherReportModel({
+    required this.voucherId,
+    required this.voucherNumber,
+    required this.voucherDate,
+    required this.sourceName,
+    required this.cashAmount,
+    required this.receiverName,
+  });
+
+  factory CashVoucherReportModel.fromJson(Map<String, dynamic> json) =>
+      CashVoucherReportModel(
+        voucherId: json["VoucherID"] ?? '',
+        voucherNumber: json["VoucherNumber"] ?? '',
+        voucherDate: DateTime.parse(json["VoucherDate"]),
+        sourceName: json["SourceName"] ?? "",
+        cashAmount: json["CashAmount"].toDouble() ?? 0.0,
+        receiverName: json["ReceiverName"] ?? '',
+      );
+
+  Map<String, dynamic> toJson() => {
+        "VoucherID": voucherId,
+        "VoucherNumber": voucherNumber,
+        "VoucherDate": voucherDate.toIso8601String(),
+        "SourceName": sourceName,
+        "CashAmount": cashAmount,
+        "ReceiverName": receiverName,
+      };
+}

@@ -1,0 +1,231 @@
+import 'dart:typed_data';
+
+import 'package:cash_van_app/core/app_color.dart';
+import 'package:cash_van_app/core/text_style.dart';
+import 'package:cash_van_app/view/widget/custom_button.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+
+class InvoiceReportWidget extends StatelessWidget {
+  const InvoiceReportWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const double totalInvoices = 15000.75;
+
+    final List<Map<String, dynamic>> invoices = [
+      {
+        "invoiceNumber": "INV001",
+        "amount": 500.0,
+        "date": "2025-01-15",
+        "recipient": "احمد امجد الباشا",
+        "paymentMethod": "Cash"
+      },
+      {
+        "invoiceNumber": "INV002",
+        "amount": 1500.0,
+        "date": "2025-01-16",
+        "recipient": "ahmad amjad awbd woiand awoifn awpoifn",
+        "paymentMethod": "Bank Transfer"
+      },
+      {
+        "invoiceNumber": "INV003",
+        "amount": 2500.0,
+        "date": "2025-01-17",
+        "recipient": "Suad Ahmed",
+        "paymentMethod": "Credit Card"
+      },
+      {
+        "invoiceNumber": "INV004",
+        "amount": 3500.0,
+        "date": "2025-01-18",
+        "recipient": "Khaled Youssef",
+        "paymentMethod": "Cash"
+      },
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 30,),
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: AppColor.primaryColor,
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Center(
+            child: Text(
+              "Total Invoices: ${totalInvoices.toStringAsFixed(2)}",
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 20.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Invoice Report :",
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            CustomButtonWidget(
+              vertical: 5,
+              textStyle: semiBold12.copyWith(color: Colors.white),
+              title: 'Export PDF',
+              onPressed: () => Get.to(() => PdfPreviewScreen(
+                    invoices: invoices,
+                  )),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10.0),
+        Expanded(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              columnSpacing: 15,
+              columns: const [
+                DataColumn(
+                  label: Text(
+                    "#",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    "Date",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    "Customer Name",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    "Amount",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    "Payment Method",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+              rows: invoices.map((invoice) {
+                return DataRow(
+                  cells: [
+                    DataCell(Text(invoice['invoiceNumber'])),
+                    DataCell(Text(invoice['date'])),
+                    DataCell(ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 150),
+                        child: Text(
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                            maxLines: 2,
+                            invoice['recipient']))),
+                    DataCell(Text("${invoice['amount'].toStringAsFixed(2)}")),
+                    DataCell(Text(invoice['paymentMethod'])),
+                  ],
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class PdfPreviewScreen extends StatelessWidget {
+  final List<Map<String, dynamic>> invoices;
+
+  const PdfPreviewScreen({
+    super.key,
+    required this.invoices,
+  });
+
+  Future<Uint8List> generatePdf() async {
+    final pdf = pw.Document();
+    final arabicFont =
+        pw.Font.ttf(await rootBundle.load('assets/font/Amiri-Regular.ttf'));
+
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+              pw.Text(
+                textDirection: pw.TextDirection.rtl,
+                "Invoice Report",
+                style: pw.TextStyle(
+                  fontSize: 24,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+              pw.SizedBox(height: 30),
+              pw.Directionality(
+                textDirection: pw.TextDirection.rtl,
+                child: pw.TableHelper.fromTextArray(
+                  cellStyle: pw.TextStyle(
+                    font: arabicFont,
+                  ),
+                  headers: [
+                    "#",
+                    "Date",
+                    "Customer Name",
+                    "Amount",
+                    "Payment Method"
+                  ],
+                  data: invoices.map((invoice) {
+                    return [
+                      invoice['invoiceNumber'],
+                      invoice['date'],
+                      invoice['recipient'],
+                      invoice['amount'].toStringAsFixed(2),
+                      invoice['paymentMethod'],
+                    ];
+                  }).toList(),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+
+    return pdf.save();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("PDF Preview"),
+        centerTitle: true,
+      ),
+      body: PdfPreview(
+        canDebug: false,
+        build: (format) => generatePdf(),
+        allowSharing: true,
+        allowPrinting: true,
+      ),
+    );
+  }
+}

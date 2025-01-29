@@ -1,0 +1,96 @@
+import 'package:cash_van_app/core/app_color.dart';
+import 'package:cash_van_app/core/my_shared_preferences.dart';
+import 'package:cash_van_app/view/widget/custom_button.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:cash_van_app/controller/settings_controller.dart';
+
+class SettingsScreen extends StatelessWidget {
+  SettingsScreen({super.key});
+
+  final SettingsController controller = Get.put(SettingsController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Settings'.tr)),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: [
+            GetBuilder<SettingsController>(
+                id: 'color',
+                builder: (logic) {
+                  return ListTile(
+                    title: Text('Select App Color'.tr),
+                    trailing: Container(
+                      width: 30,
+                      height: 30,
+                      color: controller.appColor,
+                    ),
+                    onTap: () => controller.pickColor(),
+                  );
+                }),
+            const SizedBox(height: 16),
+            Text('Select Font Size'.tr),
+            GetBuilder<SettingsController>(
+                id: 'font',
+                builder: (logic) {
+                  return Column(
+                    children: [
+                      Slider(
+                        min: 0.8,
+                        max: 1.4,
+                        divisions: 6,
+                        // overlayColor: WidgetStatePropertyAll(AppColor.primaryColor),
+                        activeColor: AppColor.primaryColor,
+                        inactiveColor: AppColor.primaryColor.withOpacity(0.3),
+                        value: controller.fontSize,
+                        onChanged: (value) => controller.updateFontSize(value),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${'Font Size'.tr}: ${controller.fontSize.toStringAsFixed(2)}',
+                            style:
+                                TextStyle(fontSize: 16 * controller.fontSize),
+                          ),
+                          CustomButtonWidget(
+                            backgroundColor: mySharedPreferences.fontSize ==
+                                    controller.fontSize
+                                ? Colors.grey
+                                : AppColor.primaryColor,
+                            vertical: 0,
+                            title: 'save'.tr,
+                            onPressed: () {
+                              mySharedPreferences.fontSize ==
+                                      controller.fontSize
+                                  ? null
+                                  : controller.saveFontSize();
+                            },
+                          )
+                        ],
+                      ),
+                    ],
+                  );
+                }),
+            const SizedBox(height: 16),
+            GetBuilder<SettingsController>(
+                id: 'fingerprint',
+                builder: (logic) {
+                  return SwitchListTile(
+                    activeTrackColor: AppColor.primaryColor.withOpacity(0.7),
+                    inactiveTrackColor: Colors.white,
+                    activeColor: AppColor.primaryColor,
+                    title: Text('Enable Fingerprint'.tr),
+                    value: controller.isFingerprintActive,
+                    onChanged: (value) => controller.toggleFingerprint(value),
+                  );
+                }),
+          ],
+        ),
+      ),
+    );
+  }
+}

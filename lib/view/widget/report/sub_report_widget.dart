@@ -1,0 +1,75 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../../core/app_color.dart';
+import '../../../core/text_style.dart';
+
+class SubReportWidget extends StatelessWidget {
+  final String title;
+  final VoidCallback onTap;
+  final IconData icon;
+
+  const SubReportWidget(
+      {super.key,
+      required this.title,
+      required this.onTap,
+      required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: AppColor.primaryColor, width: 0.8),
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              blurRadius: 5,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColor.primaryColor.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    icon,
+                    color: AppColor.primaryColor,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.55,
+                  child: Text(
+                    title.tr,
+                    style: AppTextStyles.bold16.copyWith(
+                      color: AppColor.primaryColor,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.black54,
+              size: 20,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

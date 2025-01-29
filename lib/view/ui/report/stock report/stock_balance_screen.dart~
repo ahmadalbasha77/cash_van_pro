@@ -1,0 +1,83 @@
+import 'package:cash_van_app/core/app_color.dart';
+import 'package:cash_van_app/view/widget/report/from_date_widget.dart';
+import 'package:cash_van_app/view/widget/report/item_dropdown_widget.dart';
+import 'package:cash_van_app/view/widget/report/to_date_widget.dart';
+import 'package:flutter/material.dart';
+
+import '../../../widget/report/stock/stock_balance_report_widget.dart';
+
+class StockBalanceScreen extends StatelessWidget {
+  StockBalanceScreen({super.key});
+
+  final TextEditingController fromDateController = TextEditingController();
+  final TextEditingController toDateController = TextEditingController();
+  String selectedItem = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Stock Balance Report'),
+          centerTitle: true,
+        ),
+        body: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        FromDateWidget(
+                            fromDateController: fromDateController,
+                            toDateController: toDateController),
+                        const SizedBox(width: 15),
+                        const Icon(
+                          Icons.sync_alt,
+                          color: Colors.black54,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 15),
+                        ToDateWidget(
+                            fromDateController: fromDateController,
+                            toDateController: toDateController)
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    ItemDropDownWidget(
+                      onItemSelected: (p0) {
+                        selectedItem = p0!;
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        style: ButtonStyle(
+                            padding: const WidgetStatePropertyAll(
+                                EdgeInsets.symmetric(vertical: 15)),
+                            backgroundColor:
+                                WidgetStatePropertyAll(AppColor.primaryColor)),
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.search,
+                          color: Colors.white,
+                        ),
+                        label: const Text(
+                          'Show',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SliverFillRemaining(child: StockBalanceReportWidget())
+          ],
+        ));
+  }
+}

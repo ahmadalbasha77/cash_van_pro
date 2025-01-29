@@ -1,0 +1,371 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+
+class ItemReportWidget extends StatelessWidget {
+  const ItemReportWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Map<String, dynamic>> invoices = [
+      {
+        "invoiceNumber": "INV001",
+        "item": 'Item 1',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV002",
+        "item": 'Item 2',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV003",
+        "item": 'Item 3',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+      {
+        "invoiceNumber": "INV004",
+        "item": 'Item 4',
+        "quantityItem": 20,
+        "quantityReturn": 562,
+        "salesAmount": 200.5,
+        "returnAmount": 153.5,
+      },
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 20.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "Item Report :",
+                style: TextStyle(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              TextButton.icon(
+                onPressed: () {},
+                label: const Text("best seller"),
+                icon: const Icon(CupertinoIcons.arrow_branch),
+              )
+            ],
+          ),
+          const SizedBox(height: 10.0),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                columnSpacing: MediaQuery.of(context).size.width * 0.06,
+                columns: const [
+                  DataColumn(
+                    label: Text(
+                      "#",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      "Item Name",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      "Quantity Item",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      "Quantity Return",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      "Sales Amount",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  DataColumn(
+                    label: Text(
+                      "Return Amount",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+                rows: invoices.map((invoice) {
+                  return DataRow(
+                    cells: [
+                      DataCell(Text(invoice['invoiceNumber'])),
+                      DataCell(ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 150),
+                          child: Text(
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: true,
+                              maxLines: 2,
+                              invoice['item']))),
+                      DataCell(Text('${invoice['quantityItem']}')),
+                      DataCell(Text("${invoice['quantityReturn']}")),
+                      DataCell(Text('${invoice['salesAmount']}')),
+                      DataCell(Text('${invoice['returnAmount']}')),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

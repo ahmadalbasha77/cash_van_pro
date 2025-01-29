@@ -1,0 +1,53 @@
+import 'package:cash_van_app/controller/report/voucher/cash_voucher_report_controller.dart';
+import 'package:cash_van_app/view/widget/auth/custom_text_filed.dart';
+import 'package:cash_van_app/view/widget/report/customer_dropdown_widget.dart';
+import 'package:cash_van_app/view/widget/report/voucher/cash_voucher_report_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../../widget/report/filter_report_widget.dart';
+
+class CashVoucherReportScreen extends StatelessWidget {
+  CashVoucherReportScreen({super.key});
+
+  final _controller = CashVoucherReportController.to;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Cash Voucher Report'.tr),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: FilterReportWidget(
+            formKey: _controller.formKey,
+            fromDateController: _controller.fromDateController,
+            toDateController: _controller.toDateController,
+            widgets: [
+              const SizedBox(height: 16),
+              CustomTextFiledWidget(
+                  keyboardType: TextInputType.number,
+                  controller: TextEditingController(),
+                  label: 'Voucher Number',
+                  hint: 'Enter voucher number'),
+              const SizedBox(height: 16),
+              CustomerDropdownWidget(
+                onChanged: (p0) {
+                  _controller.customerId = p0!;
+                },
+              ),
+              const SizedBox(height: 24),
+            ],
+            onTap: () {
+              _controller.getCashVoucherReport();
+            },
+            reportWidget: CashVoucherReportWidget(),
+          ),
+        ),
+      ),
+    );
+  }
+}

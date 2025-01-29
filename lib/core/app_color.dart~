@@ -1,0 +1,12 @@
+import 'package:cash_van_app/core/my_shared_preferences.dart';
+import 'package:flutter/material.dart';
+
+class AppColor {
+  // Fetch and parse the color from shared preferences, defaulting to blue if not found.
+  static Color get primaryColor => mySharedPreferences.colorApp;
+
+  // Helper function to set the color (إذا لزم الأمر)
+  static void setPrimaryColor(Color color) {
+    mySharedPreferences.colorApp = color;
+  }
+}
