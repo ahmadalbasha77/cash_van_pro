@@ -1,54 +1,52 @@
 import 'package:cash_van_app/core/text_style.dart';
 import 'package:cash_van_app/core/validation.dart';
-import 'package:cash_van_app/model/customers/customers_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../controller/voucher/add_cash_controller.dart';
+import '../../../controller/invoice/sales_and_refund_controller.dart';
 import '../../../core/app_color.dart';
-import '../auth/custom_text_filed.dart';
-import '../custom_button.dart';
+import '../../widget/auth/custom_text_filed.dart';
+import '../../widget/custom_button.dart';
 
-class CashDialog extends StatelessWidget {
-  final CustomersModel customer;
+class ChangePriceSalesRefundDialog extends StatelessWidget {
+  final void Function() onConfirm;
 
-  const CashDialog({super.key, required this.customer});
+  ChangePriceSalesRefundDialog({
+    super.key,
+    required this.onConfirm,
+  });
+
+  final _controller = Get.find<SalesAndRefundController>();
 
   @override
   Widget build(BuildContext context) {
-    final controller = AddCashController.to;
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       backgroundColor: Colors.white,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
         child: Form(
-          key: controller.formKey,
+          key: _controller.priceKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 textAlign: TextAlign.center,
-                '${'Cash Voucher for'.tr} ${customer.aName}'.tr,
+                'Change Price'.tr,
                 style: AppTextStyles.bold18,
               ),
               const SizedBox(
                 height: 10,
               ),
               CustomTextFiledWidget(
-                  controller: controller.name,
+                  keyboardType: TextInputType.number,
+                  controller: _controller.newPriceController,
                   validator: (text) => Validation.isRequired(text),
-                  label: 'Name Receiver'.tr,
-                  hint: 'Enter name receiver'.tr),
+                  label: 'New Price'.tr,
+                  hint: 'Enter new price'.tr),
               const SizedBox(
                 height: 20,
               ),
-              CustomTextFiledWidget(
-                  keyboardType: TextInputType.number,
-                  controller: controller.amount,
-                  validator: (text) => Validation.isRequired(text),
-                  label: 'Amount',
-                  hint: 'Enter amount'),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
@@ -57,9 +55,7 @@ class CashDialog extends StatelessWidget {
                     CustomButtonWidget(
                       vertical: 8,
                       title: 'confirm',
-                      onPressed: () {
-                        controller.addCashVoucher(customer.id, customer.aName);
-                      },
+                      onPressed: onConfirm,
                     ),
                     const SizedBox(
                       width: 20,

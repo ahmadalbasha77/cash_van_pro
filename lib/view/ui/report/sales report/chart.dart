@@ -28,7 +28,7 @@ class ItemReportChartWidget extends StatelessWidget {
                 majorGridLines: const MajorGridLines(width: 0),
               ),
               primaryYAxis: NumericAxis(
-                labelFormat: '\${value}',
+                labelFormat: '{value}',
                 axisLine: const AxisLine(width: 1),
                 majorGridLines: const MajorGridLines(dashArray: [5, 5]),
               ),
@@ -42,7 +42,6 @@ class ItemReportChartWidget extends StatelessWidget {
                 position: LegendPosition.bottom,
               ),
               tooltipBehavior: TooltipBehavior(enable: true),
-              // تلميحات عند الضغط
               series: [
                 ColumnSeries<Map<String, dynamic>, String>(
                   dataSource: items,

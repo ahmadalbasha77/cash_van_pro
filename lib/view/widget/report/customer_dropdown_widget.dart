@@ -13,28 +13,30 @@ class CustomerDropdownWidget extends StatefulWidget {
 }
 
 class _CustomerDropdownWidgetState extends State<CustomerDropdownWidget> {
-  final controller = Get.find<CustomersController>();
+  final controller = CustomersController.to;
 
   String? selectedClient;
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<String>(
-      decoration: InputDecoration(
-        labelText: 'Customer Name'.tr,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+    return GetBuilder<CustomersController>(builder: (logic) {
+      return DropdownButtonFormField<String>(
+        decoration: InputDecoration(
+          labelText: 'Customer Name'.tr,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
         ),
-      ),
-      value: selectedClient,
-      items: controller.customersList
-          .map((client) => DropdownMenuItem(
-              value: client.id.toString(), child: Text(client.aName)))
-          .toList(),
-      onChanged: (value) {
-        selectedClient = value;
-        widget.onChanged(value);
-      },
-    );
+        value: selectedClient,
+        items: controller.customersList
+            .map((client) => DropdownMenuItem(
+                value: client.id.toString(), child: Text(client.aName)))
+            .toList(),
+        onChanged: (value) {
+          selectedClient = value;
+          widget.onChanged(value);
+        },
+      );
+    });
   }
 }

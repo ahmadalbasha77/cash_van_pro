@@ -44,7 +44,7 @@ class AddCashController extends GetxController {
           onLayout: (format) => invoicePdf.save(),
         );
 
-        final controller = Get.find<CustomersController>();
+        final controller = CustomersController.to;
 
         controller.getCustomers();
 

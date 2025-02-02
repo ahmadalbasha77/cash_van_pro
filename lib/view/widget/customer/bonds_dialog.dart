@@ -1,5 +1,5 @@
 import 'package:cash_van_app/core/text_style.dart';
-import 'package:cash_van_app/view/widget/customer/cach_dialog.dart';
+import 'package:cash_van_app/view/ui/voucher/cach_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -9,28 +9,23 @@ class ItemRefundReportScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Item Refund Report'),
-          centerTitle: true,
-        ),
-        body: const CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  FilterItemReport(),
-                  SizedBox(height: 24),
-                ],
-              ),
+      appBar: AppBar(
+        title: const Text('Item Refund Report'),
+        centerTitle: true,
+      ),
+      body: const SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 20,
             ),
-            SliverFillRemaining(
-              child: ItemReportWidget(),
-            )
+            FilterItemReport(),
+            SizedBox(height: 24),
+            ItemReportWidget()
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

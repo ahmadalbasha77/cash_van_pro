@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../model/customers/customers_model.dart';
+import '../../widget/invoice/change_price_sales_refund_dialog.dart';
 import '../../widget/invoice/item_order_widget.dart';
 import '../../widget/invoice/pay_widget.dart';
 import 'category_buttom_sheet.dart';
@@ -176,6 +177,15 @@ class AddSalesRefundInvoice extends StatelessWidget {
                                       itemBuilder: (context, index) {
                                         var item = _controller.salesList[index];
                                         return ItemOrderWidget(
+                                          changePrice: () {
+                                            Get.dialog(ChangePriceSalesRefundDialog(
+
+                                              onConfirm: () {
+                                                _controller.changePriceSales(
+                                                    item.itemId);
+                                              },
+                                            ));
+                                          },
                                           increaseQuantity: () {
                                             _controller.increaseQuantitySales(
                                                 item.itemId);
@@ -261,6 +271,16 @@ class AddSalesRefundInvoice extends StatelessWidget {
                                       itemCount: _controller.refundList.length,
                                       itemBuilder: (context, index) {
                                         return ItemOrderWidget(
+                                            changePrice: () {
+                                              Get.dialog(ChangePriceSalesRefundDialog(
+                                                onConfirm: () {
+                                                  _controller.changePriceRefund(
+                                                      _controller
+                                                          .refundList[index]
+                                                          .itemId);
+                                                },
+                                              ));
+                                            },
                                             increaseQuantity: () {
                                               _controller
                                                   .increaseQuantityRefund(

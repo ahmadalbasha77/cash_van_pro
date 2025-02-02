@@ -151,5 +151,8 @@ const Map<String, String> en = {
   'Done': 'Done',
   'Are you sure?': 'Are you sure?',
   'Cancel': 'Cancel',
-  'Confirm': 'Confirm'
+  'Confirm': 'Confirm',
+  'New Price':'New Price',
+  'Enter new price':'Enter new price',
+
 };

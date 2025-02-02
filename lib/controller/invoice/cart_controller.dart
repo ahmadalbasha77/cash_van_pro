@@ -2,6 +2,7 @@ import 'package:cash_van_app/core/my_shared_preferences.dart';
 import 'package:cash_van_app/core/utils.dart';
 import 'package:cash_van_app/model/customers/customers_model.dart';
 import 'package:cash_van_app/view/ui/home/customers_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:printing/printing.dart';
 import '../../model/invoice/cart_model.dart';
@@ -15,6 +16,20 @@ class CartController extends GetxController {
   int paymentType = 0;
 
   List<CartModel> get cartList => _cartMap.values.toList();
+
+  final GlobalKey<FormState> priceKey = GlobalKey<FormState>();
+
+  final TextEditingController newPriceController = TextEditingController();
+
+  changePriceProduct(int itemId) {
+    if (priceKey.currentState!.validate()) {
+      _cartMap[itemId]!.priceAfterTax = double.parse(newPriceController.text);
+      newPriceController.clear();
+
+      Get.back();
+      update();
+    }
+  }
 
   void addItem(CartModel item) {
     if (_cartMap.containsKey(item.itemId)) {
@@ -108,7 +123,6 @@ class CartController extends GetxController {
 
       // final controller = Get.find<CustomersController>();
       // controller.getCustomers();
-
 
       paymentType = 0;
       cartList.clear();

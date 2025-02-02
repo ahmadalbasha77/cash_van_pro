@@ -63,7 +63,7 @@ class IpScreen extends StatelessWidget {
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         mySharedPreferences.ip = ip.text;
-                        isLogin == false
+                        isLogin == true
                             ? Get.back()
                             : Get.offAllNamed(Routes.login);
                       }

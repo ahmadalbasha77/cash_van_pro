@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../model/customers/customers_model.dart';
+import '../../widget/invoice/change_price_dialog.dart';
 import '../../widget/invoice/item_order_widget.dart';
 import '../../widget/invoice/pay_widget.dart';
 import 'category_buttom_sheet.dart';
@@ -115,7 +116,7 @@ class AddInvoiceScreen extends StatelessWidget {
             const SizedBox(height: 10),
             const Divider(),
             const SizedBox(height: 15),
-            Text('Items:'.tr, style: AppTextStyles.bold16),
+            Text('${'Items'.tr} :'.tr, style: AppTextStyles.bold16),
             const SizedBox(height: 10),
             Expanded(
               child: GetBuilder<CartController>(
@@ -128,6 +129,14 @@ class AddInvoiceScreen extends StatelessWidget {
                         itemCount: _controller.cartList.length,
                         itemBuilder: (context, index) {
                           return ItemOrderWidget(
+                              changePrice: () {
+                                Get.dialog(ChangePriceDialog(
+                                  onTap: () {
+                                    _controller.changePriceProduct(
+                                        _controller.cartList[index].itemId);
+                                  },
+                                ));
+                              },
                               increaseQuantity: () {
                                 _controller.increaseQuantity(
                                     _controller.cartList[index].itemId);
@@ -200,8 +209,7 @@ class PaymentDialog extends StatelessWidget {
               onPressed: () {
                 logic.paymentType == 0
                     ? null
-                    : logic.addInvoice(
-                        customer: customers, isRefund: !isSales);
+                    : logic.addInvoice(customer: customers, isRefund: !isSales);
               },
             )
           ],

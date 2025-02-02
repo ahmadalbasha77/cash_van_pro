@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:printing/printing.dart';
 
@@ -20,6 +21,28 @@ class SalesAndRefundController extends GetxController {
   List<CartModel> get salesList => _salesMap.values.toList();
 
   List<CartModel> get refundList => _refundMap.values.toList();
+
+  final GlobalKey<FormState> priceKey = GlobalKey<FormState>();
+
+  final TextEditingController newPriceController = TextEditingController();
+
+  void changePriceSales(int itemId) {
+    if (priceKey.currentState!.validate()) {
+      _salesMap[itemId]!.priceAfterTax = double.parse(newPriceController.text);
+      newPriceController.clear();
+      Get.back();
+      update();
+    }
+  }
+
+  void changePriceRefund(int itemId) {
+    if (priceKey.currentState!.validate()) {
+      _refundMap[itemId]!.priceAfterTax = double.parse(newPriceController.text);
+      newPriceController.clear();
+      Get.back();
+      update();
+    }
+  }
 
   void updatePaymentType(int value) {
     paymentType = value;

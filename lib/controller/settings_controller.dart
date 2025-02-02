@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:cash_van_app/core/my_shared_preferences.dart';
 import 'package:cash_van_app/core/theme/light_theme_app.dart';
 
-import '../view/ui/splash_screen.dart';
+import '../core/route/routes.dart';
 
 class SettingsController extends GetxController {
   Color appColor = mySharedPreferences.colorApp;
@@ -19,7 +19,7 @@ class SettingsController extends GetxController {
     appColor = color;
     mySharedPreferences.colorApp = color;
     Get.changeTheme(lightThemeApp(color));
-    Get.offAll(() => const SplashScreen());
+    Get.offAllNamed(Routes.initial);
     update(['theme']);
   }
 
@@ -34,7 +34,8 @@ class SettingsController extends GetxController {
 
   void saveFontSize() {
     mySharedPreferences.fontSize = fontSize;
-    Get.offAll(() => const SplashScreen());
+    Get.offAllNamed(Routes.initial);
+    // Get.offAll(() => const SplashScreen());
     update(['font']);
   }
 

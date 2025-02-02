@@ -13,6 +13,7 @@ import 'core/theme/light_theme_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await initialServices();
   runApp(
     DevicePreview(

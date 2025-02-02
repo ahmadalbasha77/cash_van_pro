@@ -1,7 +1,6 @@
 import 'package:cash_van_app/view/ui/report/sales%20report/chart.dart';
 import 'package:cash_van_app/view/widget/custom_button.dart';
 import 'package:cash_van_app/view/widget/report/data_table_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -54,10 +53,11 @@ class ItemReportWidget extends StatelessWidget {
           CustomButtonWidget(
             vertical: 10,
             title: 'View Chart',
+            textStyle: const TextStyle(fontSize: 12, color: Colors.white),
             onPressed: () {
               Get.to(() => ItemReportChartWidget(
-                items: invoices,
-              ));
+                    items: invoices,
+                  ));
             },
           )
         ],

@@ -11,7 +11,6 @@ class TotalSalesReportWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final List<Map<String, dynamic>> invoices = [
       {
         "invoiceNumber": "INV001",
@@ -80,7 +79,7 @@ class TotalSalesReportWidget extends StatelessWidget {
             CustomButtonWidget(
               vertical: 5,
               textStyle: AppTextStyles.semiBold12.copyWith(color: Colors.white),
-              title: '',
+              title: 'export PDF',
               onPressed: () => Get.to(() => PdfPreviewScreen(
                     invoices: invoices,
                   )),
@@ -168,17 +167,15 @@ class PdfPreviewScreen extends StatelessWidget {
                   headers: [
                     "#",
                     "Date",
-                    "Customer Name",
                     "Amount",
-                    "Payment Method"
                   ],
                   data: invoices.map((invoice) {
                     return [
                       invoice['invoiceNumber'],
                       invoice['date'],
-                      invoice['recipient'],
+
                       invoice['amount'].toStringAsFixed(2),
-                      invoice['paymentMethod'],
+
                     ];
                   }).toList(),
                 ),
