@@ -18,7 +18,14 @@ class AddChequesController extends GetxController {
   final TextEditingController amount = TextEditingController();
   final TextEditingController chequesNumber = TextEditingController();
 
-  String? selectedBank;
+  var selectedBankId = Rxn<String>();
+  var selectedBankName = Rxn<String>();
+
+  void setSelectedBank(String id, String name) {
+    selectedBankId.value = id;
+    selectedBankName.value = name;
+  }
+
   final GlobalKey<FormState> formKey = GlobalKey();
 
   bool isFirstBeneficiary = false;
@@ -52,7 +59,7 @@ class AddChequesController extends GetxController {
         "IsCommitDate": '$isCommitDate',
         "Amount": amount.text,
         "BeneficiaryName": name.text,
-        "BankID": selectedBank,
+        "BankID": '${selectedBankId.value}',
         "ChequesNumber": chequesNumber.text,
         "AccountID": '0',
         "CustomerID": '$customerId',
@@ -61,8 +68,7 @@ class AddChequesController extends GetxController {
       if (result == true) {
         final invoicePdf = await chequeVoucherPdf(
             date: Utils.formatDate(DateTime.now()),
-            // customerName: 'احمد محمد',
-            bankName: selectedBank!,
+            bankName: selectedBankName.value!,
             chequeNumber: chequesNumber.text,
             beneficiaryName: name.text,
             chequeAmount: double.parse(amount.text),

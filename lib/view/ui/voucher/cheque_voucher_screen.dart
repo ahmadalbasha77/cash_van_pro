@@ -79,15 +79,22 @@ class ChequeVoucherScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  value: _controller.selectedBank,
+                  value: _controller.selectedBankId.value, // استخدم القيمة المخزنة
                   items: bankController.banksList
                       .map((bank) => DropdownMenuItem(
-                          value: bank.id.toString(), child: Text(bank.aName)))
+                    value: bank.id.toString(),
+                    child: Text(bank.aName),
+                  ))
                       .toList(),
                   onChanged: (value) {
-                    _controller.selectedBank = value;
+                    if (value != null) {
+                      final selectedBank =
+                      bankController.banksList.firstWhere((bank) => bank.id.toString() == value);
+                      _controller.setSelectedBank(value, selectedBank.aName);
+                    }
                   },
                 ),
+
                 const SizedBox(height: 20),
                 Container(
                   padding: const EdgeInsets.all(8.0),

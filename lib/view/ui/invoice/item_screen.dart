@@ -1,12 +1,13 @@
 import 'package:cash_van_app/controller/invoice/item_controller.dart';
 import 'package:cash_van_app/core/app_color.dart';
 import 'package:cash_van_app/core/text_style.dart';
-import 'package:cash_van_app/model/invoice/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/invoice/cart_controller.dart';
+import '../../../model/invoice/cart_model.dart';
 import '../../widget/invoice/item_widget.dart';
+import '../../widget/invoice/select_quantity_widget.dart';
 
 class ItemScreen extends StatelessWidget {
   const ItemScreen({super.key});
@@ -57,14 +58,30 @@ class ItemScreen extends StatelessWidget {
                                       )
                                     : IconButton(
                                         onPressed: () {
-                                          cartController.addItem(CartModel(
-                                              itemId: item.itemId,
-                                              priceAfterTax:
-                                                  item.salesPriceAfterTax,
-                                              // totalAfterTax:
-                                              //     item.salesPriceAfterTax,
-                                              itemName: item.itemName,
-                                              quantity: 1));
+                                          Get.dialog(
+                                                  const SelectQuantityWidget())
+                                              .then((selectedQuantity) {
+                                            if (selectedQuantity != null &&
+                                                selectedQuantity > 0) {
+                                              cartController.addItem(
+                                                CartModel(
+                                                  itemId: item.itemId,
+                                                  priceAfterTax:
+                                                      item.salesPriceAfterTax,
+                                                  itemName: item.itemName,
+                                                  quantity: selectedQuantity,
+                                                ),
+                                              );
+                                            }
+                                          });
+                                          // cartController.addItem(CartModel(
+                                          //     itemId: item.itemId,
+                                          //     priceAfterTax:
+                                          //         item.salesPriceAfterTax,
+                                          //     // totalAfterTax:
+                                          //     //     item.salesPriceAfterTax,
+                                          //     itemName: item.itemName,
+                                          //     quantity: 1));
                                         },
                                         icon: Icon(
                                           Icons.add,

@@ -42,7 +42,6 @@ class AddCustomerController extends GetxController {
         controller.getCustomers();
         Get.back();
         Utils.showSnackbar('Success', 'Customer added successfully');
-        Get.back();
       } else {
         Utils.hideLoadingDialog();
         Utils.showSnackbar(

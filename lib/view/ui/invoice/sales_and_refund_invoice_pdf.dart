@@ -19,7 +19,7 @@ Future<pw.Document> salesRefundInvoicePdf({
   final pdf = pw.Document();
 
   const customPageFormat = PdfPageFormat.roll80;
-
+  pw.Font arabicFont = FontManager.arabicFont;
   String wrapText(String text, int maxLength) {
     if (text.length <= maxLength) {
       return text;
@@ -90,8 +90,11 @@ Future<pw.Document> salesRefundInvoicePdf({
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.SizedBox(height: 5),
-                pw.Text('Name: $customerName',
-                    style: const pw.TextStyle(fontSize: 10)),
+                pw.Directionality(
+                  textDirection: pw.TextDirection.rtl,
+                  child: pw.Text('Name: $customerName',
+                      style: pw.TextStyle(fontSize: 10, font: arabicFont)),
+                ),
                 pw.Text('Phone: $customerNumber',
                     style: const pw.TextStyle(fontSize: 10)),
               ],
@@ -204,9 +207,14 @@ Future<pw.Document> salesRefundInvoicePdf({
                 //     style: pw.TextStyle(
                 //         fontSize: 12, fontWeight: pw.FontWeight.bold)),
                 pw.SizedBox(height: 5),
-                pw.Text(representativeName,
-                    style: pw.TextStyle(
-                        fontSize: 10, fontStyle: pw.FontStyle.italic)),
+                pw.Directionality(
+                  textDirection: pw.TextDirection.rtl,
+                  child: pw.Text(representativeName,
+                      style: pw.TextStyle(
+                          fontSize: 10,
+                          fontStyle: pw.FontStyle.italic,
+                          font: arabicFont)),
+                )
               ],
             ),
           ),

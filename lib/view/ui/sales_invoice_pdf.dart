@@ -29,6 +29,7 @@ Future<pw.Document> salesInvoicePdf({
     return buffer.toString();
   }
 
+  pw.Font arabicFont = FontManager.arabicFont;
   pdf.addPage(
     pw.Page(
       pageFormat: customPageFormat,
@@ -84,8 +85,11 @@ Future<pw.Document> salesInvoicePdf({
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.SizedBox(height: 5),
-                pw.Text('Name: $customerName',
-                    style: const pw.TextStyle(fontSize: 10)),
+                pw.Directionality(
+                  textDirection: pw.TextDirection.rtl,
+                  child: pw.Text('Name: $customerName',
+                      style: pw.TextStyle(fontSize: 10, font: arabicFont)),
+                ),
                 pw.Text('Phone: $customerNumber',
                     style: const pw.TextStyle(fontSize: 10)),
               ],
@@ -157,9 +161,14 @@ Future<pw.Document> salesInvoicePdf({
                 //     style: pw.TextStyle(
                 //         fontSize: 12, fontWeight: pw.FontWeight.bold)),
                 pw.SizedBox(height: 5),
-                pw.Text(representativeName,
-                    style: pw.TextStyle(
-                        fontSize: 10, fontStyle: pw.FontStyle.italic)),
+                pw.Directionality(
+                  textDirection: pw.TextDirection.rtl,
+                  child: pw.Text(representativeName,
+                      style: pw.TextStyle(
+                          fontSize: 10,
+                          fontStyle: pw.FontStyle.italic,
+                          font: arabicFont)),
+                )
               ],
             ),
           ),

@@ -38,7 +38,10 @@ class AddCashController extends GetxController {
           customerName: customerName,
           recipientName: name.text,
           amount: double.parse(amount.text),
+
         );
+        name.clear();
+        amount.clear();
 
         await Printing.layoutPdf(
           onLayout: (format) => invoicePdf.save(),

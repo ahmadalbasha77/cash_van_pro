@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 import '../../../core/text_style.dart';
 import '../../widget/invoice/item_widget.dart';
+import '../../widget/invoice/select_quantity_widget.dart';
 
 class ItemSalesRefundScreen extends StatelessWidget {
   final bool isSales;
@@ -59,15 +60,32 @@ class ItemSalesRefundScreen extends StatelessWidget {
                                           )
                                         : IconButton(
                                             onPressed: () {
-                                              cartController.addItemSales(
-                                                  CartModel(
+                                              Get.dialog(
+                                                      const SelectQuantityWidget())
+                                                  .then((selectedQuantity) {
+                                                if (selectedQuantity != null &&
+                                                    selectedQuantity > 0) {
+                                                  cartController.addItemSales(
+                                                    CartModel(
                                                       itemId: item.itemId,
                                                       priceAfterTax: item
                                                           .salesPriceAfterTax,
-                                                      // totalAfterTax: item
-                                                      //     .salesPriceAfterTax,
                                                       itemName: item.itemName,
-                                                      quantity: 1));
+                                                      quantity:
+                                                          selectedQuantity,
+                                                    ),
+                                                  );
+                                                }
+                                              });
+                                              // cartController.addItemSales(
+                                              //     CartModel(
+                                              //         itemId: item.itemId,
+                                              //         priceAfterTax: item
+                                              //             .salesPriceAfterTax,
+                                              //         // totalAfterTax: item
+                                              //         //     .salesPriceAfterTax,
+                                              //         itemName: item.itemName,
+                                              //         quantity: 1));
                                             },
                                             icon: Icon(
                                               Icons.add,
@@ -82,15 +100,32 @@ class ItemSalesRefundScreen extends StatelessWidget {
                                           )
                                         : IconButton(
                                             onPressed: () {
-                                              cartController.addItemRefund(
-                                                  CartModel(
+                                              Get.dialog(
+                                                      const SelectQuantityWidget())
+                                                  .then((selectedQuantity) {
+                                                if (selectedQuantity != null &&
+                                                    selectedQuantity > 0) {
+                                                  cartController.addItemRefund(
+                                                    CartModel(
                                                       itemId: item.itemId,
                                                       priceAfterTax: item
                                                           .salesPriceAfterTax,
-                                                      // totalAfterTax: item
-                                                      //     .salesPriceAfterTax,
                                                       itemName: item.itemName,
-                                                      quantity: 1));
+                                                      quantity:
+                                                          selectedQuantity,
+                                                    ),
+                                                  );
+                                                }
+                                              });
+                                              // cartController.addItemRefund(
+                                              //     CartModel(
+                                              //         itemId: item.itemId,
+                                              //         priceAfterTax: item
+                                              //             .salesPriceAfterTax,
+                                              //         // totalAfterTax: item
+                                              //         //     .salesPriceAfterTax,
+                                              //         itemName: item.itemName,
+                                              //         quantity: 1));
                                             },
                                             icon: Icon(
                                               Icons.add,
