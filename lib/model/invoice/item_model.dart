@@ -18,17 +18,17 @@ class ItemModel {
   bool isScalerPerGrain;
   bool isDiscountable;
   bool isAdditions;
-  bool? isHasAdditionMandatory;
+  bool isHasAdditionMandatory;
   bool isHasOptions;
   bool isOptionsMandetory;
-  bool? isItemOptions;
+  bool isItemOptions;
   int parentId;
   bool isMainItem;
   double qtyFactor;
-  int? updateUserId;
+  double wholeSalesPrice;
+  int updateUserId;
   String updateUserName;
-  DateTime? updateDate;
-  bool? isProductions;
+  bool isProductions;
   int costCenterId;
   bool status;
   bool isShowInTablet;
@@ -63,52 +63,50 @@ class ItemModel {
     required this.qtyFactor,
     required this.updateUserId,
     required this.updateUserName,
-    required this.updateDate,
     required this.isProductions,
     required this.costCenterId,
     required this.status,
     required this.isShowInTablet,
     required this.picture,
+    required this.wholeSalesPrice,
   });
 
   factory ItemModel.fromJson(Map<String, dynamic> json) => ItemModel(
-        itemId: json["ItemID"],
-        itemBarcode: json["ItemBarcode"],
-        itemName: json["ItemName"],
-        categoryId: json["CategoryID"],
-        categoryName: json["CategoryName"],
-        salesTaxId: json["SalesTaxID"],
-        salesTaxPercentage: json["SalesTaxPercentage"],
-        purchaseTaxId: json["PurchaseTaxID"],
-        purchaseTaxPercentage: json["PurchaseTaxPercentage"],
-        isTax: json["IsTax"],
-        salesPriceBeforeTax: json["SalesPriceBeforeTax"]?.toDouble(),
-        salesPriceAfterTax: json["SalesPriceAfterTax"]?.toDouble(),
-        purchasePriceBeforeTax: json["PurchasePriceBeforeTax"],
-        purchasePriceAfterTax: json["PurchasePriceAfterTax"],
-        isNumber: json["IsNumber"],
-        isScaler: json["IsScaler"],
-        isScalerPerGrain: json["IsScalerPerGrain"],
-        isDiscountable: json["IsDiscountable"],
-        isAdditions: json["IsAdditions"],
-        isHasAdditionMandatory: json["IsHasAdditionMandatory"],
-        isHasOptions: json["IsHasOptions"],
-        isOptionsMandetory: json["IsOptionsMandetory"],
-        isItemOptions: json["IsItemOptions"],
-        parentId: json["ParentID"],
-        isMainItem: json["IsMainItem"],
-        qtyFactor: json["QTYFactor"],
-        updateUserId: json["UpdateUserID"],
-        updateUserName: json["UpdateUserName"],
-        updateDate: json["UpdateDate"] == null
-            ? null
-            : DateTime.parse(json["UpdateDate"]),
-        isProductions: json["IsProductions"],
-        costCenterId: json["CostCenterID"],
-        status: json["Status"],
-        isShowInTablet: json["IsShowInTablet"],
-        picture: json["Picture"],
-      );
+    itemId: json["ItemID"] ?? 0,
+    itemBarcode: json["ItemBarcode"] ?? '',
+    itemName: json["ItemName"] ?? '',
+    categoryId: json["CategoryID"] ?? 0,
+    categoryName: json["CategoryName"] ?? '',
+    salesTaxId: json["SalesTaxID"] ?? 0,
+    salesTaxPercentage: json["SalesTaxPercentage"]?.toDouble() ?? 0.0, // ✅ تجنب null
+    purchaseTaxId: json["PurchaseTaxID"] ?? 0,
+    purchaseTaxPercentage: json["PurchaseTaxPercentage"]?.toDouble() ?? 0.0, // ✅ تجنب null
+    isTax: json["IsTax"] ?? false,
+    salesPriceBeforeTax: json["SalesPriceBeforeTax"]?.toDouble() ?? 0.0, // ✅ تجنب null
+    salesPriceAfterTax: json["SalesPriceAfterTax"]?.toDouble() ?? 0.0, // ✅ تجنب null
+    purchasePriceBeforeTax: json["PurchasePriceBeforeTax"]?.toInt() ?? 0, // ✅ تجنب null
+    purchasePriceAfterTax: json["PurchasePriceAfterTax"]?.toInt() ?? 0, // ✅ تجنب null
+    isNumber: json["IsNumber"] ?? false,
+    isScaler: json["IsScaler"] ?? false,
+    isScalerPerGrain: json["IsScalerPerGrain"] ?? false,
+    isDiscountable: json["IsDiscountable"] ?? false,
+    isAdditions: json["IsAdditions"] ?? false,
+    isHasAdditionMandatory: json["IsHasAdditionMandatory"] ?? false,
+    isHasOptions: json["IsHasOptions"] ?? false,
+    isOptionsMandetory: json["IsOptionsMandetory"] ?? false,
+    isItemOptions: json["IsItemOptions"] ?? false,
+    parentId: json["ParentID"] ?? 0,
+    isMainItem: json["IsMainItem"] ?? false,
+    qtyFactor: json["QTYFactor"]?.toDouble() ?? 0.0, // ✅ تجنب null
+    updateUserId: json["UpdateUserID"] ?? 0,
+    updateUserName: json["UpdateUserName"] ?? '',
+    isProductions: json["IsProductions"] ?? false,
+    costCenterId: json["CostCenterID"] ?? 0,
+    status: json["Status"] ?? false,
+    isShowInTablet: json["IsShowInTablet"] ?? false,
+    picture: json["Picture"] ?? '',
+    wholeSalesPrice: json["WholeSalesPrice"]?.toDouble() ?? 0.0, // ✅ تجنب null
+  );
 
   Map<String, dynamic> toJson() => {
         "ItemID": itemId,
@@ -139,11 +137,11 @@ class ItemModel {
         "QTYFactor": qtyFactor,
         "UpdateUserID": updateUserId,
         "UpdateUserName": updateUserName,
-        "UpdateDate": updateDate?.toIso8601String(),
         "IsProductions": isProductions,
         "CostCenterID": costCenterId,
         "Status": status,
         "IsShowInTablet": isShowInTablet,
         "Picture": picture,
+        "WholeSalesPrice": wholeSalesPrice,
       };
 }

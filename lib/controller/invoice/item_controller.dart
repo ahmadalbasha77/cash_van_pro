@@ -24,6 +24,7 @@ class ItemController extends GetxController {
     isLoading = true;
     update();
     itemList = await restApi.getItem(categoryId: categoryId);
+
     isLoading = false;
     update();
   }

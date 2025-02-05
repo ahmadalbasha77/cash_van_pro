@@ -12,6 +12,7 @@ class SettingsController extends GetxController {
   Color appColor = mySharedPreferences.colorApp;
   double fontSize = mySharedPreferences.fontSize;
   bool isFingerprintActive = mySharedPreferences.fingerPrint;
+  bool isWholesalePrice = mySharedPreferences.wholesalePrice;
   ThemeMode themeMode = ThemeMode.system;
   Color selectedColor = mySharedPreferences.colorApp;
 
@@ -43,6 +44,12 @@ class SettingsController extends GetxController {
     isFingerprintActive = value;
     mySharedPreferences.fingerPrint = value;
     update(['fingerprint']);
+  }
+
+  void toggleWholesalePrice(bool value) {
+    isWholesalePrice = value;
+    mySharedPreferences.wholesalePrice = value;
+    update(['wholesalePrice']);
   }
 
   void updateThemeMode(ThemeMode mode) {

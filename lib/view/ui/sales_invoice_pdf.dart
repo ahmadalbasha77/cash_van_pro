@@ -6,6 +6,7 @@ import '../../model/invoice/cart_model.dart';
 Future<pw.Document> salesInvoicePdf({
   required List<CartModel> cartList,
   required String customerName,
+  required int invoiceId,
   required String customerNumber,
   required String representativeName,
   required double totalAmount,
@@ -60,6 +61,10 @@ Future<pw.Document> salesInvoicePdf({
           pw.SizedBox(height: 10),
 
           // Date and Customer Information
+          pw.Text(
+            'Invoice Number : $invoiceId',
+            style: const pw.TextStyle(fontSize: 10),
+          ),
           pw.Row(
             mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
             children: [

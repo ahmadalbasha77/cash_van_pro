@@ -1,4 +1,4 @@
-import 'package:cash_van_app/view/ui/invoice/add_sales_refund_invoice.dart';
+import 'package:cash_van_app/view/ui/proposal/proposal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -76,9 +76,17 @@ class InvoiceDialog extends StatelessWidget {
                 style: AppTextStyles.regular16,
               ),
               onTap: () {
-                Get.off(() => AddSalesRefundInvoice(
-                      customersData: customersModel,
-                    ));
+                Get.offNamed(Routes.addInvoiceSF, arguments: customersModel);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.add_shopping_cart_outlined),
+              title: Text(
+                'Proposal price'.tr,
+                style: AppTextStyles.regular16,
+              ),
+              onTap: () {
+                Get.off(() => ProposalScreen());
               },
             ),
           ],

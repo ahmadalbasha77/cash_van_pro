@@ -11,7 +11,8 @@ import '../../widget/custom_button.dart';
 import '../../widget/custom_icon_button.dart';
 
 class LoginScreen extends StatelessWidget {
-   LoginScreen({super.key});
+  LoginScreen({super.key});
+
   final controller = LoginController.to;
 
   @override
@@ -27,7 +28,9 @@ class LoginScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(height: 10,),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -69,7 +72,7 @@ class LoginScreen extends StatelessWidget {
                         suffixIcon: CustomIconButton(
                           color: controller.obscureText
                               ? Colors.black54
-                              : Colors.blue[300],
+                              : AppColor.primaryColor,
                           size: 25,
                           icon: Icons.remove_red_eye_outlined,
                           onPressed: controller.changeObscureText,

@@ -155,5 +155,6 @@ const Map<String, String> en = {
   'New Price':'New Price',
   'Enter new price':'Enter new price',
   'Change Price':'Change Price',
+  'Dealing at Wholesale Price':'Dealing at Wholesale Price',
 
 };

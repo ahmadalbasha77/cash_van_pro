@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:printing/printing.dart';
 import '../../model/invoice/cart_model.dart';
+import '../../model/invoice/invoice_model.dart';
 import '../../network/rest_api.dart';
 import '../../view/ui/sales_invoice_pdf.dart';
 
@@ -91,7 +92,7 @@ class CartController extends GetxController {
     final apiMethod =
         isRefund ? restApi.addRefundInvoice : restApi.addSalesInvoice;
 
-    bool result = await apiMethod({
+    InvoiceModel result = await apiMethod({
       "ID": '0',
       "InvoiceDate": DateTime.now().toIso8601String(),
       "SettelmentWayID": '$paymentType',
@@ -107,9 +108,10 @@ class CartController extends GetxController {
       isRefund ? "ReturnJson" : "SalesJson": cartJson,
     });
 
-    if (result) {
+    if (result != null) {
       // Utils.hideLoadingDialog();
       final invoicePdf = await salesInvoicePdf(
+          invoiceId: isRefund ? result.returnId : result.salesId,
           cartList: cartList,
           invoiceType: isRefund ? 'Refund' : 'Sales',
           paymentType: paymentType == 1 ? 'Cash' : 'Credit',

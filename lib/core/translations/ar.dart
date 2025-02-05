@@ -157,4 +157,5 @@ Map<String, String> ar = {
   'New Price': 'السعر الجديد',
   'Enter new price': 'ادخل السعر الجديد',
   'Change Price': 'تغيير السعر',
+  'Dealing at Wholesale Price': 'التعامل بسعر الجملة'
 };

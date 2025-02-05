@@ -7,6 +7,8 @@ import '../../../model/invoice/cart_model.dart';
 Future<pw.Document> salesRefundInvoicePdf({
   required List<CartModel> salesList,
   required List<CartModel> refundList,
+  required int invoiceSalesId,
+  required int invoiceRefundId,
   required String customerName,
   required String customerNumber,
   required String representativeName,
@@ -102,6 +104,10 @@ Future<pw.Document> salesRefundInvoicePdf({
           ),
 
           pw.SizedBox(height: 15),
+          pw.Text('ID: $invoiceSalesId',
+              style:
+                  pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold)),
+          pw.SizedBox(height: 5),
 
           pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
@@ -139,6 +145,10 @@ Future<pw.Document> salesRefundInvoicePdf({
           ),
 
           pw.SizedBox(height: 10),
+          pw.Text('ID: $invoiceRefundId',
+              style:
+                  pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold)),
+          pw.SizedBox(height: 5),
           pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [

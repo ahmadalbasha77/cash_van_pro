@@ -12,6 +12,7 @@ import '../core/my_shared_preferences.dart';
 import '../model/api_response.dart';
 import '../model/auth/login_model.dart';
 import '../model/customers/customers_model.dart';
+import '../model/invoice/invoice_model.dart';
 import '../model/report/voucher/cheque_voucher_report_model.dart';
 import 'api_url.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -271,7 +272,7 @@ class RestApi {
 
 //-----------------Voucher---------------------------------
   //-----------------Invoice-----------------------------------------
-  Future<bool> addSalesInvoice(var body) async {
+  Future<InvoiceModel> addSalesInvoice(var body) async {
     log('$body');
     try {
       String url = 'http://${apiUrl.ip}${ApiUrl.addSalesInvoice}';
@@ -289,17 +290,17 @@ class RestApi {
       log('*********************************************');
 
       if (response.statusCode == 200) {
-        return true;
+        return InvoiceModel.fromJson(jsonDecode(response.body));
       } else {
-        return false;
+        return InvoiceModel.fromJson({});
       }
     } catch (e) {
       log('Error during login: $e');
-      return false;
+      return InvoiceModel.fromJson({});
     }
   }
 
-  Future<bool> addRefundInvoice(var body) async {
+  Future<InvoiceModel> addRefundInvoice(var body) async {
     log('$body');
     try {
       String url = 'http://${apiUrl.ip}${ApiUrl.addRefundInvoice}';
@@ -317,17 +318,17 @@ class RestApi {
       log('*********************************************');
 
       if (response.statusCode == 200) {
-        return true;
+        return InvoiceModel.fromJson(jsonDecode(response.body));
       } else {
-        return false;
+        return InvoiceModel.fromJson({});
       }
     } catch (e) {
       log('Error during login: $e');
-      return false;
+      return InvoiceModel.fromJson({});
     }
   }
 
-  Future<bool> addSalesAndRefund(var body) async {
+  Future<InvoiceModel> addSalesAndRefund(var body) async {
     log('$body');
     try {
       String url = 'http://${apiUrl.ip}${ApiUrl.addSalesAndRefund}';
@@ -345,13 +346,13 @@ class RestApi {
       log('*********************************************');
 
       if (response.statusCode == 200) {
-        return true;
+        return InvoiceModel.fromJson(jsonDecode(response.body));
       } else {
-        return false;
+        return InvoiceModel.fromJson({});
       }
     } catch (e) {
       log('Error during login: $e');
-      return false;
+      return InvoiceModel.fromJson({});
     }
   }
 

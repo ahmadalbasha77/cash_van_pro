@@ -79,6 +79,7 @@ flutter_icons:
   adaptive_icon_background: "#ffffff"  # Background color for Android adaptive icon
   adaptive_icon_foreground: "assets/images/icon.png"  # Path to your adaptive foreground icon
 
+#  flutter pub run flutter_launcher_icons:main
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

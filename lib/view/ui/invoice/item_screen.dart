@@ -1,5 +1,6 @@
 import 'package:cash_van_app/controller/invoice/item_controller.dart';
 import 'package:cash_van_app/core/app_color.dart';
+import 'package:cash_van_app/core/my_shared_preferences.dart';
 import 'package:cash_van_app/core/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,55 +42,66 @@ class ItemScreen extends StatelessWidget {
                 : controller.itemList.isEmpty
                     ? Center(child: Text('No items found.'.tr))
                     : ListView.builder(
-                        itemCount: controller.itemList.length,
-                        itemBuilder: (context, index) {
-                          final item = controller.itemList[index];
-                          return ItemWidget(
-                              itemName: item.itemName,
-                              itemBarcode: item.itemBarcode,
-                              salesPriceBeforeTax: item.salesPriceAfterTax,
-                              iconButton: GetBuilder<CartController>(
-                                builder: (controller) => cartController.cartList
-                                        .any((cartItem) =>
-                                            cartItem.itemId == item.itemId)
-                                    ? Icon(
-                                        Icons.check,
+                      itemCount: controller.itemList.length,
+                      itemBuilder: (context, index) {
+                        final item = controller.itemList[index];
+                        return ItemWidget(
+                            itemName: item.itemName,
+                            itemBarcode: item.itemBarcode,
+                            salesPriceBeforeTax:
+                                mySharedPreferences.wholesalePrice
+                                    ? item.wholeSalesPrice
+                                    : item.salesPriceAfterTax,
+                            iconButton: GetBuilder<CartController>(
+                              builder: (controller) => cartController
+                                      .cartList
+                                      .any((cartItem) =>
+                                          cartItem.itemId ==
+                                          item.itemId)
+                                  ? Icon(
+                                      Icons.check,
+                                      color: AppColor.primaryColor,
+                                    )
+                                  : IconButton(
+                                      onPressed: () {
+                                        Get.dialog(
+                                                const SelectQuantityWidget())
+                                            .then((selectedQuantity) {
+                                          if (selectedQuantity !=
+                                                  null &&
+                                              selectedQuantity > 0) {
+                                            cartController.addItem(
+                                              CartModel(
+                                                itemId: item.itemId,
+                                                priceAfterTax: mySharedPreferences
+                                                        .wholesalePrice
+                                                    ? item
+                                                        .wholeSalesPrice
+                                                    : item
+                                                        .salesPriceAfterTax,
+                                                itemName: item.itemName,
+                                                quantity:
+                                                    selectedQuantity,
+                                              ),
+                                            );
+                                          }
+                                        });
+                                        // cartController.addItem(CartModel(
+                                        //     itemId: item.itemId,
+                                        //     priceAfterTax:
+                                        //         item.salesPriceAfterTax,
+                                        //     // totalAfterTax:
+                                        //     //     item.salesPriceAfterTax,
+                                        //     itemName: item.itemName,
+                                        //     quantity: 1));
+                                      },
+                                      icon: Icon(
+                                        Icons.add,
                                         color: AppColor.primaryColor,
-                                      )
-                                    : IconButton(
-                                        onPressed: () {
-                                          Get.dialog(
-                                                  const SelectQuantityWidget())
-                                              .then((selectedQuantity) {
-                                            if (selectedQuantity != null &&
-                                                selectedQuantity > 0) {
-                                              cartController.addItem(
-                                                CartModel(
-                                                  itemId: item.itemId,
-                                                  priceAfterTax:
-                                                      item.salesPriceAfterTax,
-                                                  itemName: item.itemName,
-                                                  quantity: selectedQuantity,
-                                                ),
-                                              );
-                                            }
-                                          });
-                                          // cartController.addItem(CartModel(
-                                          //     itemId: item.itemId,
-                                          //     priceAfterTax:
-                                          //         item.salesPriceAfterTax,
-                                          //     // totalAfterTax:
-                                          //     //     item.salesPriceAfterTax,
-                                          //     itemName: item.itemName,
-                                          //     quantity: 1));
-                                        },
-                                        icon: Icon(
-                                          Icons.add,
-                                          color: AppColor.primaryColor,
-                                        )),
-                              ));
-                        },
-                      )),
+                                      )),
+                            ));
+                      },
+                    )),
       ),
     );
   }

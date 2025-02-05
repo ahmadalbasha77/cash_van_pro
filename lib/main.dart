@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
           locale: Locale(mySharedPreferences.language),
           initialRoute: Routes.initial,
           getPages: AppPages.pages,
-          // home: InvoiceScreen(),
+          // home: ProposalScreen(),
         );
       },
     );

@@ -1,6 +1,7 @@
 import 'package:cash_van_app/controller/invoice/item_controller.dart';
 import 'package:cash_van_app/controller/invoice/sales_and_refund_controller.dart';
 import 'package:cash_van_app/core/app_color.dart';
+import 'package:cash_van_app/core/my_shared_preferences.dart';
 import 'package:cash_van_app/model/invoice/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,7 +50,10 @@ class ItemSalesRefundScreen extends StatelessWidget {
                           return ItemWidget(
                               itemName: item.itemName,
                               itemBarcode: item.itemBarcode,
-                              salesPriceBeforeTax: item.salesPriceAfterTax,
+                              salesPriceBeforeTax:
+                                  mySharedPreferences.wholesalePrice
+                                      ? item.wholeSalesPrice
+                                      : item.salesPriceAfterTax,
                               iconButton: GetBuilder<SalesAndRefundController>(
                                 builder: (controller) => isSales == true
                                     ? cartController.salesList.any((cartItem) =>
@@ -68,8 +72,13 @@ class ItemSalesRefundScreen extends StatelessWidget {
                                                   cartController.addItemSales(
                                                     CartModel(
                                                       itemId: item.itemId,
-                                                      priceAfterTax: item
-                                                          .salesPriceAfterTax,
+                                                      priceAfterTax:
+                                                          mySharedPreferences
+                                                                  .wholesalePrice
+                                                              ? item
+                                                                  .wholeSalesPrice
+                                                              : item
+                                                                  .salesPriceAfterTax,
                                                       itemName: item.itemName,
                                                       quantity:
                                                           selectedQuantity,

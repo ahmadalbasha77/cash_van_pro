@@ -1,3 +1,4 @@
+import 'package:cash_van_app/view/widget/customer/pin_settings_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -85,13 +86,13 @@ class CustomDrawerWidget extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: [
-                    DrawerWidget(
-                      title: 'Reports',
-                      iconData: Icons.description_outlined,
-                      onTap: () {
-                        Get.toNamed(Routes.report);
-                      },
-                    ),
+                    // DrawerWidget(
+                    //   title: 'Reports',
+                    //   iconData: Icons.description_outlined,
+                    //   onTap: () {
+                    //     Get.toNamed(Routes.report);
+                    //   },
+                    // ),
                     // Divider(color: Colors.grey[300]),
                     // DrawerWidget(
                     //   title: 'Transaction History',
@@ -100,12 +101,13 @@ class CustomDrawerWidget extends StatelessWidget {
                     //     Get.toNamed(Routes.history);
                     //   },
                     // ),
-                    Divider(color: Colors.grey[300]),
+                    // Divider(color: Colors.grey[300]),
                     DrawerWidget(
                       title: 'Settings',
                       iconData: Icons.settings_outlined,
                       onTap: () {
-                        Get.toNamed(Routes.settings);
+                        Get.dialog(PinSettingsDialog());
+                        // Get.toNamed(Routes.settings);
                       },
                     ),
                     Divider(color: Colors.grey[300]),

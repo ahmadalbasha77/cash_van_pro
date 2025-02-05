@@ -88,6 +88,19 @@ class SettingsScreen extends StatelessWidget {
                     onChanged: (value) => controller.toggleFingerprint(value),
                   );
                 }),
+            GetBuilder<SettingsController>(
+                id: 'wholesalePrice',
+                builder: (logic) {
+                  return SwitchListTile(
+                    activeTrackColor: AppColor.primaryColor.withOpacity(0.7),
+                    inactiveTrackColor: Colors.white,
+                    activeColor: AppColor.primaryColor,
+                    title: Text('Dealing at Wholesale Price'.tr),
+                    value: controller.isWholesalePrice,
+                    onChanged: (value) =>
+                        controller.toggleWholesalePrice(value),
+                  );
+                }),
           ],
         ),
       ),

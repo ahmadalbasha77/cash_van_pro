@@ -44,6 +44,13 @@ class MySharedPreferences {
     _sharedPreferences.setBool(keyFingerPrint, value);
   }
 
+  bool get wholesalePrice =>
+      _sharedPreferences.getBool(keyWholesalePrice) ?? false;
+
+  set wholesalePrice(bool value) {
+    _sharedPreferences.setBool(keyWholesalePrice, value);
+  }
+
   String get language => _sharedPreferences.getString(keyLanguage) ?? "en";
 
   set language(String value) {
@@ -87,6 +94,7 @@ const String keyColorApp = "key_color_app";
 const String keyUserData = "key_user_data";
 const String keyIsLogin = "key_is_login";
 const String keyFingerPrint = "key_finger_print";
+const String keyWholesalePrice = "key_wholesale_price";
 const String keyIP = "key_ip";
 const String keyLanguage = "key_language";
 const String keyUserId = "key_user_id";

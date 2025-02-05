@@ -12,10 +12,11 @@ ThemeData lightThemeApp(Color primaryColor) {
       headerHeadlineStyle: const TextStyle(color: Colors.white, fontSize: 28),
       headerForegroundColor: Colors.white,
       rangeSelectionBackgroundColor: Colors.redAccent,
-
     ),
     colorScheme: ColorScheme.light(
-        primary: AppColor.primaryColor, onPrimary: Colors.white, ),
+      primary: AppColor.primaryColor,
+      onPrimary: Colors.white,
+    ),
     fontFamily: 'tejwal',
     cardTheme: const CardTheme(color: Colors.white),
     checkboxTheme: const CheckboxThemeData(

@@ -6,6 +6,7 @@ import '../../core/my_shared_preferences.dart';
 import '../../core/utils.dart';
 import '../../model/customers/customers_model.dart';
 import '../../model/invoice/cart_model.dart';
+import '../../model/invoice/invoice_model.dart';
 import '../../network/rest_api.dart';
 import '../../view/ui/home/customers_screen.dart';
 import '../../view/ui/invoice/sales_and_refund_invoice_pdf.dart';
@@ -156,7 +157,7 @@ class SalesAndRefundController extends GetxController {
             })
         .toList()
         .toString();
-    bool result;
+    InvoiceModel result;
 
     if (_salesMap.isEmpty || _refundMap.isEmpty) {
       final apiMethod = _salesMap.isEmpty
@@ -195,9 +196,10 @@ class SalesAndRefundController extends GetxController {
       });
     }
 
-    if (result) {
+    if (result != null) {
       if (_salesMap.isEmpty || _refundMap.isEmpty) {
         final salesInvoice = await salesInvoicePdf(
+            invoiceId: _salesMap.isEmpty ? result.returnId : result.salesId,
             cartList: _salesMap.isEmpty ? refundList : salesList,
             invoiceType: _salesMap.isEmpty ? 'Refund' : 'Sales',
             paymentType: paymentType == 1 ? 'Cash' : 'Credit',
@@ -211,6 +213,8 @@ class SalesAndRefundController extends GetxController {
         );
       } else {
         final invoicePdf = await salesRefundInvoicePdf(
+            invoiceRefundId: result.returnId,
+            invoiceSalesId: result.salesId,
             refundList: refundList,
             totalRefundAmount: totalRefundPrice,
             totalSalesAmount: totalSalesPrice,
