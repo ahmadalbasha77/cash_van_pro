@@ -1,6 +1,7 @@
 import 'package:cash_van_app/controller/customers/customers_controller.dart';
 import 'package:cash_van_app/core/my_shared_preferences.dart';
 import 'package:cash_van_app/core/text_style.dart';
+import 'package:cash_van_app/view/widget/search_text_filed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -57,33 +58,10 @@ class CustomersScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.all(16.0),
-            color: AppColor.primaryColor,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(25),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: TextFormField(
-                onChanged: (query) {
-                  controller.filterCustomers(query); // Call filter method
-                },
-                decoration: InputDecoration(
-                  hintText: "Search customers...".tr,
-                  prefixIcon: Icon(Icons.search, color: AppColor.primaryColor),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 14),
-                ),
-              ),
-            ),
+          SearchTextFiledWidget(
+            backgroundColor: AppColor.primaryColor,
+            hintText: 'Search customers...',
+            onChanged: (p0) => controller.filterCustomers(p0),
           ),
           Expanded(
             child: GetBuilder<CustomersController>(

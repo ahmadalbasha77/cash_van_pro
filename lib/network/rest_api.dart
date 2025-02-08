@@ -157,7 +157,7 @@ class RestApi {
     }
   }
 
-  Future<List<ItemModel>> getItem({required int categoryId}) async {
+  Future<List<ItemModel>> getItem() async {
     try {
       String url = 'http://${apiUrl.ip}${ApiUrl.getItem}';
 
@@ -168,6 +168,42 @@ class RestApi {
       );
       log('*********************************************');
       log('Item  :  $uri');
+      log('status Code :  ${response.statusCode}');
+      log('response body :  ${response.body}');
+      log('*********************************************');
+
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonList = jsonDecode(response.body);
+        return jsonList.map((json) => ItemModel.fromJson(json)).toList();
+      } else {
+        log('Error: Unexpected status code ${response.statusCode}');
+        throw Exception('Failed to log in: ${response.body}');
+      }
+    } catch (e) {
+      log('$e');
+      return [];
+    }
+  }
+
+  Future<List<ItemModel>> getItemByCategoryId(
+      {required int categoryId, String search = ''}) async {
+    try {
+      String url;
+      if (search.isEmpty) {
+        url =
+            'http://${apiUrl.ip}${ApiUrl.getItemByCategoryId}?categoryId=$categoryId';
+      } else {
+        url =
+            'http://${apiUrl.ip}${ApiUrl.getItemsByCategoryIDAndName}?categoryId=$categoryId&ItemName=$search';
+      }
+
+      Uri uri = Uri.parse(url);
+
+      http.Response response = await http.get(
+        uri,
+      );
+      log('*********************************************');
+      log('get Item By CategoryId  :  $uri');
       log('status Code :  ${response.statusCode}');
       log('response body :  ${response.body}');
       log('*********************************************');
@@ -272,6 +308,34 @@ class RestApi {
 
 //-----------------Voucher---------------------------------
   //-----------------Invoice-----------------------------------------
+  Future<bool> addQuotation(var body) async {
+    log('$body');
+    try {
+      String url = 'http://${apiUrl.ip}${ApiUrl.addQuotation}';
+      Uri uri = Uri.parse(url);
+
+      http.Response response = await http.post(
+        uri,
+        body: body,
+      );
+
+      log('*********************************************');
+      log('add Quotation  :  $uri');
+      log('status Code :  ${response.statusCode}');
+      log('response body :  ${response.body}');
+      log('*********************************************');
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      log('Error during login: $e');
+      return false;
+    }
+  }
+
   Future<InvoiceModel> addSalesInvoice(var body) async {
     log('$body');
     try {
@@ -284,7 +348,7 @@ class RestApi {
       );
 
       log('*********************************************');
-      log('addCashVoucher  :  $uri');
+      log('add Sales Invoice  :  $uri');
       log('status Code :  ${response.statusCode}');
       log('response body :  ${response.body}');
       log('*********************************************');
@@ -312,7 +376,7 @@ class RestApi {
       );
 
       log('*********************************************');
-      log('addCustomer  :  $uri');
+      log('add Refund Invoice  :  $uri');
       log('status Code :  ${response.statusCode}');
       log('response body :  ${response.body}');
       log('*********************************************');
@@ -340,7 +404,7 @@ class RestApi {
       );
 
       log('*********************************************');
-      log('addSalesAndRefund  :  $uri');
+      log('add Sales And Refund  :  $uri');
       log('status Code :  ${response.statusCode}');
       log('response body :  ${response.body}');
       log('*********************************************');
@@ -476,7 +540,7 @@ class RestApi {
         uri,
       );
       log('*********************************************');
-      log('get Cash Voucher Report  :  $uri');
+      log('get Cheque Voucher Report  :  $uri');
       log('status Code :  ${response.statusCode}');
       log('response body :  ${response.body}');
       log('*********************************************');

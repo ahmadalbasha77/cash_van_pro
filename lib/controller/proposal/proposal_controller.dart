@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../core/my_shared_preferences.dart';
+import '../../core/utils.dart';
+import '../../model/customers/customers_model.dart';
 import '../../model/invoice/cart_model.dart';
 import '../../network/rest_api.dart';
+import '../../view/ui/home/customers_screen.dart';
+import '../customers/customers_controller.dart';
 
 class ProposalController extends GetxController {
   final Map<int, CartModel> _cartMap = {};
@@ -45,5 +50,60 @@ class ProposalController extends GetxController {
 
   double get totalCartPrice {
     return _cartMap.values.fold(0, (sum, item) => sum + item.totalPrice);
+  }
+
+  Future<void> addQuotation({
+    required CustomersModel customer,
+  }) async {
+    Utils.showLoadingDialog();
+
+    String cartJson = _cartMap.values
+        .map((item) => {
+              "itemId": item.itemId,
+              "QTYIN": item.quantity,
+              "QTYOUT": 0,
+              "PriceAfterTax": item.priceAfterTax,
+              "TotalAfterTax": item.totalPrice,
+              "DiscountAmount": 0,
+              "DiscountPercentage": 0,
+              "BranchID": '${mySharedPreferences.getUserData()!.branchId}',
+              "StoreID": '${mySharedPreferences.getUserData()!.storeId}',
+            })
+        .toList()
+        .toString();
+
+    bool result = await restApi.addQuotation({
+      "ID": '0',
+      "InvoiceDate": DateTime.now().toIso8601String(),
+      "SettelmentWayID": '0',
+      "CustomerID": '${customer.id}',
+      "CashID": '${mySharedPreferences.getUserData()!.cashId}',
+      "TaxType": '1',
+      "SalesManID": '1',
+      "UserID": '${mySharedPreferences.getUserData()!.id}',
+      "NumberCar": "",
+      "TranactionType": '33',
+      "BranchID": '${mySharedPreferences.getUserData()!.branchId}',
+      "StoreID": '${mySharedPreferences.getUserData()!.storeId}',
+      "SalesJson": cartJson,
+    });
+
+    if (result == true) {
+      // Utils.hideLoadingDialog();
+
+      final controller = CustomersController.to;
+      controller.getCustomers();
+
+      paymentType = 0;
+      cartList.clear();
+      _cartMap.clear();
+      update();
+      Utils.showSnackbar('Success', 'Quotation added successfully');
+      Get.offAll(() => CustomersScreen());
+    } else {
+      Utils.hideLoadingDialog();
+      Utils.showSnackbar(
+          'Failed', 'An error occurred while adding the invoice.');
+    }
   }
 }

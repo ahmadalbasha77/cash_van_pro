@@ -55,7 +55,7 @@ class PinDialog extends StatelessWidget {
                     title: 'confirm',
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        Get.off(() => IpScreen());
+                        Get.off(() => IpScreen(isLogin: true,));
                       }
                     },
                   ),

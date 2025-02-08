@@ -69,12 +69,15 @@ class AppPages {
     //Invoice
     GetPage(
       name: Routes.item,
-      page: () => const ItemScreen(),
+      page: () => ItemScreen(
+        categoryId: Get.arguments['id'],
+      ),
     ),
     GetPage(
       name: Routes.itemSF,
       page: () => ItemSalesRefundScreen(
-        isSales: Get.arguments,
+        isSales: Get.arguments['isSales'],
+        categoryId: Get.arguments['id'],
       ),
     ),
     GetPage(

@@ -10,13 +10,15 @@ class ItemOrderWidget extends StatelessWidget {
   final void Function() increaseQuantity;
   final void Function() decreaseQuantity;
   final VoidCallback changePrice;
+  final bool? showPrice;
 
   const ItemOrderWidget(
       {super.key,
       required this.cartModel,
       required this.increaseQuantity,
       required this.decreaseQuantity,
-      required this.changePrice});
+      required this.changePrice,
+      this.showPrice = true});
 
   @override
   Widget build(BuildContext context) {
@@ -43,20 +45,22 @@ class ItemOrderWidget extends StatelessWidget {
               icon: const Icon(Icons.remove, size: 25),
             ),
             const Spacer(),
-            GetBuilder<CartController>(builder: (logic) {
-              return TextButton(
-                style: const ButtonStyle(
-                    padding: WidgetStatePropertyAll(EdgeInsets.zero)),
-                onPressed: changePrice,
-                child: Text(cartModel.priceAfterTax.toStringAsFixed(2),
-                    style: AppTextStyles.bold16),
-              );
-            }),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.07,
-            ),
-            Text(cartModel.totalPrice.toStringAsFixed(2),
-                style: AppTextStyles.bold16),
+            if (showPrice == true) ...[
+              GetBuilder<CartController>(builder: (logic) {
+                return TextButton(
+                  style: const ButtonStyle(
+                      padding: WidgetStatePropertyAll(EdgeInsets.zero)),
+                  onPressed: changePrice,
+                  child: Text(cartModel.priceAfterTax.toStringAsFixed(2),
+                      style: AppTextStyles.bold16),
+                );
+              }),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.07,
+              ),
+              Text(cartModel.totalPrice.toStringAsFixed(2),
+                  style: AppTextStyles.bold16),
+            ]
           ],
         ),
       ),

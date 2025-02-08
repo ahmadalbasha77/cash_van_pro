@@ -36,6 +36,20 @@ class InvoiceDialog extends StatelessWidget {
               ),
             ),
             ListTile(
+              leading: const Icon(Icons.add_shopping_cart_outlined),
+              title: Text(
+                'Quotation'.tr,
+                style: AppTextStyles.regular16,
+              ),
+              onTap: () {
+                Get.off(
+                  () => ProposalScreen(
+                    customersData: customersModel,
+                  ),
+                );
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.add_box_outlined),
               title: Text(
                 'Sales invoice'.tr,
@@ -77,16 +91,6 @@ class InvoiceDialog extends StatelessWidget {
               ),
               onTap: () {
                 Get.offNamed(Routes.addInvoiceSF, arguments: customersModel);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.add_shopping_cart_outlined),
-              title: Text(
-                'Proposal price'.tr,
-                style: AppTextStyles.regular16,
-              ),
-              onTap: () {
-                Get.off(() => ProposalScreen());
               },
             ),
           ],

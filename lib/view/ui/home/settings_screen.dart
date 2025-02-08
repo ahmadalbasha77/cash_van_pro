@@ -101,6 +101,19 @@ class SettingsScreen extends StatelessWidget {
                         controller.toggleWholesalePrice(value),
                   );
                 }),
+            GetBuilder<SettingsController>(
+                id: 'priceQuotation',
+                builder: (logic) {
+                  return SwitchListTile(
+                    activeTrackColor: AppColor.primaryColor.withOpacity(0.7),
+                    inactiveTrackColor: Colors.white,
+                    activeColor: AppColor.primaryColor,
+                    title: Text('Show price in Quotation'.tr),
+                    value: controller.priceQuotation,
+                    onChanged: (value) =>
+                        controller.togglePriceQuotation(value),
+                  );
+                }),
           ],
         ),
       ),

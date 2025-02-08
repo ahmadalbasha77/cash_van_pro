@@ -157,5 +157,14 @@ Map<String, String> ar = {
   'New Price': 'السعر الجديد',
   'Enter new price': 'ادخل السعر الجديد',
   'Change Price': 'تغيير السعر',
-  'Dealing at Wholesale Price': 'التعامل بسعر الجملة'
+  'Dealing at Wholesale Price': 'التعامل بسعر الجملة',
+  'Quotation added successfully': 'تم اضافة العرض بنجاح',
+  'Quotation': 'عرض السعر',
+  'Add Quotation': 'اضافة عرض السعر',
+  'Add to cart': 'اضافة الى السلة',
+  'Added': 'تم الاضافة',
+  'Show price in Quotation': 'اظهار السعر في عرض السعر',
+  'Login Failed': 'فشل تسجيل الدخول',
+  'Invalid username or password': 'اسم المستخدم او كلمة المرور غير صحيحة',
+  'Search items...': 'بحث عن مادة...'
 };

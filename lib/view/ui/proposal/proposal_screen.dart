@@ -1,17 +1,25 @@
-import 'package:cash_van_app/controller/invoice/item_controller.dart';
 import 'package:cash_van_app/core/app_color.dart';
 import 'package:cash_van_app/core/text_style.dart';
 import 'package:cash_van_app/model/invoice/cart_model.dart';
+import 'package:cash_van_app/view/ui/proposal/add_proposal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 
+import '../../../controller/proposal/category_proposal_controller.dart';
+import '../../../controller/proposal/item_by_categoryid_proposal_controller.dart';
 import '../../../controller/proposal/proposal_controller.dart';
+import '../../../model/customers/customers_model.dart';
 import '../../widget/custom_button.dart';
+import '../../widget/search_text_filed_widget.dart';
 
 class ProposalScreen extends StatelessWidget {
-  ProposalScreen({super.key});
+  final CustomersModel customersData;
 
-  final _controller = ItemController.to;
+  ProposalScreen({super.key, required this.customersData});
+
+  final _controller = ItemByCategoryIdProposalController.to;
+  final _controllerCategory = CategoryProposalController.to;
   final proposalController = Get.put(ProposalController());
 
   @override
@@ -31,65 +39,162 @@ class ProposalScreen extends StatelessWidget {
         ),
         child: CustomButtonWidget(
           title: 'Save',
-          onPressed: () {},
+          onPressed: () {
+            Get.to(() => AddProposalScreen(customersData: customersData));
+          },
         ),
       ),
       appBar: AppBar(
-        title: const Text(
-          'Proposal Price',
+        title: Text(
+          'Items'.tr,
         ),
         centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: GetBuilder<ItemController>(
-            builder: (logic) => _controller.isLoading == true
-                ? const Center(child: CircularProgressIndicator())
-                : _controller.itemList.isEmpty
-                    ? const Center(
-                        child: Text('No Found Data'),
-                      )
-                    : GridView.builder(
-                        itemCount: _controller.itemList.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 15,
-                          mainAxisSpacing: 15,
-                          childAspectRatio: 0.8,
-                        ),
-                        itemBuilder: (context, index) {
-                          final item = _controller.itemList[index];
-                          return GetBuilder<ProposalController>(
-                              builder: (logic) {
-                            return ProposalItemWidget(
-                              title: proposalController.cartList.any(
-                                      (cartItem) =>
-                                          cartItem.itemId == item.itemId)
-                                  ? 'Added'
-                                  : 'Add to cart',
-                              background: proposalController.cartList.any(
-                                      (cartItem) =>
-                                          cartItem.itemId == item.itemId)
-                                  ? Colors.grey[400]!
-                                  : AppColor.primaryColor,
-                              name: item.itemName,
-                              onTap: () {
-                                !proposalController.cartList.any((cartItem) =>
-                                        cartItem.itemId == item.itemId)
-                                    ? proposalController.addItem(CartModel(
-                                        itemId: item.itemId,
-                                        itemName: item.itemName,
-                                        priceAfterTax: item.salesPriceBeforeTax,
-                                        quantity: 1))
-                                    : proposalController
-                                        .removeItem(item.itemId);
-                              },
-                              price: item.wholeSalesPrice,
-                            );
-                          });
-                        },
-                      )),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            GetBuilder<ItemByCategoryIdProposalController>(builder: (logic) {
+              return SizedBox(
+                height: MediaQuery.sizeOf(context).height * 0.05,
+                child: GetBuilder<CategoryProposalController>(
+                    builder: (logic) => _controllerCategory.isLoading
+                        ? ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 5, // Placeholder shimmer count
+                            itemBuilder: (context, index) => Shimmer.fromColors(
+                              baseColor: Colors.grey[300]!,
+                              highlightColor: Colors.grey[100]!,
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                width: 80,
+                                height: 20, // Adjust height as needed
+                              ),
+                            ),
+                          )
+                        : _controllerCategory.categoryList.isEmpty
+                            ?  Center(
+                                child: Text('No Found Data'.tr),
+                              )
+                            : ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount:
+                                    _controllerCategory.categoryList.length,
+                                itemBuilder: (context, index) =>
+                                    GestureDetector(
+                                  onTap: () {
+                                    if (_controller.categoryId !=
+                                        _controllerCategory
+                                            .categoryList[index].id) {
+                                      _controller.categoryId =
+                                          _controllerCategory
+                                              .categoryList[index].id;
+                                      _controller.getItem();
+                                    }
+                                  },
+                                  child: FittedBox(
+                                    child: Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 10),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: _controller.categoryId ==
+                                                      _controllerCategory
+                                                          .categoryList[index].id
+                                                  ? AppColor.primaryColor
+                                                  : Colors.black26,
+                                              width: 1),
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Text(_controllerCategory
+                                          .categoryList[index].aName),
+                                    ),
+                                  ),
+                                ),
+                              )),
+              );
+            }),
+            SearchTextFiledWidget(
+              controller: _controller.searchController,
+              hintText: 'Search items...',
+              onChanged: (p0) {
+                _controller.getItem();
+              },
+            ),
+            Expanded(
+              child: GetBuilder<ItemByCategoryIdProposalController>(
+                  builder: (logic) {
+                return _controllerCategory.categoryList.isEmpty
+                    ? const SizedBox.shrink()
+                    : _controller.isLoading == true
+                        ? const Center(child: CircularProgressIndicator())
+                        : _controller.itemList.isEmpty
+                            ? const Center(
+                                child: Text('No Found Data'),
+                              )
+                            : GridView.builder(
+                                itemCount: _controller.itemList.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 15,
+                                  mainAxisSpacing: 15,
+                                  childAspectRatio: 0.8,
+                                ),
+                                itemBuilder: (context, index) {
+                                  final item = _controller.itemList[index];
+                                  return GetBuilder<ProposalController>(
+                                      builder: (logic) {
+                                    return ProposalItemWidget(
+                                      title: proposalController.cartList.any(
+                                              (cartItem) =>
+                                                  cartItem.itemId ==
+                                                  item.itemId)
+                                          ? 'Added'.tr
+                                          : 'Add'.tr,
+                                      background: proposalController.cartList
+                                              .any((cartItem) =>
+                                                  cartItem.itemId ==
+                                                  item.itemId)
+                                          ? Colors.grey[400]!
+                                          : AppColor.primaryColor,
+                                      name: item.itemName,
+                                      onTap: () {
+                                        !proposalController.cartList.any(
+                                                (cartItem) =>
+                                                    cartItem.itemId ==
+                                                    item.itemId)
+                                            ? proposalController.addItem(
+                                                CartModel(
+                                                    itemId: item.itemId,
+                                                    itemName: item.itemName,
+                                                    priceAfterTax:
+                                                        item.salesPriceAfterTax,
+                                                    quantity: 1))
+                                            : proposalController
+                                                .removeItem(item.itemId);
+                                      },
+                                      price: item.salesPriceAfterTax,
+                                    );
+                                  });
+                                },
+                              );
+              }),
+            ),
+          ],
+        ),
       ),
     );
   }

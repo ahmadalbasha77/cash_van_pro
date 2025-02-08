@@ -2,7 +2,7 @@ import 'package:cash_van_app/view/widget/customer/pin_settings_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../controller/drawer_controller.dart';
+import '../../../controller/battery_controller.dart';
 import '../../../core/app_color.dart';
 import '../../../core/my_shared_preferences.dart';
 import '../../../core/route/routes.dart';

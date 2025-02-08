@@ -51,7 +51,8 @@ class LoginScreen extends StatelessWidget {
                   Image.asset(
                     'assets/images/logo2.png',
                     color: AppColor.primaryColor,
-                    width: 230,
+                    // width: 230,
+                    width: MediaQuery.sizeOf(context).width * 0.45,
                   ),
                   Text(
                     'Login'.tr,

@@ -28,7 +28,7 @@ class ChequeVoucherReportController extends GetxController {
     formattedData = chequeVoucherReportList.map((e) {
       return {
         '#': e.id,
-        'Date': Utils.formatDate(e.paymentDate),
+        'Date': Utils.formatDate(e.paymentDate!),
         'Customer Name': e.beneficiaryName,
         'Amount': e.amount,
         'Received': e.beneficiaryName,

@@ -13,6 +13,7 @@ class SettingsController extends GetxController {
   double fontSize = mySharedPreferences.fontSize;
   bool isFingerprintActive = mySharedPreferences.fingerPrint;
   bool isWholesalePrice = mySharedPreferences.wholesalePrice;
+  bool priceQuotation = mySharedPreferences.showPriceInQuotation;
   ThemeMode themeMode = ThemeMode.system;
   Color selectedColor = mySharedPreferences.colorApp;
 
@@ -50,6 +51,12 @@ class SettingsController extends GetxController {
     isWholesalePrice = value;
     mySharedPreferences.wholesalePrice = value;
     update(['wholesalePrice']);
+  }
+
+  void togglePriceQuotation(bool value) {
+    priceQuotation = value;
+    mySharedPreferences.showPriceInQuotation = value;
+    update(['priceQuotation']);
   }
 
   void updateThemeMode(ThemeMode mode) {

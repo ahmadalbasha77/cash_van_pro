@@ -49,9 +49,15 @@ class CategoryBottomSheet extends StatelessWidget {
                                 isSalesAndRefund == true
                                     ? Get.offNamed(
                                         Routes.itemSF,
-                                        arguments: isSales!,
+                                        arguments: {
+                                          'isSales': isSales,
+                                          'id':
+                                              controller.categoryList[index].id
+                                        },
                                       )
-                                    : Get.offNamed(Routes.item);
+                                    : Get.offNamed(Routes.item, arguments: {
+                                        'id': controller.categoryList[index].id
+                                      });
                               },
                             );
                           },
