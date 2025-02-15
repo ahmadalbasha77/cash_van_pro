@@ -1,6 +1,7 @@
 import 'package:cash_van_app/core/text_style.dart';
 import 'package:cash_van_app/core/validation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/invoice/cart_controller.dart';
@@ -39,7 +40,11 @@ class ChangePriceDialog extends StatelessWidget {
                 height: 10,
               ),
               CustomTextFiledWidget(
-                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^\d*[.,]?\d*$')),
+                  ],
+                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+
                   controller: _controller.newPriceController,
                   validator: (text) => Validation.isRequired(text),
                   label: 'New Price'.tr,

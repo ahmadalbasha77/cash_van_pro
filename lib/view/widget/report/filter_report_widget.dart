@@ -30,46 +30,56 @@ class FilterReportWidget extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        Form(
-          key: formKey,
-          child: Row(
-            children: [
-              FromDateWidget(
-                  fromDateController: fromDateController,
-                  toDateController: toDateController),
-              const SizedBox(width: 15),
-              const Icon(
-                Icons.sync_alt,
-                color: Colors.black54,
-                size: 20,
-              ),
-              const SizedBox(width: 15),
-              ToDateWidget(
-                  fromDateController: fromDateController,
-                  toDateController: toDateController),
-            ],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Form(
+            key: formKey,
+            child: Row(
+              children: [
+                FromDateWidget(
+                    fromDateController: fromDateController,
+                    toDateController: toDateController),
+                const SizedBox(width: 15),
+                const Icon(
+                  Icons.sync_alt,
+                  color: Colors.black54,
+                  size: 20,
+                ),
+                const SizedBox(width: 15),
+                ToDateWidget(
+                    fromDateController: fromDateController,
+                    toDateController: toDateController),
+              ],
+            ),
           ),
         ),
-        Column(children: widgets),
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton.icon(
-            style: ButtonStyle(
-                padding: const WidgetStatePropertyAll(
-                    EdgeInsets.symmetric(vertical: 15)),
-                backgroundColor: WidgetStatePropertyAll(AppColor.primaryColor)),
-            onPressed: () {
-              if (formKey.currentState!.validate()) {
-                onTap();
-              }
-            },
-            icon: const Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            label: Text(
-              'Show'.tr,
-              style: const TextStyle(color: Colors.white),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(children: widgets),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              style: ButtonStyle(
+                  padding: const WidgetStatePropertyAll(
+                      EdgeInsets.symmetric(vertical: 15)),
+                  backgroundColor:
+                      WidgetStatePropertyAll(AppColor.primaryColor)),
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  onTap();
+                }
+              },
+              icon: const Icon(
+                Icons.search,
+                color: Colors.white,
+              ),
+              label: Text(
+                'Show'.tr,
+                style: const TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),

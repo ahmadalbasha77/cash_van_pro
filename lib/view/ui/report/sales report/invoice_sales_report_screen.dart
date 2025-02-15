@@ -20,32 +20,29 @@ class InvoiceSalesReportScreen extends StatelessWidget {
           centerTitle: true,
         ),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            child: FilterReportWidget(
-              formKey: _controller.formKey,
-              fromDateController: _controller.fromDateController,
-              toDateController: _controller.toDateController,
-              widgets: [
-                const SizedBox(height: 16),
-                CustomTextFiledWidget(
-                    keyboardType: TextInputType.number,
-                    controller: TextEditingController(),
-                    label: 'Invoice Number',
-                    hint: 'enter invoice number'),
-                const SizedBox(height: 16),
-                CustomerDropdownWidget(
-                  onChanged: (p0) {
-                    _controller.customerId = p0!;
-                  },
-                ),
-                const SizedBox(height: 24),
-              ],
-              onTap: () {
-                _controller.getSalesInvoiceReport();
-              },
-              reportWidget: InvoiceReportWidget(),
-            ),
+          child: FilterReportWidget(
+            formKey: _controller.formKey,
+            fromDateController: _controller.fromDateController,
+            toDateController: _controller.toDateController,
+            widgets: [
+              const SizedBox(height: 16),
+              CustomTextFiledWidget(
+                  keyboardType: TextInputType.number,
+                  controller: TextEditingController(),
+                  label: 'Invoice Number',
+                  hint: 'enter invoice number'),
+              const SizedBox(height: 16),
+              CustomerDropdownWidget(
+                onChanged: (p0) {
+                  _controller.customerId = p0!;
+                },
+              ),
+              const SizedBox(height: 24),
+            ],
+            onTap: () {
+              _controller.getSalesInvoiceReport();
+            },
+            reportWidget: InvoiceReportWidget(),
           ),
         ));
   }

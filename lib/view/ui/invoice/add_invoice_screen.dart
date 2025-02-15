@@ -1,6 +1,7 @@
 import 'package:cash_van_app/controller/invoice/cart_controller.dart';
 import 'package:cash_van_app/core/app_color.dart';
 import 'package:cash_van_app/core/text_style.dart';
+import 'package:cash_van_app/view/widget/auth/custom_text_filed.dart';
 import 'package:cash_van_app/view/widget/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -115,6 +116,12 @@ class AddInvoiceScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             const Divider(),
+            const SizedBox(height: 15),
+            CustomTextFiledWidget(
+                radius: 20,
+                controller: TextEditingController(),
+                hint: 'Enter note here',
+                label: 'add note (optional)'.tr),
             const SizedBox(height: 15),
             Text('${'Items'.tr} :'.tr, style: AppTextStyles.bold16),
             const SizedBox(height: 10),

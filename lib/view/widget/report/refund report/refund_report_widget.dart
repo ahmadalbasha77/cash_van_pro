@@ -27,6 +27,7 @@ class RefundReportWidget extends StatelessWidget {
               children: <Widget>[
                 const SizedBox(height: 30),
                 Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 10.0),
                   padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
                     color: AppColor.primaryColor,

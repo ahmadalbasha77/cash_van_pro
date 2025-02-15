@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 import '../../../controller/proposal/proposal_controller.dart';
 import '../../../model/customers/customers_model.dart';
+import '../../widget/invoice/change_price_sales_refund_dialog.dart';
 import '../../widget/invoice/item_order_widget.dart';
 
 class AddProposalScreen extends StatelessWidget {
@@ -103,7 +104,18 @@ class AddProposalScreen extends StatelessWidget {
                           return ItemOrderWidget(
                               showPrice:
                                   mySharedPreferences.showPriceInQuotation,
-                              changePrice: () {},
+                              changePrice: () {
+                                Get.dialog(ChangePriceSalesRefundDialog(
+                                  controller: _controller
+                                      .newPriceController,
+                                  keyForm: _controller.priceKey,
+
+                                  onConfirm: () {
+                                    _controller.changePriceSales(
+                                        _controller.cartList[index].itemId);
+                                  },
+                                ));
+                              },
                               increaseQuantity: () {
                                 _controller.increaseQuantity(
                                     _controller.cartList[index].itemId);

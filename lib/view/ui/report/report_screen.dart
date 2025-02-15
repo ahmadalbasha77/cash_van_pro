@@ -1,3 +1,4 @@
+import 'package:cash_van_app/view/ui/report/customer%20report/account_statements_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,27 +41,27 @@ class ReportScreen extends StatelessWidget {
                             Get.toNamed(Routes.invoiceSalesReport);
                           },
                         ),
-                        SubReportWidget(
-                          icon: Icons.today_outlined,
-                          title: 'Daily Sales Report',
-                          onTap: () {
-                            Get.toNamed(Routes.dailySalesReport);
-                          },
-                        ),
-                        SubReportWidget(
-                          icon: Icons.category_outlined,
-                          title: 'Item Report',
-                          onTap: () {
-                            Get.toNamed(Routes.itemSalesReport);
-                          },
-                        ),
-                        SubReportWidget(
-                          icon: Icons.sell_outlined,
-                          title: 'Total Sales Report',
-                          onTap: () {
-                            Get.toNamed(Routes.totalSalesReport);
-                          },
-                        ),
+                        // SubReportWidget(
+                        //   icon: Icons.today_outlined,
+                        //   title: 'Daily Sales Report',
+                        //   onTap: () {
+                        //     Get.toNamed(Routes.dailySalesReport);
+                        //   },
+                        // ),
+                        // SubReportWidget(
+                        //   icon: Icons.category_outlined,
+                        //   title: 'Item Report',
+                        //   onTap: () {
+                        //     Get.toNamed(Routes.itemSalesReport);
+                        //   },
+                        // ),
+                        // SubReportWidget(
+                        //   icon: Icons.sell_outlined,
+                        //   title: 'Total Sales Report',
+                        //   onTap: () {
+                        //     Get.toNamed(Routes.totalSalesReport);
+                        //   },
+                        // ),
                       ],
                     )
                   : const SizedBox.shrink()),
@@ -86,20 +87,20 @@ class ReportScreen extends StatelessWidget {
                         //   title: 'Daily Refunds Report',
                         //   onTap: () {},
                         // ),
-                        SubReportWidget(
-                          icon: Icons.category_outlined,
-                          title: 'Item Report',
-                          onTap: () {
-                            Get.toNamed(Routes.itemRefundReport);
-                          },
-                        ),
-                        SubReportWidget(
-                          icon: Icons.sell_outlined,
-                          title: 'Total Refunds Report',
-                          onTap: () {
-                            Get.toNamed(Routes.totalRefundReport);
-                          },
-                        ),
+                        // SubReportWidget(
+                        //   icon: Icons.category_outlined,
+                        //   title: 'Item Report',
+                        //   onTap: () {
+                        //     Get.toNamed(Routes.itemRefundReport);
+                        //   },
+                        // ),
+                        // SubReportWidget(
+                        //   icon: Icons.sell_outlined,
+                        //   title: 'Total Refunds Report',
+                        //   onTap: () {
+                        //     Get.toNamed(Routes.totalRefundReport);
+                        //   },
+                        // ),
                       ],
                     )
                   : const SizedBox.shrink()),
@@ -131,49 +132,55 @@ class ReportScreen extends StatelessWidget {
                     )
                   : Container()),
               const SizedBox(height: 16),
+              Obx(() => ReportWidget(
+                    active: controller.isActiveCustomers.value,
+                    title: 'Customers Reports',
+                    icon: Icons.people_rounded,
+                    onTap: controller.toggleCustomersReports,
+                  )),
+              Obx(() => controller.isActiveCustomers.value
+                  ? Column(
+                      children: [
+                        SubReportWidget(
+                          icon: Icons.insert_chart_outlined,
+                          title: 'Customers account statements',
+                          onTap: () {
+                            Get.to(() => AccountStatementsScreen());
+                          },
+                        ),
+                        // SubReportWidget(
+                        //   icon: Icons.trending_up_outlined,
+                        //   title: 'Best Seller',
+                        //   onTap: () {},
+                        // ),
+                        // SubReportWidget(
+                        //   icon: Icons.trending_down,
+                        //   title: 'Lowest Seller',
+                        //   onTap: () {},
+                        // ),
+                      ],
+                    )
+                  : const SizedBox.shrink()),
+              const SizedBox(height: 16),
               // Obx(() => ReportWidget(
-              //       active: controller.isActiveCustomers.value,
-              //       title: 'Customers Reports',
-              //       icon: Icons.people_rounded,
-              //       onTap: controller.toggleCustomersReports,
+              //       active: controller.isActiveStock.value,
+              //       title: 'Stock Reports',
+              //       icon: Icons.store,
+              //       onTap: controller.toggleStockReports,
               //     )),
-              // Obx(() => controller.isActiveCustomers.value
+              // Obx(() => controller.isActiveStock.value
               //     ? Column(
               //         children: [
-              //
               //           SubReportWidget(
-              //             icon: Icons.trending_up_outlined,
-              //             title: 'Best Seller',
-              //             onTap: () {},
-              //           ),
-              //           SubReportWidget(
-              //             icon: Icons.trending_down,
-              //             title: 'Lowest Seller',
-              //             onTap: () {},
+              //             icon: Icons.inventory_2_outlined,
+              //             title: 'Stock Balance',
+              //             onTap: () {
+              //               Get.toNamed(Routes.stockBalance);
+              //             },
               //           ),
               //         ],
               //       )
               //     : const SizedBox.shrink()),
-              // const SizedBox(height: 16),
-              Obx(() => ReportWidget(
-                    active: controller.isActiveStock.value,
-                    title: 'Stock Reports',
-                    icon: Icons.store,
-                    onTap: controller.toggleStockReports,
-                  )),
-              Obx(() => controller.isActiveStock.value
-                  ? Column(
-                      children: [
-                        SubReportWidget(
-                          icon: Icons.inventory_2_outlined,
-                          title: 'Stock Balance',
-                          onTap: () {
-                            Get.toNamed(Routes.stockBalance);
-                          },
-                        ),
-                      ],
-                    )
-                  : const SizedBox.shrink()),
               const SizedBox(height: 30),
             ],
           ),

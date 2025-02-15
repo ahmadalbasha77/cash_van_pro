@@ -9,7 +9,7 @@ import 'package:cash_van_app/view/ui/report/sales%20report/daily_sales_report_sc
 import 'package:cash_van_app/view/ui/voucher/cheque_voucher_screen.dart';
 import 'package:get/get.dart';
 
-import '../../view/ui/home/transaction_history_screen.dart';
+import '../../view/ui/home/invoice_history_screen.dart';
 import '../../view/ui/invoice/add_invoice_screen.dart';
 import '../../view/ui/invoice/add_sales_refund_invoice.dart';
 import '../../view/ui/invoice/item_sales_refund_screen.dart';
@@ -57,7 +57,7 @@ class AppPages {
     ),
     GetPage(
       name: Routes.history,
-      page: () => const TransactionHistoryScreen(),
+      page: () => const InvoiceHistoryScreen(),
     ),
 
     //Voucher

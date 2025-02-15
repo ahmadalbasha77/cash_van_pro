@@ -11,6 +11,7 @@ import '../../../controller/proposal/item_by_categoryid_proposal_controller.dart
 import '../../../controller/proposal/proposal_controller.dart';
 import '../../../model/customers/customers_model.dart';
 import '../../widget/custom_button.dart';
+import '../../widget/invoice/select_quantity_widget.dart';
 import '../../widget/search_text_filed_widget.dart';
 
 class ProposalScreen extends StatelessWidget {
@@ -83,7 +84,7 @@ class ProposalScreen extends StatelessWidget {
                             ),
                           )
                         : _controllerCategory.categoryList.isEmpty
-                            ?  Center(
+                            ? Center(
                                 child: Text('No Found Data'.tr),
                               )
                             : ListView.builder(
@@ -112,7 +113,8 @@ class ProposalScreen extends StatelessWidget {
                                           border: Border.all(
                                               color: _controller.categoryId ==
                                                       _controllerCategory
-                                                          .categoryList[index].id
+                                                          .categoryList[index]
+                                                          .id
                                                   ? AppColor.primaryColor
                                                   : Colors.black26,
                                               width: 1),
@@ -176,13 +178,17 @@ class ProposalScreen extends StatelessWidget {
                                                 (cartItem) =>
                                                     cartItem.itemId ==
                                                     item.itemId)
-                                            ? proposalController.addItem(
-                                                CartModel(
-                                                    itemId: item.itemId,
-                                                    itemName: item.itemName,
-                                                    priceAfterTax:
-                                                        item.salesPriceAfterTax,
-                                                    quantity: 1))
+                                            ? Get.dialog(
+                                                    const SelectQuantityWidget())
+                                                .then((selectedQuantity) {
+                                                proposalController.addItem(
+                                                    CartModel(
+                                                        itemId: item.itemId,
+                                                        itemName: item.itemName,
+                                                        priceAfterTax: item
+                                                            .salesPriceAfterTax,
+                                                        quantity: selectedQuantity));
+                                              })
                                             : proposalController
                                                 .removeItem(item.itemId);
                                       },

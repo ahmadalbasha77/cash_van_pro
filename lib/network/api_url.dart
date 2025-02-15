@@ -1,7 +1,7 @@
 import '../core/my_shared_preferences.dart';
 
 class ApiUrl {
-  // String get ip => '91.106.107.26';
+  // String get ip => '91.106.107.26:801';
   String get ip => mySharedPreferences.ip;
 
   // String baseUrl = "http://$ip";

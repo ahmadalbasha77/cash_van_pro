@@ -1,5 +1,6 @@
 import 'package:cash_van_app/core/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class CustomTextFiledWidget extends StatelessWidget {
@@ -13,6 +14,8 @@ class CustomTextFiledWidget extends StatelessWidget {
   final bool? readOnly;
   final TextInputType? keyboardType;
   final void Function()? onTap;
+  final List<TextInputFormatter>? inputFormatters;
+  final double? radius;
 
   const CustomTextFiledWidget(
       {super.key,
@@ -25,7 +28,9 @@ class CustomTextFiledWidget extends StatelessWidget {
       this.obscureText,
       this.keyboardType,
       this.onTap,
-      this.readOnly});
+      this.readOnly,
+      this.inputFormatters,
+      this.radius});
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +41,18 @@ class CustomTextFiledWidget extends StatelessWidget {
       validator: validator,
       obscureText: obscureText ?? false,
       keyboardType: keyboardType ?? TextInputType.text,
+      inputFormatters: inputFormatters,
       decoration: InputDecoration(
         labelText: label.tr,
         labelStyle: const TextStyle(color: Colors.black54),
         hintText: hint?.tr ?? '',
         hintStyle: const TextStyle(color: Colors.black45),
-        border: const OutlineInputBorder(),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radius ?? 5),
+        ),
         suffixIcon: suffixIcon,
         focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(radius ?? 5),
           borderSide: BorderSide(color: AppColor.primaryColor, width: 1.5),
         ),
         prefixIcon: prefixIcon == null

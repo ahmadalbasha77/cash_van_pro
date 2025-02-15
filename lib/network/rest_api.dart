@@ -40,7 +40,7 @@ class RestApi {
     if (!await isConnectedToInternet()) {
       return ApiResponse(
           error:
-              'No internet connection. Please check your network and try again.');
+          'No internet connection. Please check your network and try again.');
     } else {
       try {
         String url = 'http://${apiUrl.ip}${ApiUrl.login}';
@@ -60,7 +60,7 @@ class RestApi {
         if (response.statusCode == 200) {
           final List<dynamic> jsonList = jsonDecode(response.body);
           List<LoginModel> loginList =
-              jsonList.map((json) => LoginModel.fromJson(json)).toList();
+          jsonList.map((json) => LoginModel.fromJson(json)).toList();
           return ApiResponse(data: loginList);
         } else {
           return ApiResponse(error: 'Server error occurred. Please try again.');

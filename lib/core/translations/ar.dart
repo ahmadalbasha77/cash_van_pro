@@ -166,5 +166,17 @@ Map<String, String> ar = {
   'Show price in Quotation': 'اظهار السعر في عرض السعر',
   'Login Failed': 'فشل تسجيل الدخول',
   'Invalid username or password': 'اسم المستخدم او كلمة المرور غير صحيحة',
-  'Search items...': 'بحث عن مادة...'
+  'Search items...': 'بحث عن مادة...',
+  'Transaction History': 'سجل الحركات',
+  'Previous invoices': 'الفواتير السابقة',
+  'Invoice History': 'سجل الفواتير',
+  'search': 'بحث',
+  'Customers Reports': 'تقارير العملاء',
+  'Customers account statements': 'كشف حساب العملاء',
+  'Refund Report': 'تقرير المرتجعات',
+  'This is required': 'هذا الحقل مطلوب',
+  'Account Statements': 'كشف حساب',
+
+
+
 };

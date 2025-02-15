@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../model/customers/customers_model.dart';
@@ -9,6 +10,7 @@ class CustomersController extends GetxController {
       : Get.put(CustomersController());
   final RestApi restApi = RestApi();
 
+  final TextEditingController searchController = TextEditingController();
   List<CustomersModel> customersList = [];
   List<CustomersModel> filteredCustomersList = [];
 
@@ -22,6 +24,7 @@ class CustomersController extends GetxController {
 
   void getCustomers() async {
     isLoading = true;
+    searchController.clear();
     update();
     customersList = await restApi.getCustomers();
     filteredCustomersList = customersList;
@@ -29,17 +32,16 @@ class CustomersController extends GetxController {
     update();
   }
 
-  void filterCustomers(String query) {
-    if (query.isEmpty) {
+  void filterCustomers() {
+    if (searchController.text.isEmpty) {
       filteredCustomersList = customersList;
     } else {
       filteredCustomersList = customersList
-          .where((customer) =>
-          customer.aName.toLowerCase().contains(query.toLowerCase()))
+          .where((customer) => customer.aName
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase()))
           .toList();
     }
     update();
   }
-
-
 }

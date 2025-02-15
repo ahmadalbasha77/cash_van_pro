@@ -38,14 +38,14 @@ class ItemModel {
     categoryId: json["CategoryID"] ?? 0,
     categoryName: json["CategoryName"] ?? '',
     salesTaxId: json["SalesTaxID"] ?? 0,
-    salesTaxPercentage: json["SalesTaxPercentage"]?.toDouble() ?? 0.0, // ✅ تجنب null
+    salesTaxPercentage: json["SalesTaxPercentage"]?.toDouble() ?? 0.0,
     purchaseTaxId: json["PurchaseTaxID"] ?? 0,
-    purchaseTaxPercentage: json["PurchaseTaxPercentage"]?.toDouble() ?? 0.0, // ✅ تجنب null
-    salesPriceBeforeTax: json["SalesPriceBeforeTax"]?.toDouble() ?? 0.0, // ✅ تجنب null
-    salesPriceAfterTax: json["SalesPriceAfterTax"]?.toDouble() ?? 0.0, // ✅ تجنب null
-    purchasePriceBeforeTax: json["PurchasePriceBeforeTax"]?.toInt() ?? 0, // ✅ تجنب null
-    purchasePriceAfterTax: json["PurchasePriceAfterTax"]?.toInt() ?? 0, // ✅ تجنب null
-    wholeSalesPrice: json["WholeSalesPrice"]?.toDouble() ?? 0.0, // ✅ تجنب null
+    purchaseTaxPercentage: json["PurchaseTaxPercentage"]?.toDouble() ?? 0.0,
+    salesPriceBeforeTax: json["SalesPriceBeforeTax"]?.toDouble() ?? 0.0,
+    salesPriceAfterTax: json["SalesPriceAfterTax"]?.toDouble() ?? 0.0,
+    purchasePriceBeforeTax: json["PurchasePriceBeforeTax"]?.toInt() ?? 0,
+    purchasePriceAfterTax: json["PurchasePriceAfterTax"]?.toInt() ?? 0,
+    wholeSalesPrice: json["WholeSalesPrice"]?.toDouble() ?? 0.0,
   );
 
   Map<String, dynamic> toJson() => {

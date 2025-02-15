@@ -12,13 +12,21 @@ class ProposalController extends GetxController {
   final Map<int, CartModel> _cartMap = {};
   final RestApi restApi = RestApi();
 
+  final GlobalKey<FormState> priceKey = GlobalKey<FormState>();
+  final TextEditingController newPriceController = TextEditingController();
+
   int paymentType = 0;
 
+  void changePriceSales(int itemId) {
+    if (priceKey.currentState!.validate()) {
+      _cartMap[itemId]!.priceAfterTax = double.parse(newPriceController.text);
+      newPriceController.clear();
+      Get.back();
+      update();
+    }
+  }
+
   List<CartModel> get cartList => _cartMap.values.toList();
-
-  final GlobalKey<FormState> priceKey = GlobalKey<FormState>();
-
-  final TextEditingController newPriceController = TextEditingController();
 
   void addItem(CartModel item) {
     if (_cartMap.containsKey(item.itemId)) {

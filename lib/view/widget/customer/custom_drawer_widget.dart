@@ -86,22 +86,22 @@ class CustomDrawerWidget extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: [
-                    // DrawerWidget(
-                    //   title: 'Reports',
-                    //   iconData: Icons.description_outlined,
-                    //   onTap: () {
-                    //     Get.toNamed(Routes.report);
-                    //   },
-                    // ),
-                    // Divider(color: Colors.grey[300]),
-                    // DrawerWidget(
-                    //   title: 'Transaction History',
-                    //   iconData: Icons.history,
-                    //   onTap: () {
-                    //     Get.toNamed(Routes.history);
-                    //   },
-                    // ),
-                    // Divider(color: Colors.grey[300]),
+                    DrawerWidget(
+                      title: 'Reports',
+                      iconData: Icons.description_outlined,
+                      onTap: () {
+                        Get.toNamed(Routes.report);
+                      },
+                    ),
+                    Divider(color: Colors.grey[300]),
+                    DrawerWidget(
+                      title: 'Invoice History',
+                      iconData: Icons.history,
+                      onTap: () {
+                        Get.toNamed(Routes.history);
+                      },
+                    ),
+                    Divider(color: Colors.grey[300]),
                     DrawerWidget(
                       title: 'Settings',
                       iconData: Icons.settings_outlined,

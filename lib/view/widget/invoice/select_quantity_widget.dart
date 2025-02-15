@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/invoice/select_quantity_controller.dart';
@@ -38,6 +39,9 @@ class SelectQuantityWidget extends StatelessWidget {
                 SizedBox(
                   width: 60,
                   child: TextField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
                     controller: controller.textController,
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
@@ -53,7 +57,8 @@ class SelectQuantityWidget extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

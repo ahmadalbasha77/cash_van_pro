@@ -1,6 +1,7 @@
 import 'package:cash_van_app/core/text_style.dart';
 import 'package:cash_van_app/core/validation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/invoice/sales_and_refund_controller.dart';
@@ -10,13 +11,17 @@ import '../../widget/custom_button.dart';
 
 class ChangePriceSalesRefundDialog extends StatelessWidget {
   final void Function() onConfirm;
+  final GlobalKey<FormState> keyForm;
+  final TextEditingController controller;
 
-  ChangePriceSalesRefundDialog({
+  const ChangePriceSalesRefundDialog({
     super.key,
     required this.onConfirm,
+    required this.keyForm,
+    required this.controller,
   });
 
-  final _controller = Get.find<SalesAndRefundController>();
+  // final _controller = Get.find<SalesAndRefundController>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +31,7 @@ class ChangePriceSalesRefundDialog extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20),
         child: Form(
-          key: _controller.priceKey,
+          key: keyForm,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -39,8 +44,12 @@ class ChangePriceSalesRefundDialog extends StatelessWidget {
                 height: 10,
               ),
               CustomTextFiledWidget(
-                  keyboardType: TextInputType.number,
-                  controller: _controller.newPriceController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r'^\d*[.,]?\d*$')),
+                  ],
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  controller: controller,
                   validator: (text) => Validation.isRequired(text),
                   label: 'New Price'.tr,
                   hint: 'Enter new price'.tr),

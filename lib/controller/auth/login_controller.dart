@@ -12,9 +12,9 @@ import '../../core/utils.dart';
 import '../../model/api_response.dart';
 
 class LoginController extends GetxController {
-  static LoginController get to => Get.isRegistered<LoginController>()
-      ? Get.find<LoginController>()
-      : Get.put(LoginController());
+    static LoginController get to => Get.isRegistered<LoginController>()
+        ? Get.find<LoginController>()
+        : Get.put(LoginController());
 
   final RestApi restApi = RestApi();
   final TextEditingController usernameController = TextEditingController();

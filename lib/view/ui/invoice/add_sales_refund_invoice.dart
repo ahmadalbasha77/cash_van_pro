@@ -178,8 +178,11 @@ class AddSalesRefundInvoice extends StatelessWidget {
                                         var item = _controller.salesList[index];
                                         return ItemOrderWidget(
                                           changePrice: () {
-                                            Get.dialog(ChangePriceSalesRefundDialog(
-
+                                            Get.dialog(
+                                                ChangePriceSalesRefundDialog(
+                                              controller: _controller
+                                                  .newPriceController,
+                                              keyForm: _controller.priceKey,
                                               onConfirm: () {
                                                 _controller.changePriceSales(
                                                     item.itemId);
@@ -272,7 +275,11 @@ class AddSalesRefundInvoice extends StatelessWidget {
                                       itemBuilder: (context, index) {
                                         return ItemOrderWidget(
                                             changePrice: () {
-                                              Get.dialog(ChangePriceSalesRefundDialog(
+                                              Get.dialog(
+                                                  ChangePriceSalesRefundDialog(
+                                                    controller: _controller
+                                                        .newPriceController,
+                                                    keyForm: _controller.priceKey,
                                                 onConfirm: () {
                                                   _controller.changePriceRefund(
                                                       _controller

@@ -59,9 +59,10 @@ class CustomersScreen extends StatelessWidget {
       body: Column(
         children: [
           SearchTextFiledWidget(
+            controller: controller.searchController,
             backgroundColor: AppColor.primaryColor,
             hintText: 'Search customers...',
-            onChanged: (p0) => controller.filterCustomers(p0),
+            onChanged: (p0) => controller.filterCustomers(),
           ),
           Expanded(
             child: GetBuilder<CustomersController>(

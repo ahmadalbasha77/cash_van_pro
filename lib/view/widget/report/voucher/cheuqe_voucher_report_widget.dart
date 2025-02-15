@@ -56,9 +56,9 @@ class ChequeVoucherReportWidget extends StatelessWidget {
                             'Received',
                             'Cheque Num',
                             'Bank',
-                            'Co',
-                            'First Beneficiary',
-                            'Commit Date'
+                            // 'Co',
+                            // 'First Beneficiary',
+                            // 'Commit Date'
                           ],
                           'data': _controller.formattedData
                         });
