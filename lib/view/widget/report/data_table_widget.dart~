@@ -38,21 +38,17 @@ class DataTableWidget extends StatelessWidget {
             // header: Text(title, style: AppTextStyles.bold14),
             columns: headers
                 .map(
-                  (header) =>
-                  DataColumn(
+                  (header) => DataColumn(
                     label: Text(
                       header.tr,
                       style: AppTextStyles.bold14,
                     ),
                   ),
-            )
+                )
                 .toList(),
             source: _DataSource(data, headers),
             rowsPerPage: 10,
-            columnSpacing: MediaQuery
-                .of(context)
-                .size
-                .width * 0.085,
+            columnSpacing: MediaQuery.of(context).size.width * 0.085,
           ),
         ],
       ),
@@ -76,13 +72,13 @@ class _DataSource extends DataTableSource {
         final cellValue = row[header];
         final displayValue = cellValue is bool
             ? cellValue == true
-            ? 'Yes' : 'No': cellValue != null
-            ? (cellValue
-            .toString()
-            .length > 30
-            ? '${cellValue.toString().substring(0, 27)}...'
-            : cellValue.toString())
-            : '-';
+                ? 'Yes'
+                : 'No'
+            : cellValue != null
+                ? (cellValue.toString().length > 30
+                    ? '${cellValue.toString().substring(0, 27)}...'
+                    : cellValue.toString())
+                : '-';
 
         return DataCell(
           SizedBox(

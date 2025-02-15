@@ -1,12 +1,11 @@
 import 'package:cash_van_app/controller/report/refund/refund_invoice_report_controller.dart';
-import 'package:cash_van_app/controller/report/sales/sales_invoice_report_controller.dart';
 import 'package:cash_van_app/view/widget/auth/custom_text_filed.dart';
 import 'package:cash_van_app/view/widget/report/customer_dropdown_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../widget/report/filter_report_widget.dart';
-import '../../../widget/report/sales report/invoice_report_widget.dart';
+import '../../../widget/report/refund report/refund_report_widget.dart';
 
 class InvoiceRefundReportScreen extends StatelessWidget {
   InvoiceRefundReportScreen({super.key});
@@ -45,7 +44,7 @@ class InvoiceRefundReportScreen extends StatelessWidget {
               onTap: () {
                 _controller.getSalesInvoiceReport();
               },
-              reportWidget: InvoiceReportWidget(),
+              reportWidget: RefundReportWidget(),
             ),
           ),
         ));

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/route/routes.dart';
-import '../../../ui/report/pdf_preview_screen.dart';
 import '../../custom_loading_error_widget.dart';
 
 class RefundReportWidget extends StatelessWidget {
@@ -58,7 +57,7 @@ class RefundReportWidget extends StatelessWidget {
                           .copyWith(color: Colors.white),
                       title: 'Export PDF',
                       onPressed: () {
-                        Get.toNamed(Routes.pdfPreview,arguments:{
+                        Get.toNamed(Routes.pdfPreview, arguments: {
                           'headers': const [
                             '#',
                             'Date',

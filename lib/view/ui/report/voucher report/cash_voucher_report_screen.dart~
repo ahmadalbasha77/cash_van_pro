@@ -1,22 +1,22 @@
+import 'package:cash_van_app/controller/report/voucher/cash_voucher_report_controller.dart';
 import 'package:cash_van_app/view/widget/auth/custom_text_filed.dart';
 import 'package:cash_van_app/view/widget/report/customer_dropdown_widget.dart';
+import 'package:cash_van_app/view/widget/report/voucher/cash_voucher_report_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../controller/report/voucher/cheque_voucher_report_controller.dart';
 import '../../../widget/report/filter_report_widget.dart';
-import '../../../widget/report/voucher/cheuqe_voucher_report_widget.dart';
 
-class ChequeVoucherReportScreen extends StatelessWidget {
-  ChequeVoucherReportScreen({super.key});
+class CashVoucherReportScreen extends StatelessWidget {
+  CashVoucherReportScreen({super.key});
 
-  final _controller = ChequeVoucherReportController.to;
+  final _controller = CashVoucherReportController.to;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cheque Voucher Report'.tr),
+        title: Text('Cash Voucher Report'.tr),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -42,9 +42,9 @@ class ChequeVoucherReportScreen extends StatelessWidget {
               const SizedBox(height: 24),
             ],
             onTap: () {
-              _controller.getChequeVoucherReport();
+              _controller.getCashVoucherReport();
             },
-            reportWidget: ChequeVoucherReportWidget(),
+            reportWidget: CashVoucherReportWidget(),
           ),
         ),
       ),

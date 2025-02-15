@@ -6,6 +6,7 @@ import '../../model/invoice/cart_model.dart';
 Future<pw.Document> salesInvoicePdf({
   required List<CartModel> cartList,
   required String customerName,
+  required int invoiceId,
   required String customerNumber,
   required String representativeName,
   required double totalAmount,
@@ -20,14 +21,16 @@ Future<pw.Document> salesInvoicePdf({
     }
     final buffer = StringBuffer();
     for (int i = 0; i < text.length; i += maxLength) {
-      buffer.write(text.substring(i, i + maxLength > text.length ? text.length : i + maxLength));
+      buffer.write(text.substring(
+          i, i + maxLength > text.length ? text.length : i + maxLength));
       if (i + maxLength < text.length) {
-        buffer.write('\n'); // إضافة سطر جديد عند الحاجة
+        buffer.write('\n');
       }
     }
     return buffer.toString();
   }
 
+  pw.Font arabicFont = FontManager.arabicFont;
   pdf.addPage(
     pw.Page(
       pageFormat: customPageFormat,
@@ -58,6 +61,10 @@ Future<pw.Document> salesInvoicePdf({
           pw.SizedBox(height: 10),
 
           // Date and Customer Information
+          pw.Text(
+            'Invoice Number: $invoiceId',
+            style: const pw.TextStyle(fontSize: 10),
+          ),
           pw.Row(
             mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
             children: [
@@ -83,8 +90,11 @@ Future<pw.Document> salesInvoicePdf({
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 pw.SizedBox(height: 5),
-                pw.Text('Name: $customerName',
-                    style: const pw.TextStyle(fontSize: 10)),
+                pw.Directionality(
+                  textDirection: pw.TextDirection.rtl,
+                  child: pw.Text('Name: $customerName',
+                      style: pw.TextStyle(fontSize: 10, font: arabicFont)),
+                ),
                 pw.Text('Phone: $customerNumber',
                     style: const pw.TextStyle(fontSize: 10)),
               ],
@@ -107,7 +117,6 @@ Future<pw.Document> salesInvoicePdf({
               data: cartList.map((item) {
                 return [
                   wrapText(item.itemName, 20),
-
                   item.quantity.toString(),
                   item.totalPrice.toStringAsFixed(2),
                 ];
@@ -157,9 +166,14 @@ Future<pw.Document> salesInvoicePdf({
                 //     style: pw.TextStyle(
                 //         fontSize: 12, fontWeight: pw.FontWeight.bold)),
                 pw.SizedBox(height: 5),
-                pw.Text(representativeName,
-                    style: pw.TextStyle(
-                        fontSize: 10, fontStyle: pw.FontStyle.italic)),
+                pw.Directionality(
+                  textDirection: pw.TextDirection.rtl,
+                  child: pw.Text(representativeName,
+                      style: pw.TextStyle(
+                          fontSize: 10,
+                          fontStyle: pw.FontStyle.italic,
+                          font: arabicFont)),
+                )
               ],
             ),
           ),

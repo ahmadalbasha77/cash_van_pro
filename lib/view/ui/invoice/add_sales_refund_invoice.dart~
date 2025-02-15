@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../model/customers/customers_model.dart';
-import '../../widget/invoice/change_price_dialog.dart';
 import '../../widget/invoice/change_price_sales_refund_dialog.dart';
 import '../../widget/invoice/item_order_widget.dart';
 import '../../widget/invoice/pay_widget.dart';
@@ -180,6 +179,8 @@ class AddSalesRefundInvoice extends StatelessWidget {
                                         return ItemOrderWidget(
                                           changePrice: () {
                                             Get.dialog(ChangePriceSalesRefundDialog(
+                                              controller: _controller.newPriceController,
+                                              keyForm: _controller.priceKey,
 
                                               onConfirm: () {
                                                 _controller.changePriceSales(
