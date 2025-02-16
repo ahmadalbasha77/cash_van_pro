@@ -1,3 +1,4 @@
+import 'package:cash_van_app/core/text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -42,17 +43,21 @@ class Utils {
     }
   }
 
-  static Future<bool> showAreYouSureDialog({required String title}) async {
+  static Future<bool> showAreYouSureDialog(
+      {required String title, String? message}) async {
     var result = await Get.defaultDialog(
       backgroundColor: Colors.white,
-      title: title,
+      title: title.tr,
+
       content: Text(
-        'Are you sure?'.tr,
-        style: const TextStyle(fontWeight: FontWeight.w500),
+
+        textAlign: TextAlign.center,
+        message?.tr ?? 'Are you sure?'.tr,
+        style: AppTextStyles.regular16,
       ),
       textCancel: 'Cancel'.tr,
       textConfirm: 'Confirm'.tr,
-      titleStyle: const TextStyle(fontSize: 18),
+      titleStyle: AppTextStyles.bold18,
       confirmTextColor: Colors.white,
       buttonColor: AppColor.primaryColor,
       cancelTextColor: AppColor.primaryColor,
@@ -69,9 +74,11 @@ class Utils {
       Get.back();
     }
   }
+
   static String formatDate(DateTime date) {
     return DateFormat('yyyy-MM-dd').format(date);
   }
+
   static showFlutterToast(String message) {
     Fluttertoast.showToast(
         msg: message.tr,

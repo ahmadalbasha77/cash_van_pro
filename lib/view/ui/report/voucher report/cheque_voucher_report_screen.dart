@@ -1,4 +1,3 @@
-import 'package:cash_van_app/view/widget/auth/custom_text_filed.dart';
 import 'package:cash_van_app/view/widget/report/customer_dropdown_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,12 +25,12 @@ class ChequeVoucherReportScreen extends StatelessWidget {
           toDateController: _controller.toDateController,
           widgets: [
             const SizedBox(height: 16),
-            CustomTextFiledWidget(
-                keyboardType: TextInputType.number,
-                controller: TextEditingController(),
-                label: 'Voucher Number',
-                hint: 'Enter voucher number'),
-            const SizedBox(height: 16),
+            // CustomTextFiledWidget(
+            //     keyboardType: TextInputType.number,
+            //     controller: TextEditingController(),
+            //     label: 'Voucher Number',
+            //     hint: 'Enter voucher number'),
+            // const SizedBox(height: 16),
             CustomerDropdownWidget(
               onChanged: (p0) {
                 _controller.customerId = p0!;

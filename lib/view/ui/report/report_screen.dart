@@ -1,4 +1,3 @@
-import 'package:cash_van_app/view/ui/report/customer%20report/account_statements_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -132,36 +131,36 @@ class ReportScreen extends StatelessWidget {
                     )
                   : Container()),
               const SizedBox(height: 16),
-              Obx(() => ReportWidget(
-                    active: controller.isActiveCustomers.value,
-                    title: 'Customers Reports',
-                    icon: Icons.people_rounded,
-                    onTap: controller.toggleCustomersReports,
-                  )),
-              Obx(() => controller.isActiveCustomers.value
-                  ? Column(
-                      children: [
-                        SubReportWidget(
-                          icon: Icons.insert_chart_outlined,
-                          title: 'Customers account statements',
-                          onTap: () {
-                            Get.to(() => AccountStatementsScreen());
-                          },
-                        ),
-                        // SubReportWidget(
-                        //   icon: Icons.trending_up_outlined,
-                        //   title: 'Best Seller',
-                        //   onTap: () {},
-                        // ),
-                        // SubReportWidget(
-                        //   icon: Icons.trending_down,
-                        //   title: 'Lowest Seller',
-                        //   onTap: () {},
-                        // ),
-                      ],
-                    )
-                  : const SizedBox.shrink()),
-              const SizedBox(height: 16),
+              // Obx(() => ReportWidget(
+              //       active: controller.isActiveCustomers.value,
+              //       title: 'Customers Reports',
+              //       icon: Icons.people_rounded,
+              //       onTap: controller.toggleCustomersReports,
+              //     )),
+              // Obx(() => controller.isActiveCustomers.value
+              //     ? Column(
+              //         children: [
+              //           SubReportWidget(
+              //             icon: Icons.insert_chart_outlined,
+              //             title: 'Customers account statements',
+              //             onTap: () {
+              //               Get.to(() => AccountStatementsScreen());
+              //             },
+              //           ),
+              //           // SubReportWidget(
+              //           //   icon: Icons.trending_up_outlined,
+              //           //   title: 'Best Seller',
+              //           //   onTap: () {},
+              //           // ),
+              //           // SubReportWidget(
+              //           //   icon: Icons.trending_down,
+              //           //   title: 'Lowest Seller',
+              //           //   onTap: () {},
+              //           // ),
+              //         ],
+              //       )
+              //     : const SizedBox.shrink()),
+              // const SizedBox(height: 16),
               // Obx(() => ReportWidget(
               //       active: controller.isActiveStock.value,
               //       title: 'Stock Reports',

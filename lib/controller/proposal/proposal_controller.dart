@@ -68,8 +68,8 @@ class ProposalController extends GetxController {
     String cartJson = _cartMap.values
         .map((item) => {
               "itemId": item.itemId,
-              "QTYIN": item.quantity,
-              "QTYOUT": 0,
+              "QTYIN": 0,
+              "QTYOUT": item.quantity,
               "PriceAfterTax": item.priceAfterTax,
               "TotalAfterTax": item.totalPrice,
               "DiscountAmount": 0,

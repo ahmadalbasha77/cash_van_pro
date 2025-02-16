@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/proposal/proposal_controller.dart';
+import '../../../core/utils.dart';
 import '../../../model/customers/customers_model.dart';
 import '../../widget/invoice/change_price_sales_refund_dialog.dart';
 import '../../widget/invoice/item_order_widget.dart';
@@ -59,7 +60,9 @@ class AddProposalScreen extends StatelessWidget {
                       _controller.cartList.isEmpty ? Colors.grey : null,
                   title: 'Confirm',
                   onPressed: () {
-                    _controller.addQuotation(customer: customersData);
+                    _controller.cartList.isEmpty
+                        ? Utils.showFlutterToast('Please add items'.tr)
+                        : _controller.addQuotation(customer: customersData);
                   },
                 );
               }),
@@ -106,10 +109,8 @@ class AddProposalScreen extends StatelessWidget {
                                   mySharedPreferences.showPriceInQuotation,
                               changePrice: () {
                                 Get.dialog(ChangePriceSalesRefundDialog(
-                                  controller: _controller
-                                      .newPriceController,
+                                  controller: _controller.newPriceController,
                                   keyForm: _controller.priceKey,
-
                                   onConfirm: () {
                                     _controller.changePriceSales(
                                         _controller.cartList[index].itemId);

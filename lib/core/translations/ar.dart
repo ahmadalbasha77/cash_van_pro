@@ -176,7 +176,9 @@ Map<String, String> ar = {
   'Refund Report': 'تقرير المرتجعات',
   'This is required': 'هذا الحقل مطلوب',
   'Account Statements': 'كشف حساب',
-
-
-
+  'Please add items': 'يرجى اضافة مواد',
+  'Warning': 'تنبيه',
+  'Added items will be removed. Are you sure you want to exit?':
+      'سوف يتم حذف المواد المضافة. هل انت متأكد من الخروج؟',
+  'Exit': 'خروج',
 };

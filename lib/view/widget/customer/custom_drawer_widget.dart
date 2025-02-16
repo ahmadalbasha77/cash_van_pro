@@ -93,14 +93,14 @@ class CustomDrawerWidget extends StatelessWidget {
                         Get.toNamed(Routes.report);
                       },
                     ),
-                    Divider(color: Colors.grey[300]),
-                    DrawerWidget(
-                      title: 'Invoice History',
-                      iconData: Icons.history,
-                      onTap: () {
-                        Get.toNamed(Routes.history);
-                      },
-                    ),
+                    // Divider(color: Colors.grey[300]),
+                    // DrawerWidget(
+                    //   title: 'Invoice History',
+                    //   iconData: Icons.history,
+                    //   onTap: () {
+                    //     Get.toNamed(Routes.history);
+                    //   },
+                    // ),
                     Divider(color: Colors.grey[300]),
                     DrawerWidget(
                       title: 'Settings',

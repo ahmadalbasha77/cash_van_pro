@@ -174,6 +174,11 @@ const Map<String, String> en = {
   'Customers account statements': 'Customers account statements',
   'Refund Report': 'Refund Report',
   'Please enter valid email': 'Please enter valid email',
-  'This is required':'This is required',
-  'Account Statements':'Account Statements'
+  'This is required': 'This is required',
+  'Account Statements': 'Account Statements',
+  'Please add items': 'Please add items',
+  'Warning': 'Warning',
+  'Added items will be removed. Are you sure you want to exit?':
+      'Added items will be removed. Are you sure you want to exit?',
+  'Exit':'Exit',
 };

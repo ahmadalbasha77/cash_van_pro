@@ -1,5 +1,6 @@
 import 'package:cash_van_app/core/app_color.dart';
 import 'package:cash_van_app/core/text_style.dart';
+import 'package:cash_van_app/core/utils.dart';
 import 'package:cash_van_app/model/invoice/cart_model.dart';
 import 'package:cash_van_app/view/ui/proposal/add_proposal_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,181 +26,197 @@ class ProposalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 8,
-              offset: Offset(0, -2),
-            ),
-          ],
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) return;
+
+        bool exit = await Utils.showAreYouSureDialog(
+            title: 'Warning'.tr,
+            message: 'Added items will be removed. Are you sure you want to exit?');
+        if (exit) {
+          Get.back();
+        }
+      },
+      child: Scaffold(
+        bottomNavigationBar: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 8,
+                offset: Offset(0, -2),
+              ),
+            ],
+          ),
+          child: CustomButtonWidget(
+            title: 'Save',
+            onPressed: () {
+              Get.to(() => AddProposalScreen(customersData: customersData));
+            },
+          ),
         ),
-        child: CustomButtonWidget(
-          title: 'Save',
-          onPressed: () {
-            Get.to(() => AddProposalScreen(customersData: customersData));
-          },
+        appBar: AppBar(
+          title: Text(
+            'Items'.tr,
+          ),
+          centerTitle: true,
         ),
-      ),
-      appBar: AppBar(
-        title: Text(
-          'Items'.tr,
-        ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            GetBuilder<ItemByCategoryIdProposalController>(builder: (logic) {
-              return SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.05,
-                child: GetBuilder<CategoryProposalController>(
-                    builder: (logic) => _controllerCategory.isLoading
-                        ? ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 5, // Placeholder shimmer count
-                            itemBuilder: (context, index) => Shimmer.fromColors(
-                              baseColor: Colors.grey[300]!,
-                              highlightColor: Colors.grey[100]!,
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15, vertical: 10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              GetBuilder<ItemByCategoryIdProposalController>(builder: (logic) {
+                return SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.05,
+                  child: GetBuilder<CategoryProposalController>(
+                      builder: (logic) => _controllerCategory.isLoading
+                          ? ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 5, // Placeholder shimmer count
+                              itemBuilder: (context, index) =>
+                                  Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  width: 80,
+                                  height: 20, // Adjust height as needed
                                 ),
-                                width: 80,
-                                height: 20, // Adjust height as needed
                               ),
-                            ),
-                          )
-                        : _controllerCategory.categoryList.isEmpty
-                            ? Center(
-                                child: Text('No Found Data'.tr),
-                              )
-                            : ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount:
-                                    _controllerCategory.categoryList.length,
-                                itemBuilder: (context, index) =>
-                                    GestureDetector(
-                                  onTap: () {
-                                    if (_controller.categoryId !=
-                                        _controllerCategory
-                                            .categoryList[index].id) {
-                                      _controller.categoryId =
+                            )
+                          : _controllerCategory.categoryList.isEmpty
+                              ? Center(
+                                  child: Text('No Found Data'.tr),
+                                )
+                              : ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount:
+                                      _controllerCategory.categoryList.length,
+                                  itemBuilder: (context, index) =>
+                                      GestureDetector(
+                                    onTap: () {
+                                      if (_controller.categoryId !=
                                           _controllerCategory
-                                              .categoryList[index].id;
-                                      _controller.getItem();
-                                    }
-                                  },
-                                  child: FittedBox(
-                                    child: Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 15, vertical: 10),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: _controller.categoryId ==
-                                                      _controllerCategory
-                                                          .categoryList[index]
-                                                          .id
-                                                  ? AppColor.primaryColor
-                                                  : Colors.black26,
-                                              width: 1),
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      child: Text(_controllerCategory
-                                          .categoryList[index].aName),
+                                              .categoryList[index].id) {
+                                        _controller.categoryId =
+                                            _controllerCategory
+                                                .categoryList[index].id;
+                                        _controller.getItem();
+                                      }
+                                    },
+                                    child: FittedBox(
+                                      child: Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 10),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: _controller.categoryId ==
+                                                        _controllerCategory
+                                                            .categoryList[index]
+                                                            .id
+                                                    ? AppColor.primaryColor
+                                                    : Colors.black26,
+                                                width: 1),
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Text(_controllerCategory
+                                            .categoryList[index].aName),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              )),
-              );
-            }),
-            SearchTextFiledWidget(
-              controller: _controller.searchController,
-              hintText: 'Search items...',
-              onChanged: (p0) {
-                _controller.getItem();
-              },
-            ),
-            Expanded(
-              child: GetBuilder<ItemByCategoryIdProposalController>(
-                  builder: (logic) {
-                return _controllerCategory.categoryList.isEmpty
-                    ? const SizedBox.shrink()
-                    : _controller.isLoading == true
-                        ? const Center(child: CircularProgressIndicator())
-                        : _controller.itemList.isEmpty
-                            ? const Center(
-                                child: Text('No Found Data'),
-                              )
-                            : GridView.builder(
-                                itemCount: _controller.itemList.length,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 15,
-                                  mainAxisSpacing: 15,
-                                  childAspectRatio: 0.8,
-                                ),
-                                itemBuilder: (context, index) {
-                                  final item = _controller.itemList[index];
-                                  return GetBuilder<ProposalController>(
-                                      builder: (logic) {
-                                    return ProposalItemWidget(
-                                      title: proposalController.cartList.any(
-                                              (cartItem) =>
-                                                  cartItem.itemId ==
-                                                  item.itemId)
-                                          ? 'Added'.tr
-                                          : 'Add'.tr,
-                                      background: proposalController.cartList
-                                              .any((cartItem) =>
-                                                  cartItem.itemId ==
-                                                  item.itemId)
-                                          ? Colors.grey[400]!
-                                          : AppColor.primaryColor,
-                                      name: item.itemName,
-                                      onTap: () {
-                                        !proposalController.cartList.any(
+                                )),
+                );
+              }),
+              SearchTextFiledWidget(
+                controller: _controller.searchController,
+                hintText: 'Search items...',
+                onChanged: (p0) {
+                  _controller.getItem();
+                },
+              ),
+              Expanded(
+                child: GetBuilder<ItemByCategoryIdProposalController>(
+                    builder: (logic) {
+                  return _controllerCategory.categoryList.isEmpty
+                      ? const SizedBox.shrink()
+                      : _controller.isLoading == true
+                          ? const Center(child: CircularProgressIndicator())
+                          : _controller.itemList.isEmpty
+                              ? const Center(
+                                  child: Text('No Found Data'),
+                                )
+                              : GridView.builder(
+                                  itemCount: _controller.itemList.length,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 15,
+                                    mainAxisSpacing: 15,
+                                    childAspectRatio: 0.7,
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    final item = _controller.itemList[index];
+                                    return GetBuilder<ProposalController>(
+                                        builder: (logic) {
+                                      return ProposalItemWidget(
+                                        title: proposalController.cartList.any(
                                                 (cartItem) =>
                                                     cartItem.itemId ==
                                                     item.itemId)
-                                            ? Get.dialog(
-                                                    const SelectQuantityWidget())
-                                                .then((selectedQuantity) {
-                                                proposalController.addItem(
-                                                    CartModel(
-                                                        itemId: item.itemId,
-                                                        itemName: item.itemName,
-                                                        priceAfterTax: item
-                                                            .salesPriceAfterTax,
-                                                        quantity: selectedQuantity));
-                                              })
-                                            : proposalController
-                                                .removeItem(item.itemId);
-                                      },
-                                      price: item.salesPriceAfterTax,
-                                    );
-                                  });
-                                },
-                              );
-              }),
-            ),
-          ],
+                                            ? 'Added'.tr
+                                            : 'Add'.tr,
+                                        background: proposalController.cartList
+                                                .any((cartItem) =>
+                                                    cartItem.itemId ==
+                                                    item.itemId)
+                                            ? Colors.grey[400]!
+                                            : AppColor.primaryColor,
+                                        name: item.itemName,
+                                        onTap: () {
+                                          !proposalController.cartList.any(
+                                                  (cartItem) =>
+                                                      cartItem.itemId ==
+                                                      item.itemId)
+                                              ? Get.dialog(
+                                                      const SelectQuantityWidget())
+                                                  .then((selectedQuantity) {
+                                                  proposalController.addItem(
+                                                      CartModel(
+                                                          itemId: item.itemId,
+                                                          itemName:
+                                                              item.itemName,
+                                                          priceAfterTax: item
+                                                              .salesPriceAfterTax,
+                                                          quantity:
+                                                              selectedQuantity));
+                                                })
+                                              : proposalController
+                                                  .removeItem(item.itemId);
+                                        },
+                                        price: item.salesPriceAfterTax,
+                                      );
+                                    });
+                                  },
+                                );
+                }),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -238,7 +255,7 @@ class ProposalItemWidget extends StatelessWidget {
               child: Center(
                 child: Text(
                   name,
-                  style: AppTextStyles.bold18,
+                  style: AppTextStyles.bold16,
                   textAlign: TextAlign.center,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
