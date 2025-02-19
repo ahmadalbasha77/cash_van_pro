@@ -3,13 +3,14 @@ import 'package:cash_van_app/view/widget/report/customer_dropdown_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../controller/report/customer/account_statement_report_controller.dart';
+import '../../../widget/report/customer/account_statement_widget.dart';
 import '../../../widget/report/filter_report_widget.dart';
-import '../../../widget/report/sales report/invoice_report_widget.dart';
 
 class AccountStatementsScreen extends StatelessWidget {
   AccountStatementsScreen({super.key});
 
-  final _controller = SalesInvoiceReportController.to;
+  final _controller = AccountStatementReportController.to;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +35,10 @@ class AccountStatementsScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
               ],
-              onTap: () {},
-              reportWidget: InvoiceReportWidget(),
+              onTap: () {
+                _controller.getAccountStatementReport();
+              },
+              reportWidget: AccountStatementWidget(),
             ),
           ),
         ));

@@ -90,7 +90,7 @@ Map<String, String> ar = {
   'Enter cheque number': 'أدخل رقم الشيك',
   'Bank Name': 'اسم البنك',
   'Enter bank name': 'أدخل اسم البنك',
-  'Success': 'نجاح',
+  'Success': 'تم بنجاح',
   'Customer added successfully': 'تم إضافة العميل بنجاح',
   'Failed': 'فشل',
   'An error occurred while adding the customer': 'حدث خطأ أثناء إضافة العميل',
@@ -181,4 +181,21 @@ Map<String, String> ar = {
   'Added items will be removed. Are you sure you want to exit?':
       'سوف يتم حذف المواد المضافة. هل انت متأكد من الخروج؟',
   'Exit': 'خروج',
+  'Add other items': 'اضافة مواد اخرى',
+  'phone number already exist': 'رقم الهاتف موجود بالفعل',
+  'Please enter a valid phone number': 'ادخل رقم هاتف صحيح',
+  'Quotations History': 'سجل العروض',
+  'Your changes will not be saved.. Are you sure you want to exit?':
+      'لن يتم حفظ التغييرات الخاصة بك.. هل أنت متأكد أنك تريد الخروج؟',
+  'Edit': 'تعديل',
+  'Save Edit': 'حفظ التعديل',
+  'Edit Quotation': 'تعديل عرض السعر',
+  'Quotation edited successfully': 'تم تعديل العرض بنجاح',
+  'type': 'النوع',
+  'note': 'الملاحظة',
+  'debit': 'مدين',
+  'credit': 'دائن',
+  'Opening Balance:': 'الرصيد الافتتاحي :',
+  'Account Statement Report :': 'تقرير كشف الحساب :',
+  'Quotation History': 'سجل العروض'
 };

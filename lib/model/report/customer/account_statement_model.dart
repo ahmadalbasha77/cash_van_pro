@@ -1,0 +1,122 @@
+class AccountStatementModel {
+  double openingBalance;
+  List<AccountStatementData> data;
+
+  AccountStatementModel({
+    required this.openingBalance,
+    required this.data,
+  });
+
+  factory AccountStatementModel.fromJson(Map<String, dynamic> json) =>
+      AccountStatementModel(
+        openingBalance: json["OpeningBalance"],
+        data: List<AccountStatementData>.from(
+            json["Data"].map((x) => AccountStatementData.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "OpeningBalance": openingBalance,
+        "Data": List<dynamic>.from(data.map((x) => x.toJson())),
+      };
+}
+
+class AccountStatementData {
+  int voucherId;
+  int voucherNumber;
+  DateTime voucherDate;
+  String voucherTypeAName;
+  String voucherTypeEName;
+  int voucherTypeId;
+  String notes;
+  double debit;
+  double credit;
+  String branchName;
+  String? transactionOwnerName;
+  DateTime dueDate;
+  String otherAccount;
+  int transactionNumber;
+  int transactionId;
+  int cashvoucherid;
+  int incomingVoucherId;
+  int outgoingVoucherId;
+  int hrTransactionId;
+  int? contractId;
+  int chequesId;
+  double periodBalance;
+
+  AccountStatementData({
+    required this.voucherId,
+    required this.voucherNumber,
+    required this.voucherDate,
+    required this.voucherTypeAName,
+    required this.voucherTypeEName,
+    required this.voucherTypeId,
+    required this.notes,
+    required this.debit,
+    required this.credit,
+    required this.branchName,
+    required this.transactionOwnerName,
+    required this.dueDate,
+    required this.otherAccount,
+    required this.transactionNumber,
+    required this.transactionId,
+    required this.cashvoucherid,
+    required this.incomingVoucherId,
+    required this.outgoingVoucherId,
+    required this.hrTransactionId,
+    required this.contractId,
+    required this.chequesId,
+    required this.periodBalance,
+  });
+
+  factory AccountStatementData.fromJson(Map<String, dynamic> json) =>
+      AccountStatementData(
+        voucherId: json["VoucherID"],
+        voucherNumber: json["VoucherNumber"],
+        voucherDate: DateTime.parse(json["VoucherDate"]),
+        voucherTypeAName: json["VoucherTypeAName"],
+        voucherTypeEName: json["VoucherTypeEName"],
+        voucherTypeId: json["VoucherTypeID"],
+        notes: json["Notes"],
+        debit: json["Debit"]?.toDouble(),
+        credit: json["Credit"]?.toDouble(),
+        branchName: json["BranchName"],
+        transactionOwnerName: json["TransactionOwnerName"],
+        dueDate: DateTime.parse(json["DueDate"]),
+        otherAccount: json["OtherAccount"],
+        transactionNumber: json["TransactionNumber"],
+        transactionId: json["TransactionID"],
+        cashvoucherid: json["Cashvoucherid"],
+        incomingVoucherId: json["IncomingVoucherID"],
+        outgoingVoucherId: json["OutgoingVoucherID"],
+        hrTransactionId: json["HrTransactionID"],
+        contractId: json["contractID"],
+        chequesId: json["ChequesID"],
+        periodBalance: json["PeriodBalance"]?.toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "VoucherID": voucherId,
+        "VoucherNumber": voucherNumber,
+        "VoucherDate": voucherDate.toIso8601String(),
+        "VoucherTypeAName": voucherTypeAName,
+        "VoucherTypeEName": voucherTypeEName,
+        "VoucherTypeID": voucherTypeId,
+        "Notes": notes,
+        "Debit": debit,
+        "Credit": credit,
+        "BranchName": branchName,
+        "TransactionOwnerName": transactionOwnerName,
+        "DueDate": dueDate.toIso8601String(),
+        "OtherAccount": otherAccount,
+        "TransactionNumber": transactionNumber,
+        "TransactionID": transactionId,
+        "Cashvoucherid": cashvoucherid,
+        "IncomingVoucherID": incomingVoucherId,
+        "OutgoingVoucherID": outgoingVoucherId,
+        "HrTransactionID": hrTransactionId,
+        "contractID": contractId,
+        "ChequesID": chequesId,
+        "PeriodBalance": periodBalance,
+      };
+}

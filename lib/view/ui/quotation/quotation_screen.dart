@@ -2,27 +2,27 @@ import 'package:cash_van_app/core/app_color.dart';
 import 'package:cash_van_app/core/text_style.dart';
 import 'package:cash_van_app/core/utils.dart';
 import 'package:cash_van_app/model/invoice/cart_model.dart';
-import 'package:cash_van_app/view/ui/proposal/add_proposal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../../controller/proposal/category_proposal_controller.dart';
-import '../../../controller/proposal/item_by_categoryid_proposal_controller.dart';
-import '../../../controller/proposal/proposal_controller.dart';
+import '../../../controller/quotation/category_quotation_controller.dart';
+import '../../../controller/quotation/item_by_category_id_quotation_controller.dart';
+import '../../../controller/quotation/quotation_controller.dart';
 import '../../../model/customers/customers_model.dart';
 import '../../widget/custom_button.dart';
 import '../../widget/invoice/select_quantity_widget.dart';
 import '../../widget/search_text_filed_widget.dart';
+import 'add_quotation_screen.dart';
 
-class ProposalScreen extends StatelessWidget {
+class QuotationScreen extends StatelessWidget {
   final CustomersModel customersData;
 
-  ProposalScreen({super.key, required this.customersData});
+  QuotationScreen({super.key, required this.customersData});
 
-  final _controller = ItemByCategoryIdProposalController.to;
-  final _controllerCategory = CategoryProposalController.to;
-  final proposalController = Get.put(ProposalController());
+  final _controller = ItemByCategoryIdQuotationController.to;
+  final _controllerCategory = CategoryQuotationController.to;
+  final proposalController = Get.put(QuotationController());
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,8 @@ class ProposalScreen extends StatelessWidget {
 
         bool exit = await Utils.showAreYouSureDialog(
             title: 'Warning'.tr,
-            message: 'Added items will be removed. Are you sure you want to exit?');
+            message:
+                'Added items will be removed. Are you sure you want to exit?');
         if (exit) {
           Get.back();
         }
@@ -54,7 +55,7 @@ class ProposalScreen extends StatelessWidget {
           child: CustomButtonWidget(
             title: 'Save',
             onPressed: () {
-              Get.to(() => AddProposalScreen(customersData: customersData));
+              Get.to(() => AddQuotationScreen(customersData: customersData));
             },
           ),
         ),
@@ -71,10 +72,10 @@ class ProposalScreen extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              GetBuilder<ItemByCategoryIdProposalController>(builder: (logic) {
+              GetBuilder<ItemByCategoryIdQuotationController>(builder: (logic) {
                 return SizedBox(
                   height: MediaQuery.sizeOf(context).height * 0.05,
-                  child: GetBuilder<CategoryProposalController>(
+                  child: GetBuilder<CategoryQuotationController>(
                       builder: (logic) => _controllerCategory.isLoading
                           ? ListView.builder(
                               scrollDirection: Axis.horizontal,
@@ -150,7 +151,7 @@ class ProposalScreen extends StatelessWidget {
                 },
               ),
               Expanded(
-                child: GetBuilder<ItemByCategoryIdProposalController>(
+                child: GetBuilder<ItemByCategoryIdQuotationController>(
                     builder: (logic) {
                   return _controllerCategory.categoryList.isEmpty
                       ? const SizedBox.shrink()
@@ -171,7 +172,7 @@ class ProposalScreen extends StatelessWidget {
                                   ),
                                   itemBuilder: (context, index) {
                                     final item = _controller.itemList[index];
-                                    return GetBuilder<ProposalController>(
+                                    return GetBuilder<QuotationController>(
                                         builder: (logic) {
                                       return ProposalItemWidget(
                                         title: proposalController.cartList.any(
@@ -265,7 +266,7 @@ class ProposalItemWidget extends StatelessWidget {
             const SizedBox(height: 10),
             Text('$price JOD', style: AppTextStyles.bold16),
             const SizedBox(height: 15),
-            GetBuilder<ProposalController>(builder: (c) {
+            GetBuilder<QuotationController>(builder: (c) {
               return CustomButtonWidget(
                 backgroundColor: background,
                 vertical: 10,

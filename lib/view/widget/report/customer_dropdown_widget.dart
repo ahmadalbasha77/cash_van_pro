@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 import '../../../controller/customers/customers_controller.dart';
 
@@ -19,24 +20,41 @@ class _CustomerDropdownWidgetState extends State<CustomerDropdownWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CustomersController>(builder: (logic) {
-      return DropdownButtonFormField<String>(
-        decoration: InputDecoration(
+    return DropdownSearch<String>(
+      asyncItems: (String filter) async {
+        return controller.customersList
+            .where((client) =>
+                client.aName.toLowerCase().contains(filter.toLowerCase()))
+            .map((client) => client.aName)
+            .toList();
+      },
+      selectedItem: selectedClient,
+      dropdownDecoratorProps: DropDownDecoratorProps(
+        dropdownSearchDecoration: InputDecoration(
           labelText: 'Customer Name'.tr,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        value: selectedClient,
-        items: controller.customersList
-            .map((client) => DropdownMenuItem(
-                value: client.id.toString(), child: Text(client.aName)))
-            .toList(),
-        onChanged: (value) {
-          selectedClient = value;
-          widget.onChanged(value);
-        },
-      );
-    });
+      ),
+      popupProps: PopupProps.menu(
+        showSearchBox: true,
+        searchFieldProps: TextFieldProps(
+          decoration: InputDecoration(
+            labelText: 'Search Customer'.tr,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
+      ),
+      onChanged: (value) {
+        selectedClient = controller.customersList
+            .firstWhereOrNull((client) => client.aName == value)
+            ?.id
+            .toString();
+        widget.onChanged(selectedClient);
+      },
+    );
   }
 }

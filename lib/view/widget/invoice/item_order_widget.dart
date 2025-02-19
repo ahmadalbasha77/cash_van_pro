@@ -31,18 +31,18 @@ class ItemOrderWidget extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              flex: 4,
-              child: Text(cartModel.itemName, style: AppTextStyles.bold16),
+              flex: 200,
+              child: Text(cartModel.itemName, style: AppTextStyles.bold12),
             ),
             const Spacer(),
             IconButton(
               onPressed: increaseQuantity,
-              icon: const Icon(Icons.add, size: 25),
+              icon: const Icon(Icons.add, size: 20),
             ),
-            Text('${cartModel.quantity}', style: AppTextStyles.bold18),
+            Text('${cartModel.quantity}', style: AppTextStyles.bold14),
             IconButton(
               onPressed: decreaseQuantity,
-              icon: const Icon(Icons.remove, size: 25),
+              icon: const Icon(Icons.remove, size: 20),
             ),
             const Spacer(),
             if (showPrice == true) ...[
@@ -52,14 +52,14 @@ class ItemOrderWidget extends StatelessWidget {
                       padding: WidgetStatePropertyAll(EdgeInsets.zero)),
                   onPressed: changePrice,
                   child: Text(cartModel.priceAfterTax.toStringAsFixed(2),
-                      style: AppTextStyles.bold16),
+                      style: AppTextStyles.bold14),
                 );
               }),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.07,
               ),
               Text(cartModel.totalPrice.toStringAsFixed(2),
-                  style: AppTextStyles.bold16),
+                  style: AppTextStyles.bold14),
             ]
           ],
         ),

@@ -1,10 +1,10 @@
-import 'package:cash_van_app/view/ui/proposal/proposal_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../core/route/routes.dart';
 import '../../../core/text_style.dart';
 import '../../../model/customers/customers_model.dart';
+import '../../ui/quotation history/customer_quotation_history_screen.dart';
 
 class InvoiceDialog extends StatelessWidget {
   final CustomersModel customersModel;
@@ -43,9 +43,10 @@ class InvoiceDialog extends StatelessWidget {
               ),
               onTap: () {
                 Get.off(
-                  () => ProposalScreen(
-                    customersData: customersModel,
+                  () => CustomerQuotationHistoryScreen(
+                    customer: customersModel,
                   ),
+                  arguments: {'id': customersModel.id.toString()},
                 );
               },
             ),

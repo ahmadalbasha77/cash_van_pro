@@ -8,6 +8,7 @@ import '../../../core/my_shared_preferences.dart';
 import '../../../core/route/routes.dart';
 import '../../../core/text_style.dart';
 import '../../../core/utils.dart';
+import '../../ui/quotation history/quotation_history_screen.dart';
 import 'drawer_widget.dart';
 
 class CustomDrawerWidget extends StatelessWidget {
@@ -101,6 +102,15 @@ class CustomDrawerWidget extends StatelessWidget {
                     //     Get.toNamed(Routes.history);
                     //   },
                     // ),
+                    Divider(color: Colors.grey[300]),
+                    DrawerWidget(
+                      title: 'Quotations History',
+                      iconData: Icons.request_page_outlined,
+                      onTap: () {
+                        Get.to(() => QuotationHistoryScreen(),
+                            arguments: {'id': '0'});
+                      },
+                    ),
                     Divider(color: Colors.grey[300]),
                     DrawerWidget(
                       title: 'Settings',

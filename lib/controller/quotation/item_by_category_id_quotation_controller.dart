@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 
 import '../../network/rest_api.dart';
 
-class ItemByCategoryIdProposalController extends GetxController {
-  static ItemByCategoryIdProposalController get to =>
-      Get.isRegistered<ItemByCategoryIdProposalController>()
-          ? Get.find<ItemByCategoryIdProposalController>()
-          : Get.put(ItemByCategoryIdProposalController());
+class ItemByCategoryIdQuotationController extends GetxController {
+  static ItemByCategoryIdQuotationController get to =>
+      Get.isRegistered<ItemByCategoryIdQuotationController>()
+          ? Get.find<ItemByCategoryIdQuotationController>()
+          : Get.put(ItemByCategoryIdQuotationController());
 
   List<ItemModel> itemList = [];
   bool isLoading = false;

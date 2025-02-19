@@ -72,6 +72,7 @@ class AddInvoiceScreen extends StatelessWidget {
               Expanded(
                 child: GetBuilder<CartController>(builder: (logic) {
                   return CustomButtonWidget(
+
                     backgroundColor:
                         _controller.cartList.isEmpty ? Colors.grey : null,
                     title: 'Save',
@@ -91,6 +92,7 @@ class AddInvoiceScreen extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton.extended(
           backgroundColor: AppColor.primaryColor,
+
           icon: const Icon(
             Icons.add,
             color: Colors.white,

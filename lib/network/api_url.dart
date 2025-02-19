@@ -1,7 +1,7 @@
 import '../core/my_shared_preferences.dart';
 
 class ApiUrl {
-  // String get ip => '91.106.107.26:801';
+  // String get ip => '192.168.1.30:80';
   String get ip => mySharedPreferences.ip;
 
   // String baseUrl = "http://$ip";
@@ -22,7 +22,11 @@ class ApiUrl {
   static String addChequesVoucher = "/api/Cheques/Save";
   static String getBank = "/api/Bank/SelectAllBank";
 
-  static String addQuotation = "/api/Transaction/QuotationTransaction";
+  static String addEditQuotation = "/api/Transaction/QuotationTransaction";
+  static String getQuotation = "/api/Transaction/SelectAllQuotationTransaction";
+  static String getQuotationInfo =
+      "/api/Transaction/SelectAllQuotationTransactionById";
+
   static String addSalesInvoice = "/api/Transaction/SalesTransaction";
   static String addRefundInvoice = "/api/Transaction/RefundTransaction";
   static String addSalesAndRefund =
@@ -33,4 +37,6 @@ class ApiUrl {
 
   static String cashVoucherReport = "/api/Reports/CashCollectingReport";
   static String chequeVoucherReport = "/api/Reports/ChequesCollectingReport";
+
+  static String accountStatementReport = "/api/Reports/SelectAccountStatment";
 }

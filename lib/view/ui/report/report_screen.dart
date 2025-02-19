@@ -5,6 +5,7 @@ import '../../../controller/report/report_controller.dart';
 import '../../../core/route/routes.dart';
 import '../../widget/report/report_widget.dart';
 import '../../widget/report/sub_report_widget.dart';
+import 'customer report/account_statements_screen.dart';
 
 class ReportScreen extends StatelessWidget {
   ReportScreen({super.key});
@@ -131,22 +132,22 @@ class ReportScreen extends StatelessWidget {
                     )
                   : Container()),
               const SizedBox(height: 16),
-              // Obx(() => ReportWidget(
-              //       active: controller.isActiveCustomers.value,
-              //       title: 'Customers Reports',
-              //       icon: Icons.people_rounded,
-              //       onTap: controller.toggleCustomersReports,
-              //     )),
-              // Obx(() => controller.isActiveCustomers.value
-              //     ? Column(
-              //         children: [
-              //           SubReportWidget(
-              //             icon: Icons.insert_chart_outlined,
-              //             title: 'Customers account statements',
-              //             onTap: () {
-              //               Get.to(() => AccountStatementsScreen());
-              //             },
-              //           ),
+              Obx(() => ReportWidget(
+                    active: controller.isActiveCustomers.value,
+                    title: 'Customers Reports',
+                    icon: Icons.people_rounded,
+                    onTap: controller.toggleCustomersReports,
+                  )),
+              Obx(() => controller.isActiveCustomers.value
+                  ? Column(
+                      children: [
+                        SubReportWidget(
+                          icon: Icons.insert_chart_outlined,
+                          title: 'Customers account statements',
+                          onTap: () {
+                            Get.to(() => AccountStatementsScreen());
+                          },
+                        ),
               //           // SubReportWidget(
               //           //   icon: Icons.trending_up_outlined,
               //           //   title: 'Best Seller',
@@ -157,9 +158,9 @@ class ReportScreen extends StatelessWidget {
               //           //   title: 'Lowest Seller',
               //           //   onTap: () {},
               //           // ),
-              //         ],
-              //       )
-              //     : const SizedBox.shrink()),
+                      ],
+                    )
+                  : const SizedBox.shrink()),
               // const SizedBox(height: 16),
               // Obx(() => ReportWidget(
               //       active: controller.isActiveStock.value,

@@ -77,7 +77,7 @@ class FilterReportWidget extends StatelessWidget {
                 color: Colors.white,
               ),
               label: Text(
-                'Show'.tr,
+                'search'.tr,
                 style: const TextStyle(color: Colors.white),
               ),
             ),

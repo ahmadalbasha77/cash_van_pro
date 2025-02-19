@@ -180,5 +180,22 @@ const Map<String, String> en = {
   'Warning': 'Warning',
   'Added items will be removed. Are you sure you want to exit?':
       'Added items will be removed. Are you sure you want to exit?',
-  'Exit':'Exit',
+  'Exit': 'Exit',
+  'Add other items': 'Add other items',
+  'phone number already exist': 'phone number already exist',
+  'Please enter a valid phone number': 'Please enter a valid phone number',
+  'Quotations History': 'Quotations History',
+  'Your changes will not be saved.. Are you sure you want to exit?':
+      'Your changes will not be saved.. Are you sure you want to exit?',
+  'Edit': 'Edit',
+  'Save Edit': 'Save Edit',
+  'Edit Quotation': 'Edit Quotation',
+  'Quotation edited successfully': 'Quotation edited successfully',
+  'type': 'type',
+  'note': 'note',
+  'debit': 'debit',
+  'credit': 'credit',
+  'Opening Balance:': 'Opening Balance:',
+  'Account Statement Report :':'Account Statement Report :',
+  'Quotation History':'Quotation History',
 };
