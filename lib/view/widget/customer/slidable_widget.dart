@@ -43,6 +43,7 @@ class SlidableWidget extends StatelessWidget {
               spacing: 15,
               // flex: 2,
               onPressed: (context) async {
+
                 String text = '';
                 String phoneCustomer = customersModel.telephone1;
                 String androidUrl =
@@ -72,6 +73,7 @@ class SlidableWidget extends StatelessWidget {
                   await launchUrl(Uri.parse(webUrl),
                       mode: LaunchMode.externalApplication);
                 }
+
               },
 
               foregroundColor: Colors.black,

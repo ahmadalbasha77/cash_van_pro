@@ -80,6 +80,18 @@ class ChequeVoucherScreen extends StatelessWidget {
                       label: 'enter cheque number'),
                   const SizedBox(height: 16),
                   Text(
+                    'Note (optional)'.tr,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  CustomTextFiledWidget(
+                      // validator: (text) => Validation.isRequired(text),
+                      // keyboardType: TextInputType.number,
+                      controller: _controller.note,
+                      label: 'Enter Note'),
+                  const SizedBox(height: 16),
+                  Text(
                     'Bank Name'.tr,
                     style: AppTextStyles.bold16,
                   ),

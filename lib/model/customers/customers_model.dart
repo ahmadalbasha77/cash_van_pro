@@ -1,10 +1,10 @@
 class CustomersModel {
-  int id;
-  String aName;
-  String telephone1;
-  double customerBalance;
+  final int id;
+  final String aName;
+  final String telephone1;
+  final double customerBalance;
 
-  CustomersModel({
+  const CustomersModel({
     required this.id,
     required this.aName,
     required this.telephone1,
@@ -24,4 +24,5 @@ class CustomersModel {
         "Telephone1": telephone1,
         "CustomerBalance": customerBalance,
       };
+
 }

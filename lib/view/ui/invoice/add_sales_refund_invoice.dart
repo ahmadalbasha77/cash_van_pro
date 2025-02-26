@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 import '../../../core/utils.dart';
 import '../../../model/customers/customers_model.dart';
+import '../../widget/auth/custom_text_filed.dart';
 import '../../widget/invoice/change_price_sales_refund_dialog.dart';
 import '../../widget/invoice/item_order_widget.dart';
 import '../../widget/invoice/pay_widget.dart';
@@ -127,15 +128,15 @@ class AddSalesRefundInvoice extends StatelessWidget {
               ),
               const SizedBox(height: 15),
               const Divider(),
-              // const SizedBox(height: 15),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              //   child: CustomTextFiledWidget(
-              //       radius: 20,
-              //       controller: TextEditingController(),
-              //       hint: 'Enter note here',
-              //       label: 'add note (optional)'.tr),
-              // ),
+              const SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: CustomTextFiledWidget(
+                    radius: 20,
+                    controller: _controller.noteController,
+                    hint: 'Enter Note',
+                    label: 'Add Note (optional)'),
+              ),
               const SizedBox(height: 15),
               Expanded(
                 child: TabBarView(

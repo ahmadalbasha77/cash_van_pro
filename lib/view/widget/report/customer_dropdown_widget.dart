@@ -4,22 +4,17 @@ import 'package:dropdown_search/dropdown_search.dart';
 
 import '../../../controller/customers/customers_controller.dart';
 
-class CustomerDropdownWidget extends StatefulWidget {
+class CustomerDropdownWidget extends StatelessWidget {
   final Function(String?) onChanged;
 
   const CustomerDropdownWidget({super.key, required this.onChanged});
 
   @override
-  State<CustomerDropdownWidget> createState() => _CustomerDropdownWidgetState();
-}
-
-class _CustomerDropdownWidgetState extends State<CustomerDropdownWidget> {
-  final controller = CustomersController.to;
-
-  String? selectedClient;
-
-  @override
   Widget build(BuildContext context) {
+    String? selectedClient;
+
+    final controller = Get.find<CustomersController>();
+
     return DropdownSearch<String>(
       asyncItems: (String filter) async {
         return controller.customersList
@@ -53,7 +48,7 @@ class _CustomerDropdownWidgetState extends State<CustomerDropdownWidget> {
             .firstWhereOrNull((client) => client.aName == value)
             ?.id
             .toString();
-        widget.onChanged(selectedClient);
+        onChanged(selectedClient);
       },
     );
   }

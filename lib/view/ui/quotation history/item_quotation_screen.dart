@@ -1,6 +1,5 @@
 import 'package:cash_van_app/core/app_color.dart';
 import 'package:cash_van_app/core/text_style.dart';
-import 'package:cash_van_app/core/utils.dart';
 import 'package:cash_van_app/model/invoice/cart_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

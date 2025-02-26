@@ -197,5 +197,9 @@ Map<String, String> ar = {
   'credit': 'دائن',
   'Opening Balance:': 'الرصيد الافتتاحي :',
   'Account Statement Report :': 'تقرير كشف الحساب :',
-  'Quotation History': 'سجل العروض'
+  'Quotation History': 'سجل العروض',
+  'Note (optional)': 'ملاحظة (اختياري)',
+  'Add Note (optional)': 'اضافة ملاحظة (اختياري)',
+  'Enter Note': 'ادخل الملاحظة',
+  'An error occurred while adding the invoice':'حدث خطأ أثناء إضافة الفاتورة',
 };

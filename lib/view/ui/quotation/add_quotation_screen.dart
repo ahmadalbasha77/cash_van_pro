@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import '../../../controller/quotation/quotation_controller.dart';
 import '../../../core/utils.dart';
 import '../../../model/customers/customers_model.dart';
+import '../../widget/auth/custom_text_filed.dart';
 import '../../widget/invoice/change_price_sales_refund_dialog.dart';
 import '../../widget/invoice/item_order_widget.dart';
 
@@ -102,6 +103,14 @@ class AddQuotationScreen extends StatelessWidget {
               height: 10,
             ),
             const Divider(),
+            const SizedBox(
+              height: 10,
+            ),
+            CustomTextFiledWidget(
+                radius: 20,
+                controller: _controller.noteController,
+                hint: 'Enter Note',
+                label: 'Add Note (optional)'),
             const SizedBox(
               height: 10,
             ),

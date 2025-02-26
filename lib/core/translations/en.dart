@@ -198,4 +198,8 @@ const Map<String, String> en = {
   'Opening Balance:': 'Opening Balance:',
   'Account Statement Report :':'Account Statement Report :',
   'Quotation History':'Quotation History',
+  'Note (optional)':'Note (optional)',
+  'Add Note (optional)':'Add Note (optional)',
+  'Enter Note':'Enter Note',
+  'An error occurred while adding the invoice':'An error occurred while adding the invoice'
 };

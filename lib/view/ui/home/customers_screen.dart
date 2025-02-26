@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../core/app_color.dart';
 import '../../../core/route/routes.dart';
 import '../../../core/utils.dart';
@@ -31,7 +32,6 @@ class CustomersScreen extends StatelessWidget {
         );
         if (exit) {
           SystemNavigator.pop();
-
         }
       },
       child: Scaffold(
@@ -81,8 +81,23 @@ class CustomersScreen extends StatelessWidget {
             ),
             Expanded(
               child: GetBuilder<CustomersController>(
-                builder: (logic) => controller.isLoading == true
-                    ? const Center(child: CircularProgressIndicator())
+                  assignId: true,
+                  builder: (logic) {
+                return controller.isLoading == true
+                    ? Skeletonizer(
+                        child: ListView.builder(
+                          padding: const EdgeInsets.all(16),
+                          itemCount: 5,
+                          itemBuilder: (context, index) {
+                            return  const Padding(
+                              padding:
+                                  EdgeInsets.symmetric(vertical: 8.0),
+                              child: CustomersWidget(
+                                  customer: CustomersController.customers),
+                            );
+                          },
+                        ),
+                      )
                     : controller.filteredCustomersList.isEmpty
                         ? Center(
                             child: Text(
@@ -113,8 +128,8 @@ class CustomersScreen extends StatelessWidget {
                                     ));
                               },
                             ),
-                          ),
-              ),
+                          );
+              }),
             ),
           ],
         ),

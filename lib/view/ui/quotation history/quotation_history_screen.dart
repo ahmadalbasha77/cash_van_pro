@@ -1,6 +1,7 @@
 import 'package:cash_van_app/core/text_style.dart';
 import 'package:cash_van_app/core/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/quotation/quotation_history_controller.dart';
@@ -31,8 +32,11 @@ class QuotationHistoryScreen extends StatelessWidget {
         widgets: [
           const SizedBox(height: 16),
           CustomTextFiledWidget(
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
               keyboardType: TextInputType.number,
-              controller: TextEditingController(),
+              controller: _controller.invoiceNumberController,
               label: 'Invoice Number',
               hint: 'enter invoice number'),
           const SizedBox(height: 16),
@@ -118,7 +122,7 @@ class QuotationHistoryWidget extends StatelessWidget {
                 Icon(Icons.receipt, color: Colors.grey[700], size: 18),
                 const SizedBox(width: 5),
                 Text(
-                  "# ${item.id}",
+                  "# ${item.tranactionNo}",
                   style: AppTextStyles.regular14,
                 ),
               ],
@@ -149,11 +153,12 @@ class QuotationHistoryWidget extends StatelessWidget {
                     arguments: {
                       'id': item.id,
                       'date': '${item.invoiceDate}',
+                      'note': item.notes,
                     },
                   );
                 },
                 icon: const Icon(Icons.edit, size: 20),
-                label:  Text("Edit".tr),
+                label: Text("Edit".tr),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),

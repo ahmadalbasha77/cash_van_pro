@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 import '../../../core/utils.dart';
 import '../../../model/customers/customers_model.dart';
+import '../../widget/auth/custom_text_filed.dart';
 import '../../widget/invoice/change_price_dialog.dart';
 import '../../widget/invoice/item_order_widget.dart';
 import '../../widget/invoice/pay_widget.dart';
@@ -72,7 +73,6 @@ class AddInvoiceScreen extends StatelessWidget {
               Expanded(
                 child: GetBuilder<CartController>(builder: (logic) {
                   return CustomButtonWidget(
-
                     backgroundColor:
                         _controller.cartList.isEmpty ? Colors.grey : null,
                     title: 'Save',
@@ -92,7 +92,6 @@ class AddInvoiceScreen extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton.extended(
           backgroundColor: AppColor.primaryColor,
-
           icon: const Icon(
             Icons.add,
             color: Colors.white,
@@ -131,12 +130,12 @@ class AddInvoiceScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               const Divider(),
-              // const SizedBox(height: 15),
-              // CustomTextFiledWidget(
-              //     radius: 20,
-              //     controller: TextEditingController(),
-              //     hint: 'Enter note here',
-              //     label: 'add note (optional)'.tr),
+              const SizedBox(height: 15),
+              CustomTextFiledWidget(
+                  radius: 20,
+                  controller: _controller.noteController,
+                  hint: 'Enter Note',
+                  label: 'Add Note (optional)'),
               const SizedBox(height: 15),
               Text('${'Items'.tr} :'.tr, style: AppTextStyles.bold16),
               const SizedBox(height: 10),

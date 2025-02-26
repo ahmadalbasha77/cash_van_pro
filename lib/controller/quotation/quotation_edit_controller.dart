@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../../core/my_shared_preferences.dart';
 import '../../core/utils.dart';
-import '../../model/customers/customers_model.dart';
 import '../../model/invoice/cart_model.dart';
 import '../../model/quotation/quotation_info_model.dart';
 import '../../network/rest_api.dart';
@@ -22,6 +21,8 @@ class QuotationEditController extends GetxController {
 
   final GlobalKey<FormState> priceKey = GlobalKey<FormState>();
   final TextEditingController newPriceController = TextEditingController();
+  final TextEditingController noteController =
+      TextEditingController(text: Get.arguments['note']);
 
   bool isLoading = false;
   int? quotationId;
@@ -126,6 +127,7 @@ class QuotationEditController extends GetxController {
       "UserID": '${mySharedPreferences.getUserData()!.id}',
       "NumberCar": "",
       "TranactionType": '33',
+      "Notes": noteController.text.isEmpty ? "" : noteController.text,
       "BranchID": '${mySharedPreferences.getUserData()!.branchId}',
       "StoreID": '${mySharedPreferences.getUserData()!.storeId}',
       "SalesJson": cartJson,

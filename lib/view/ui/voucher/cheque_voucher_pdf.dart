@@ -8,6 +8,7 @@ Future<pw.Document> chequeVoucherPdf({
   required double chequeAmount,
   required String chequeNumber,
   required String bankName,
+  required String note,
   // required String customerName,
   required String date,
   required bool isFirstBeneficiary,
@@ -57,7 +58,13 @@ Future<pw.Document> chequeVoucherPdf({
                   style: pw.TextStyle(fontSize: 12, font: arabicFont),
                 ),
                 pw.SizedBox(height: 10),
-
+                pw.SizedBox(height: 10),
+                if (note.isNotEmpty)
+                  pw.Text(
+                    'ملاحظات: $note',
+                    style: pw.TextStyle(fontSize: 12, font: arabicFont),
+                  ),
+                pw.SizedBox(height: 5),
                 // Customer and Beneficiary Details
                 pw.Container(
                   padding: const pw.EdgeInsets.all(8),

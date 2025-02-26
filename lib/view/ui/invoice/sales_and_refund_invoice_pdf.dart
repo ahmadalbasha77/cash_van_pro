@@ -10,6 +10,7 @@ Future<pw.Document> salesRefundInvoicePdf({
   required int invoiceSalesId,
   required int invoiceRefundId,
   required String customerName,
+  required String note,
   required String customerNumber,
   required String representativeName,
   required double totalAmount,
@@ -80,7 +81,16 @@ Future<pw.Document> salesRefundInvoicePdf({
               ),
             ],
           ),
-
+          pw.Directionality(
+            textDirection: pw.TextDirection.rtl,
+            child: pw.Text(
+              'Note : $note',
+              style: pw.TextStyle(
+                fontSize: 10,
+                font: FontManager.arabicFont,
+              ),
+            ),
+          ),
           pw.SizedBox(height: 10),
           pw.Container(
             padding: const pw.EdgeInsets.all(8),

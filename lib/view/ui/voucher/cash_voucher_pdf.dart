@@ -7,6 +7,7 @@ Future<pw.Document> cashVoucherPdf({
   required String recipientName,
   required double amount,
   required String customerName,
+  required String note,
 }) async {
   final pdf = pw.Document();
   const customPageFormat = PdfPageFormat.roll80;
@@ -51,16 +52,22 @@ Future<pw.Document> cashVoucherPdf({
                   children: [
                     pw.Text(
                       'التاريخ: ${DateTime.now().toLocal().toString().split(' ')[0]}',
-                      style:  pw.TextStyle(fontSize: 10, font: arabicFont),
+                      style: pw.TextStyle(fontSize: 10, font: arabicFont),
                     ),
                     pw.Text(
                       'الوقت: ${DateTime.now().toLocal().toString().split(' ')[1].split('.')[0]}',
-                      style:  pw.TextStyle(fontSize: 10, font: arabicFont),
+                      style: pw.TextStyle(fontSize: 10, font: arabicFont),
                     ),
                   ],
                 ),
 
                 pw.SizedBox(height: 10),
+                if (note.isNotEmpty)
+                  pw.Text(
+                    'ملاحظات: $note',
+                    style: pw.TextStyle(fontSize: 12, font: arabicFont),
+                  ),
+                pw.SizedBox(height: 5),
 
                 // Recipient and Amount Section
                 pw.Container(
@@ -74,20 +81,18 @@ Future<pw.Document> cashVoucherPdf({
                     children: [
                       pw.Text(
                         'اسم المستلم: $recipientName',
-                        style:  pw.TextStyle(fontSize: 12, font: arabicFont),
+                        style: pw.TextStyle(fontSize: 12, font: arabicFont),
                       ),
                       pw.SizedBox(height: 5),
                       pw.Text(
                         'اسم العميل: $customerName',
-                        style:  pw.TextStyle(fontSize: 12, font: arabicFont),
+                        style: pw.TextStyle(fontSize: 12, font: arabicFont),
                       ),
                       pw.SizedBox(height: 5),
                       pw.Text(
                         'المبلغ: ${amount.toStringAsFixed(2)} ',
-                        style:  pw.TextStyle(fontSize: 12, font: arabicFont),
+                        style: pw.TextStyle(fontSize: 12, font: arabicFont),
                       ),
-
-
                     ],
                   ),
                 ),
@@ -100,7 +105,7 @@ Future<pw.Document> cashVoucherPdf({
                 pw.SizedBox(height: 20),
                 pw.Text(
                   'توقيع المستلم:',
-                  style:  pw.TextStyle(fontSize: 12, font: arabicFont),
+                  style: pw.TextStyle(fontSize: 12, font: arabicFont),
                 ),
                 pw.SizedBox(height: 30),
                 pw.Divider(thickness: 1),

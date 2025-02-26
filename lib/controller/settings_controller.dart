@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -17,6 +16,14 @@ class SettingsController extends GetxController {
   ThemeMode themeMode = ThemeMode.system;
   Color selectedColor = mySharedPreferences.colorApp;
 
+  // void updateAppColor(Color color) {
+  //   if (appColor != color) {
+  //     appColor = color;
+  //     mySharedPreferences.colorApp = color;
+  //     Get.changeTheme(lightThemeApp(color));
+  //     update(['theme']);
+  //   }
+  // }
   void updateAppColor(Color color) {
     appColor = color;
     mySharedPreferences.colorApp = color;
@@ -26,59 +33,50 @@ class SettingsController extends GetxController {
   }
 
   void updateFontSize(double size) {
-    fontSize = size;
-
-    log('fontSize: $fontSize');
-    log('fontSize: ${mySharedPreferences.fontSize}');
-
-    update(['font']);
+    if (fontSize != size) {
+      fontSize = size;
+      update(['font']);
+    }
   }
 
   void saveFontSize() {
     mySharedPreferences.fontSize = fontSize;
     Get.offAllNamed(Routes.initial);
-    // Get.offAll(() => const SplashScreen());
     update(['font']);
   }
 
   void toggleFingerprint(bool value) {
-    isFingerprintActive = value;
-    mySharedPreferences.fingerPrint = value;
-    update(['fingerprint']);
+    if (isFingerprintActive != value) {
+      isFingerprintActive = value;
+      mySharedPreferences.fingerPrint = value;
+      update(['fingerprint']);
+    }
   }
 
   void toggleWholesalePrice(bool value) {
-    isWholesalePrice = value;
-    mySharedPreferences.wholesalePrice = value;
-    update(['wholesalePrice']);
+    if (isWholesalePrice != value) {
+      isWholesalePrice = value;
+      mySharedPreferences.wholesalePrice = value;
+      update(['wholesalePrice']);
+    }
   }
 
   void togglePriceQuotation(bool value) {
-    priceQuotation = value;
-    mySharedPreferences.showPriceInQuotation = value;
-    update(['priceQuotation']);
+    if (priceQuotation != value) {
+      priceQuotation = value;
+      mySharedPreferences.showPriceInQuotation = value;
+      update(['priceQuotation']);
+    }
   }
 
-  void updateThemeMode(ThemeMode mode) {
-    themeMode = mode;
-    update();
-  }
 
   void pickColor() async {
     await Get.dialog(AlertDialog(
       title: const Text('Select Color'),
       content: SingleChildScrollView(
         child: ColorPicker(
-          portraitOnly: false,
-          displayThumbColor: false,
-          enableAlpha: false,
-          hexInputBar: false,
           pickerColor: appColor,
-          onColorChanged: (color) {
-            selectedColor = color;
-          },
-          // showLabel: false,
-          pickerAreaHeightPercent: 0.8,
+          onColorChanged: (color) => selectedColor = color,
         ),
       ),
       actions: <Widget>[

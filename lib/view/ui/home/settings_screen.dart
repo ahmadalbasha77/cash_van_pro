@@ -20,6 +20,7 @@ class SettingsScreen extends StatelessWidget {
           children: [
             GetBuilder<SettingsController>(
                 id: 'color',
+                assignId: true,
                 builder: (logic) {
                   return ListTile(
                     title: Text('Select App Color'.tr),
@@ -35,6 +36,7 @@ class SettingsScreen extends StatelessWidget {
             Text('Select Font Size'.tr),
             GetBuilder<SettingsController>(
                 id: 'font',
+                assignId: true,
                 builder: (logic) {
                   return Column(
                     children: [
@@ -42,11 +44,10 @@ class SettingsScreen extends StatelessWidget {
                         min: 0.8,
                         max: 1.4,
                         divisions: 6,
-                        // overlayColor: WidgetStatePropertyAll(AppColor.primaryColor),
                         activeColor: AppColor.primaryColor,
                         inactiveColor: AppColor.primaryColor.withOpacity(0.3),
                         value: controller.fontSize,
-                        onChanged: (value) => controller.updateFontSize(value),
+                        onChanged: controller.updateFontSize,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,10 +65,10 @@ class SettingsScreen extends StatelessWidget {
                             vertical: 0,
                             title: 'save'.tr,
                             onPressed: () {
-                              mySharedPreferences.fontSize ==
-                                      controller.fontSize
-                                  ? null
-                                  : controller.saveFontSize();
+                              if (mySharedPreferences.fontSize !=
+                                  controller.fontSize) {
+                                controller.saveFontSize();
+                              }
                             },
                           )
                         ],
@@ -79,44 +80,51 @@ class SettingsScreen extends StatelessWidget {
             GetBuilder<SettingsController>(
                 id: 'fingerprint',
                 builder: (logic) {
-                  return SwitchListTile(
-                    activeTrackColor: AppColor.primaryColor.withOpacity(0.7),
-                    inactiveTrackColor: Colors.white,
-                    activeColor: AppColor.primaryColor,
-                    title: Text('Enable Fingerprint'.tr),
+
+                  return _buildSwitchTile(
+                    title: 'Enable Fingerprint'.tr,
                     value: controller.isFingerprintActive,
-                    onChanged: (value) => controller.toggleFingerprint(value),
+                    onChanged: controller.toggleFingerprint,
                   );
                 }),
             GetBuilder<SettingsController>(
                 id: 'wholesalePrice',
                 builder: (logic) {
-                  return SwitchListTile(
-                    activeTrackColor: AppColor.primaryColor.withOpacity(0.7),
-                    inactiveTrackColor: Colors.white,
-                    activeColor: AppColor.primaryColor,
-                    title: Text('Dealing at Wholesale Price'.tr),
+                  return _buildSwitchTile(
+                    title: 'Dealing at Wholesale Price'.tr,
                     value: controller.isWholesalePrice,
-                    onChanged: (value) =>
-                        controller.toggleWholesalePrice(value),
+                    onChanged: controller.toggleWholesalePrice,
                   );
                 }),
             GetBuilder<SettingsController>(
                 id: 'priceQuotation',
                 builder: (logic) {
-                  return SwitchListTile(
-                    activeTrackColor: AppColor.primaryColor.withOpacity(0.7),
-                    inactiveTrackColor: Colors.white,
-                    activeColor: AppColor.primaryColor,
-                    title: Text('Show price in Quotation'.tr),
+                  return _buildSwitchTile(
+                    title: 'Show price in Quotation'.tr,
                     value: controller.priceQuotation,
-                    onChanged: (value) =>
-                        controller.togglePriceQuotation(value),
+                    onChanged: controller.togglePriceQuotation,
                   );
                 }),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildSwitchTile({
+    required String title,
+    required bool value,
+    required Function(bool) onChanged,
+  }) {
+    return SwitchListTile(
+      activeTrackColor: AppColor.primaryColor.withOpacity(0.7),
+      inactiveTrackColor: Colors.white,
+      activeColor: AppColor.primaryColor,
+      title: Text(title),
+      value: value,
+      onChanged: (val) {
+        onChanged(val);
+      },
     );
   }
 }

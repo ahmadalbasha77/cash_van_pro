@@ -12,6 +12,7 @@ Future<pw.Document> salesInvoicePdf({
   required double totalAmount,
   required String invoiceType,
   required String paymentType,
+  required String note,
 }) async {
   final pdf = pw.Document();
   const customPageFormat = PdfPageFormat.roll80;
@@ -77,6 +78,16 @@ Future<pw.Document> salesInvoicePdf({
                 style: const pw.TextStyle(fontSize: 10),
               ),
             ],
+          ),
+          pw.Directionality(
+            textDirection: pw.TextDirection.rtl,
+            child: pw.Text(
+              'Note : $note',
+              style: pw.TextStyle(
+                fontSize: 10,
+                font: FontManager.arabicFont,
+              ),
+            ),
           ),
 
           pw.SizedBox(height: 10),

@@ -21,9 +21,10 @@ class AddCustomerController extends GetxController {
 
   void addCustomer() async {
     if (formKey.currentState!.validate()) {
+      // Get.closeCurrentSnackbar();
       Utils.showLoadingDialog();
 
-      bool result = await restApi.addCustomer({
+      bool? result = await restApi.addCustomer({
         "Name": name.text,
         "Address": "a",
         "Telephone1": phone.text,
@@ -38,15 +39,15 @@ class AddCustomerController extends GetxController {
       if (result == true) {
         Utils.hideLoadingDialog();
 
-        final controller = Get.find<CustomersController>();
+        final controller = CustomersController.to;
         controller.getCustomers();
         Get.back();
         Utils.showSnackbar('Success', 'Customer added successfully');
-      } else {
+      } else if (result == false) {
         Utils.hideLoadingDialog();
         Utils.showSnackbar(
             'Failed', 'An error occurred while adding the customer');
-      }
+      } else {}
     }
   }
 }

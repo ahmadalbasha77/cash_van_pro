@@ -50,6 +50,15 @@ class CashDialog extends StatelessWidget {
                   validator: (text) => Validation.isRequired(text),
                   label: 'Amount',
                   hint: 'Enter amount'),
+              const SizedBox(
+                height: 20,
+              ),
+              CustomTextFiledWidget(
+                  keyboardType: TextInputType.number,
+                  controller: controller.note,
+                  // validator: (text) => Validation.isRequired(text),
+                  label: 'Note (optional)',
+                  hint: 'Enter Note'),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),

@@ -58,6 +58,8 @@ dependencies:
   syncfusion_flutter_charts: ^20.4.48
   shimmer: ^3.0.0
   dropdown_search:
+  sentry_flutter: ^8.13.2
+  skeletonizer: ^1.4.3
 
 
 

@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 import '../../../controller/quotation/quotation_edit_controller.dart';
 import '../../../core/utils.dart';
+import '../../widget/auth/custom_text_filed.dart';
 import '../../widget/invoice/change_price_sales_refund_dialog.dart';
 import '../../widget/invoice/item_order_widget.dart';
 
@@ -107,7 +108,7 @@ class EditQuotationScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(
-                height: 20,
+                height: 0,
               ),
               Text('${'Customer Name'.tr} : $customerName'.tr,
                   style: AppTextStyles.bold16),
@@ -121,6 +122,14 @@ class EditQuotationScreen extends StatelessWidget {
               const Divider(),
               const SizedBox(
                 height: 10,
+              ),
+              CustomTextFiledWidget(
+                  radius: 20,
+                  controller: _controller.noteController,
+                  hint: 'Enter Note',
+                  label: 'Add Note (optional)'),
+              const SizedBox(
+                height: 20,
               ),
               GetBuilder<QuotationEditController>(builder: (logic) {
                 return Text(

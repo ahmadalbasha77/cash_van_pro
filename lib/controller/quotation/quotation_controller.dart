@@ -14,6 +14,7 @@ class QuotationController extends GetxController {
 
   final GlobalKey<FormState> priceKey = GlobalKey<FormState>();
   final TextEditingController newPriceController = TextEditingController();
+  final TextEditingController noteController = TextEditingController();
 
   int paymentType = 0;
 
@@ -91,6 +92,7 @@ class QuotationController extends GetxController {
       "UserID": '${mySharedPreferences.getUserData()!.id}',
       "NumberCar": "",
       "TranactionType": '33',
+      "Notes": noteController.text.isEmpty ? "" : noteController.text,
       "BranchID": '${mySharedPreferences.getUserData()!.branchId}',
       "StoreID": '${mySharedPreferences.getUserData()!.storeId}',
       "SalesJson": cartJson,
@@ -106,6 +108,7 @@ class QuotationController extends GetxController {
       cartList.clear();
       _cartMap.clear();
       update();
+
       Utils.showSnackbar('Success', 'Quotation added successfully');
       Get.offAll(() => CustomersScreen());
     } else {

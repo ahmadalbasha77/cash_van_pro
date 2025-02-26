@@ -9,6 +9,7 @@ import '../../model/invoice/cart_model.dart';
 import '../../model/invoice/invoice_model.dart';
 import '../../network/rest_api.dart';
 import '../../view/ui/sales_invoice_pdf.dart';
+import '../customers/customers_controller.dart';
 
 class CartController extends GetxController {
   final Map<int, CartModel> _cartMap = {};
@@ -21,6 +22,7 @@ class CartController extends GetxController {
   final GlobalKey<FormState> priceKey = GlobalKey<FormState>();
 
   final TextEditingController newPriceController = TextEditingController();
+  final TextEditingController noteController = TextEditingController();
 
   changePriceProduct(int itemId) {
     if (priceKey.currentState!.validate()) {
@@ -91,7 +93,6 @@ class CartController extends GetxController {
 
     final apiMethod =
         isRefund ? restApi.addRefundInvoice : restApi.addSalesInvoice;
-
     InvoiceModel result = await apiMethod({
       "ID": '0',
       "InvoiceDate": DateTime.now().toIso8601String(),
@@ -102,20 +103,23 @@ class CartController extends GetxController {
       "SalesManID": '1',
       "UserID": '${mySharedPreferences.getUserData()!.id}',
       "NumberCar": "",
+      "Notes": noteController.text.isEmpty ? "" : noteController.text,
       "TranactionType": isRefund ? '14' : '33',
       "BranchID": '${mySharedPreferences.getUserData()!.branchId}',
       "StoreID": '${mySharedPreferences.getUserData()!.storeId}',
       isRefund ? "ReturnJson" : "SalesJson": cartJson,
     });
 
-    if (result != null) {
+    if (result.salesId != 0 || result.returnId != 0) {
       // Utils.hideLoadingDialog();
+
       final invoicePdf = await salesInvoicePdf(
           invoiceId: isRefund ? result.returnId : result.salesId,
           cartList: cartList,
           invoiceType: isRefund ? 'Refund' : 'Sales',
           paymentType: paymentType == 1 ? 'Cash' : 'Credit',
           customerName: customer.aName,
+          note: noteController.text,
           customerNumber: customer.telephone1,
           representativeName: mySharedPreferences.getUserData()!.eName,
           totalAmount: totalCartPrice);
@@ -123,10 +127,11 @@ class CartController extends GetxController {
         onLayout: (format) => invoicePdf.save(),
       );
 
-      // final controller = Get.find<CustomersController>();
-      // controller.getCustomers();
+      final controller = Get.find<CustomersController>();
+      controller.getCustomers();
 
       paymentType = 0;
+      noteController.clear();
       cartList.clear();
       _cartMap.clear();
       update();

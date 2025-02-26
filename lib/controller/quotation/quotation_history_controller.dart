@@ -12,6 +12,7 @@ class QuotationHistoryController extends GetxController {
           : Get.put(QuotationHistoryController());
 
   final RestApi restApi = RestApi();
+  TextEditingController invoiceNumberController = TextEditingController();
   String customerId = '0';
 
   @override
@@ -36,6 +37,9 @@ class QuotationHistoryController extends GetxController {
     quotationHistoryList = await restApi.getQuotation(
         dateFrom: fromDateController.text,
         dateTo: toDateController.text,
+        invoiceNo: invoiceNumberController.text == ''
+            ? '0'
+            : invoiceNumberController.text,
         customerId: customerId);
 
     isLoading = false;

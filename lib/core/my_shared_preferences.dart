@@ -52,7 +52,7 @@ class MySharedPreferences {
   }
 
   bool get showPriceInQuotation =>
-      _sharedPreferences.getBool(keyShowPriceQuotation) ?? false;
+      _sharedPreferences.getBool(keyShowPriceQuotation) ?? true;
 
   set showPriceInQuotation(bool value) {
     _sharedPreferences.setBool(keyShowPriceQuotation, value);

@@ -16,6 +16,7 @@ class AddCashController extends GetxController {
   final RestApi restApi = RestApi();
   final TextEditingController name = TextEditingController();
   final TextEditingController amount = TextEditingController();
+  final TextEditingController note = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey();
 
   void addCashVoucher(int customerId, String customerName) async {
@@ -30,15 +31,16 @@ class AddCashController extends GetxController {
         "Amount": amount.text,
         "UserID": ' ${mySharedPreferences.getUserData()!.id}',
         "ReceiverName": name.text,
+        "Notes": note.text.isEmpty ? "" : note.text,
         "CashID": ' ${mySharedPreferences.getUserData()!.cashId}',
         "CustomerID": '$customerId'
       });
       if (result == true) {
         final invoicePdf = await cashVoucherPdf(
+          note: note.text.isEmpty ? "" : note.text,
           customerName: customerName,
           recipientName: name.text,
           amount: double.parse(amount.text),
-
         );
         name.clear();
         amount.clear();

@@ -105,7 +105,7 @@ class RestApi {
     }
   }
 
-  Future<bool> addCustomer(var body) async {
+  Future<bool?> addCustomer(var body) async {
     log('$body');
     try {
       String url = 'http://${apiUrl.ip}${ApiUrl.addCustomer}';
@@ -125,8 +125,9 @@ class RestApi {
       if (response.statusCode == 200) {
         return true;
       } else if (response.statusCode == 400) {
-        Utils.showSnackbar('Warning', 'phone number already exist');
-        return false;
+        Utils.hideLoadingDialog();
+        Utils.showFlutterToast('phone number already exist');
+        return null;
       } else {
         return false;
       }
@@ -236,14 +237,17 @@ class RestApi {
       Uri uri = Uri.parse(url);
 
       http.Response response = await http.post(
+        headers: {"Content-Type": "application/json"},
+
         uri,
-        body: body,
+        body: jsonEncode(body),
       );
 
       log('*********************************************');
       log('addCashVoucher  :  $uri');
       log('status Code :  ${response.statusCode}');
       log('response body :  ${response.body}');
+      log('body :  $body');
       log('*********************************************');
 
       if (response.statusCode == 200) {
@@ -264,8 +268,10 @@ class RestApi {
       Uri uri = Uri.parse(url);
 
       http.Response response = await http.post(
+        headers: {"Content-Type": "application/json"},
+
         uri,
-        body: body,
+        body: jsonEncode(body),
       );
 
       log('*********************************************');
@@ -323,8 +329,10 @@ class RestApi {
       Uri uri = Uri.parse(url);
 
       http.Response response = await http.post(
+        headers: {"Content-Type": "application/json"},
+
         uri,
-        body: body,
+        body: jsonEncode(body),
       );
 
       log('*********************************************');
@@ -347,10 +355,11 @@ class RestApi {
   Future<List<QuotationHistoryModel>> getQuotation(
       {required String dateFrom,
       required String dateTo,
+      String? invoiceNo = '0',
       String? customerId = '0'}) async {
     try {
       String url =
-          'http://${apiUrl.ip}${ApiUrl.getQuotation}?dateFrom=$dateFrom&dateTo=$dateTo&customerId=$customerId&transactionType=15&transactionType1=0';
+          'http://${apiUrl.ip}${ApiUrl.getQuotation}?dateFrom=$dateFrom&dateTo=$dateTo&customerId=$customerId&transactionType=15&transactionType1=0&transactionNo=$invoiceNo';
 
       Uri uri = Uri.parse(url);
 
@@ -420,8 +429,10 @@ class RestApi {
       Uri uri = Uri.parse(url);
 
       http.Response response = await http.post(
+        headers: {"Content-Type": "application/json"},
+
         uri,
-        body: body,
+        body: jsonEncode(body),
       );
 
       log('*********************************************');
@@ -448,8 +459,10 @@ class RestApi {
       Uri uri = Uri.parse(url);
 
       http.Response response = await http.post(
+        headers: {"Content-Type": "application/json"},
+
         uri,
-        body: body,
+        body: jsonEncode(body),
       );
 
       log('*********************************************');
@@ -476,8 +489,10 @@ class RestApi {
       Uri uri = Uri.parse(url);
 
       http.Response response = await http.post(
+        headers: {"Content-Type": "application/json"},
+
         uri,
-        body: body,
+        body: jsonEncode(body),
       );
 
       log('*********************************************');

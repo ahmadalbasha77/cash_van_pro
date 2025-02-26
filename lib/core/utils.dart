@@ -48,9 +48,7 @@ class Utils {
     var result = await Get.defaultDialog(
       backgroundColor: Colors.white,
       title: title.tr,
-
       content: Text(
-
         textAlign: TextAlign.center,
         message?.tr ?? 'Are you sure?'.tr,
         style: AppTextStyles.regular16,

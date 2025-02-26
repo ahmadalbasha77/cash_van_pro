@@ -8,8 +8,8 @@ class InvoiceModel {
   });
 
   factory InvoiceModel.fromJson(Map<String, dynamic> json) => InvoiceModel(
-        salesId: json["SalesID"],
-        returnId: json["ReturnID"],
+        salesId: json["SalesID"] ?? 0,
+        returnId: json["ReturnID"] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {

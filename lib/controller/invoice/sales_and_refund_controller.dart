@@ -11,6 +11,7 @@ import '../../network/rest_api.dart';
 import '../../view/ui/home/customers_screen.dart';
 import '../../view/ui/invoice/sales_and_refund_invoice_pdf.dart';
 import '../../view/ui/sales_invoice_pdf.dart';
+import '../customers/customers_controller.dart';
 
 class SalesAndRefundController extends GetxController {
   final Map<int, CartModel> _salesMap = {};
@@ -26,6 +27,7 @@ class SalesAndRefundController extends GetxController {
   final GlobalKey<FormState> priceKey = GlobalKey<FormState>();
 
   final TextEditingController newPriceController = TextEditingController();
+  final TextEditingController noteController = TextEditingController();
 
   void changePriceSales(int itemId) {
     if (priceKey.currentState!.validate()) {
@@ -173,6 +175,7 @@ class SalesAndRefundController extends GetxController {
         "SalesManID": '1',
         "UserID": '${mySharedPreferences.getUserData()!.id}',
         "NumberCar": "",
+        "Notes": noteController.text.isEmpty ? "" : noteController.text,
         "TranactionType": _salesMap.isEmpty ? '14' : '33',
         "BranchID": '${mySharedPreferences.getUserData()!.branchId}',
         "StoreID": '${mySharedPreferences.getUserData()!.storeId}',
@@ -187,6 +190,7 @@ class SalesAndRefundController extends GetxController {
         "CashID": '${mySharedPreferences.getUserData()!.cashId}',
         "TaxType": '1',
         "SalesManID": '1',
+        "Notes": noteController.text.isEmpty ? "" : noteController.text,
         "UserID": '${mySharedPreferences.getUserData()!.id}',
         "NumberCar": "",
         "BranchID": '${mySharedPreferences.getUserData()!.branchId}',
@@ -196,7 +200,7 @@ class SalesAndRefundController extends GetxController {
       });
     }
 
-    if (result != null) {
+    if (result.salesId != 0 || result.returnId != 0) {
       if (_salesMap.isEmpty || _refundMap.isEmpty) {
         final salesInvoice = await salesInvoicePdf(
             invoiceId: _salesMap.isEmpty ? result.returnId : result.salesId,
@@ -204,6 +208,7 @@ class SalesAndRefundController extends GetxController {
             invoiceType: _salesMap.isEmpty ? 'Refund' : 'Sales',
             paymentType: paymentType == 1 ? 'Cash' : 'Credit',
             customerName: customer.aName,
+            note: noteController.text,
             customerNumber: customer.telephone1,
             representativeName: mySharedPreferences.getUserData()!.eName,
             totalAmount: totalPrice);
@@ -215,6 +220,7 @@ class SalesAndRefundController extends GetxController {
         final invoicePdf = await salesRefundInvoicePdf(
             invoiceRefundId: result.returnId,
             invoiceSalesId: result.salesId,
+            note: noteController.text,
             refundList: refundList,
             totalRefundAmount: totalRefundPrice,
             totalSalesAmount: totalSalesPrice,
@@ -233,9 +239,13 @@ class SalesAndRefundController extends GetxController {
       paymentType = 0;
       salesList.clear();
       refundList.clear();
+      noteController.clear();
       _salesMap.clear();
       _refundMap.clear();
       update();
+      final controller = Get.find<CustomersController>();
+      controller.getCustomers();
+
       Utils.showSnackbar('Success', 'Invoice added successfully');
       Get.offAll(() => CustomersScreen());
     } else {

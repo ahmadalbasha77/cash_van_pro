@@ -2,6 +2,7 @@ import 'package:cash_van_app/model/customers/customers_model.dart';
 import 'package:cash_van_app/view/ui/quotation%20history/quotation_history_screen.dart';
 import 'package:cash_van_app/view/ui/quotation/quotation_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../controller/quotation/quotation_history_controller.dart';
@@ -49,8 +50,11 @@ class CustomerQuotationHistoryScreen extends StatelessWidget {
         widgets: [
           const SizedBox(height: 16),
           CustomTextFiledWidget(
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
               keyboardType: TextInputType.number,
-              controller: TextEditingController(),
+              controller: _controller.invoiceNumberController,
               label: 'Invoice Number',
               hint: 'enter invoice number'),
           const SizedBox(height: 16),

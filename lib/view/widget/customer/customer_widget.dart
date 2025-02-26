@@ -15,64 +15,60 @@ class CustomersWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(10),
-      onTap: () {},
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            color: AppColor.primaryColor.withOpacity(0.3),
-            width: 1,
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: AppColor.primaryColor.withOpacity(0.3),
+          width: 1,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+        ],
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 30,
+            backgroundColor: AppColor.primaryColor.withOpacity(0.1),
+            child: Text(
+              customer.aName[0].toUpperCase(),
+              style: AppTextStyles.bold22.copyWith(color: AppColor.primaryColor),
             ),
-          ],
-        ),
-        child: Row(
-          children: [
-            CircleAvatar(
-              radius: 30,
-              backgroundColor: AppColor.primaryColor.withOpacity(0.1),
-              child: Text(
-                customer.aName[0].toUpperCase(),
-                style: AppTextStyles.bold22.copyWith(color: AppColor.primaryColor),
-              ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  customer.aName,
+                  style: AppTextStyles.bold18.copyWith(color: AppColor.primaryColor),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  "${'Phone'.tr}: ${customer.telephone1}",
+                  style: AppTextStyles.semiBold14.copyWith(color: AppColor.primaryColor),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                    "${'Balance'.tr}: ${customer.customerBalance.toStringAsFixed(2)}",
+                    style: AppTextStyles.semiBold14.copyWith(
+                        color: customer.customerBalance < 0
+                            ? Colors.red
+                            : customer.customerBalance == 0
+                                ? Colors.black45
+                                : Colors.blue[800])),
+              ],
             ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    customer.aName,
-                    style: AppTextStyles.bold18.copyWith(color: AppColor.primaryColor),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    "${'Phone'.tr}: ${customer.telephone1}",
-                    style: AppTextStyles.semiBold14.copyWith(color: AppColor.primaryColor),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                      "${'Balance'.tr}: ${customer.customerBalance.toStringAsFixed(2)}",
-                      style: AppTextStyles.semiBold14.copyWith(
-                          color: customer.customerBalance < 0
-                              ? Colors.red
-                              : customer.customerBalance == 0
-                                  ? Colors.black45
-                                  : Colors.blue[800])),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
