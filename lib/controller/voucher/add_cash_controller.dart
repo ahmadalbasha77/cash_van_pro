@@ -44,6 +44,7 @@ class AddCashController extends GetxController {
         );
         name.clear();
         amount.clear();
+        note.clear();
 
         await Printing.layoutPdf(
           onLayout: (format) => invoicePdf.save(),
@@ -59,5 +60,13 @@ class AddCashController extends GetxController {
             'Failed', 'An error occurred while adding the Cash.');
       }
     }
+  }
+
+  @override
+  void dispose() {
+    name.dispose();
+    amount.dispose();
+    note.dispose();
+    super.dispose();
   }
 }

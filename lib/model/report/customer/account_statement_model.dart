@@ -9,7 +9,7 @@ class AccountStatementModel {
 
   factory AccountStatementModel.fromJson(Map<String, dynamic> json) =>
       AccountStatementModel(
-        openingBalance: json["OpeningBalance"],
+        openingBalance: json["OpeningBalance"] ?? 0.0,
         data: List<AccountStatementData>.from(
             json["Data"].map((x) => AccountStatementData.fromJson(x))),
       );
@@ -71,28 +71,32 @@ class AccountStatementData {
 
   factory AccountStatementData.fromJson(Map<String, dynamic> json) =>
       AccountStatementData(
-        voucherId: json["VoucherID"],
-        voucherNumber: json["VoucherNumber"],
-        voucherDate: DateTime.parse(json["VoucherDate"]),
-        voucherTypeAName: json["VoucherTypeAName"],
-        voucherTypeEName: json["VoucherTypeEName"],
-        voucherTypeId: json["VoucherTypeID"],
-        notes: json["Notes"],
-        debit: json["Debit"]?.toDouble(),
-        credit: json["Credit"]?.toDouble(),
-        branchName: json["BranchName"],
-        transactionOwnerName: json["TransactionOwnerName"],
-        dueDate: DateTime.parse(json["DueDate"]),
-        otherAccount: json["OtherAccount"],
-        transactionNumber: json["TransactionNumber"],
-        transactionId: json["TransactionID"],
-        cashvoucherid: json["Cashvoucherid"],
-        incomingVoucherId: json["IncomingVoucherID"],
-        outgoingVoucherId: json["OutgoingVoucherID"],
-        hrTransactionId: json["HrTransactionID"],
-        contractId: json["contractID"],
-        chequesId: json["ChequesID"],
-        periodBalance: json["PeriodBalance"]?.toDouble(),
+        voucherId: json["VoucherID"] ?? 0,
+        voucherNumber: json["VoucherNumber"] ?? 0,
+        voucherDate: json["VoucherDate"] == null
+            ? DateTime.now()
+            : DateTime.parse(json["VoucherDate"]),
+        voucherTypeAName: json["VoucherTypeAName"] ?? '',
+        voucherTypeEName: json["VoucherTypeEName"] ?? '',
+        voucherTypeId: json["VoucherTypeID"] ?? 0,
+        notes: json["Notes"] ?? '',
+        debit: json["Debit"]?.toDouble() ?? 0.0,
+        credit: json["Credit"]?.toDouble() ?? 0.0,
+        branchName: json["BranchName"] ?? '',
+        transactionOwnerName: json["TransactionOwnerName"] ?? '',
+        dueDate: json["DueDate"] == null
+            ? DateTime.now()
+            : DateTime.parse(json["DueDate"]),
+        otherAccount: json["OtherAccount"] ?? '',
+        transactionNumber: json["TransactionNumber"] ?? 0,
+        transactionId: json["TransactionID"] ?? 0,
+        cashvoucherid: json["Cashvoucherid"] ?? 0,
+        incomingVoucherId: json["IncomingVoucherID"] ?? 0,
+        outgoingVoucherId: json["OutgoingVoucherID"] ?? 0,
+        hrTransactionId: json["HrTransactionID"] ?? 0,
+        contractId: json["contractID"] ?? 0,
+        chequesId: json["ChequesID"] ?? 0,
+        periodBalance: json["PeriodBalance"]?.toDouble() ?? 0.0,
       );
 
   Map<String, dynamic> toJson() => {

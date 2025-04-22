@@ -146,9 +146,7 @@ class QuotationScreen extends StatelessWidget {
               SearchTextFiledWidget(
                 controller: _controller.searchController,
                 hintText: 'Search items...',
-                onChanged: (p0) {
-                  _controller.getItem();
-                },
+                onChanged: _controller.onSearchChanged,
               ),
               Expanded(
                 child: GetBuilder<ItemByCategoryIdQuotationController>(

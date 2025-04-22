@@ -51,7 +51,8 @@ class EditQuotationScreen extends StatelessWidget {
             style: AppTextStyles.bold14.copyWith(color: Colors.white),
           ),
           onPressed: () {
-            Get.to(() => ItemQuotationScreen());
+            Get.to(() => ItemQuotationScreen(),
+                arguments: {'note': _controller.noteController.text});
           },
         ),
         bottomNavigationBar: Container(

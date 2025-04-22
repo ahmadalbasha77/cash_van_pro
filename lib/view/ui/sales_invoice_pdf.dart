@@ -124,11 +124,13 @@ Future<pw.Document> salesInvoicePdf({
           pw.Directionality(
             textDirection: pw.TextDirection.rtl,
             child: pw.TableHelper.fromTextArray(
-              headers: ['Item', 'Quantity', 'Price'],
+              headers: ['Item', 'QTY', 'Tax', 'PBT', 'Total'],
               data: cartList.map((item) {
                 return [
-                  wrapText(item.itemName, 20),
+                  wrapText(item.itemName, 11),
                   item.quantity.toString(),
+                  '16 %',
+                  (item.totalPrice / 1.16).toStringAsFixed(2), // السعر قبل الضريبة
                   item.totalPrice.toStringAsFixed(2),
                 ];
               }).toList(),
@@ -147,8 +149,46 @@ Future<pw.Document> salesInvoicePdf({
 
           pw.SizedBox(height: 10),
           pw.Divider(thickness: 2),
-
-          // Total Amount Section
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+              pw.Text('Total Before Tax:',
+                  style: const pw.TextStyle(
+                    fontSize: 11,
+                  )),
+              pw.Text(totalAmount.toStringAsFixed(2),
+                  style: const pw.TextStyle(
+                    fontSize: 11,
+                  )),
+            ],
+          ),
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+              pw.Text('Discount:',
+                  style: const pw.TextStyle(
+                    fontSize: 11,
+                  )),
+              pw.Text('0.0',
+                  style: const pw.TextStyle(
+                    fontSize: 11,
+                  )),
+            ],
+          ),
+          pw.Row(
+            mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+            children: [
+              pw.Text('Tax Amount:',
+                  style: const pw.TextStyle(
+                    fontSize: 11,
+                  )),
+              pw.Text('16 %',
+                  style: const pw.TextStyle(
+                    fontSize: 12,
+                  )),
+            ],
+          ),
+          pw.Divider(thickness: 1),
           pw.Row(
             mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
             children: [
@@ -173,9 +213,6 @@ Future<pw.Document> salesInvoicePdf({
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
-                // pw.Text('Sales Representative:',
-                //     style: pw.TextStyle(
-                //         fontSize: 12, fontWeight: pw.FontWeight.bold)),
                 pw.SizedBox(height: 5),
                 pw.Directionality(
                   textDirection: pw.TextDirection.rtl,

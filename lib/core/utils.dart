@@ -104,6 +104,17 @@ class Utils {
     launchUrlString("tel://$url");
   }
 
+  static Future<void> openMap(double latitude, double longitude) async {
+    final Uri googleUrl = Uri.parse(
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude');
+
+    if (await canLaunchUrl(googleUrl)) {
+      await launchUrl(googleUrl, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'Could not open the map.';
+    }
+  }
+
   static void changeLanguage() {
     Get.defaultDialog(
       title: 'Language'.tr,

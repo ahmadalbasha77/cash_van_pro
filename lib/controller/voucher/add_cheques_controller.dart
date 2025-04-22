@@ -97,4 +97,13 @@ class AddChequesController extends GetxController {
       }
     }
   }
+
+  @override
+  dispose() {
+    name.dispose();
+    amount.dispose();
+    chequesNumber.dispose();
+    note.dispose();
+    super.dispose();
+  }
 }

@@ -39,7 +39,8 @@ class CustomersWidget extends StatelessWidget {
             backgroundColor: AppColor.primaryColor.withOpacity(0.1),
             child: Text(
               customer.aName[0].toUpperCase(),
-              style: AppTextStyles.bold22.copyWith(color: AppColor.primaryColor),
+              style:
+                  AppTextStyles.bold22.copyWith(color: AppColor.primaryColor),
             ),
           ),
           const SizedBox(width: 16),
@@ -49,22 +50,41 @@ class CustomersWidget extends StatelessWidget {
               children: [
                 Text(
                   customer.aName,
-                  style: AppTextStyles.bold18.copyWith(color: AppColor.primaryColor),
+                  style: AppTextStyles.bold18
+                      .copyWith(color: AppColor.primaryColor),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   "${'Phone'.tr}: ${customer.telephone1}",
-                  style: AppTextStyles.semiBold14.copyWith(color: AppColor.primaryColor),
+                  style: AppTextStyles.semiBold14
+                      .copyWith(color: AppColor.primaryColor),
                 ),
                 const SizedBox(height: 4),
-                Text(
-                    "${'Balance'.tr}: ${customer.customerBalance.toStringAsFixed(2)}",
-                    style: AppTextStyles.semiBold14.copyWith(
-                        color: customer.customerBalance < 0
-                            ? Colors.red
-                            : customer.customerBalance == 0
-                                ? Colors.black45
-                                : Colors.blue[800])),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                        "${'Balance'.tr}: ${customer.customerBalance.toStringAsFixed(2)}",
+                        style: AppTextStyles.semiBold14.copyWith(
+                            color: customer.customerBalance < 0
+                                ? Colors.red
+                                : customer.customerBalance == 0
+                                    ? Colors.black45
+                                    : Colors.blue[800])),
+                    // IconButton(
+                    //     style: ButtonStyle(
+                    //         backgroundColor: WidgetStatePropertyAll(
+                    //             AppColor.primaryColor.withOpacity(0.1))),
+                    //     onPressed: () {
+                    //       Utils.openMap(31.993604, 35.889065);
+                    //     },
+                    //     icon: Icon(
+                    //       Icons.location_on,
+                    //       color: AppColor.primaryColor,
+                    //       size: 20 * mySharedPreferences.fontSize,
+                    //     ))
+                  ],
+                ),
               ],
             ),
           ),

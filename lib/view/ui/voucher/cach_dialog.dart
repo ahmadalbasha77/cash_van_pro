@@ -54,7 +54,7 @@ class CashDialog extends StatelessWidget {
                 height: 20,
               ),
               CustomTextFiledWidget(
-                  keyboardType: TextInputType.number,
+                  // keyboardType: TextInputType.text,
                   controller: controller.note,
                   // validator: (text) => Validation.isRequired(text),
                   label: 'Note (optional)',

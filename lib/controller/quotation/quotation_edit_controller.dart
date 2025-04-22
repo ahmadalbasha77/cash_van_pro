@@ -22,7 +22,7 @@ class QuotationEditController extends GetxController {
   final GlobalKey<FormState> priceKey = GlobalKey<FormState>();
   final TextEditingController newPriceController = TextEditingController();
   final TextEditingController noteController =
-      TextEditingController(text: Get.arguments['note']);
+      TextEditingController(text: Get.arguments['note'] ?? '');
 
   bool isLoading = false;
   int? quotationId;
