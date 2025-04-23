@@ -107,9 +107,9 @@ class CustomersWidget extends StatelessWidget {
                               source: ImageSource.camera);
 
                           if (image != null) {
-                            Get.to(() => const VisitScreen(),
-                                arguments: customer);
+                            Get.to(() => VisitScreen(), arguments: customer);
                           } else {
+                            // المستخدم لم يلتقط صورة
                             Utils.showFlutterToast('لم يتم التقاط صورة');
                           }
                         }

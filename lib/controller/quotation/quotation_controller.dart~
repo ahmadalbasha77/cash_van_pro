@@ -6,7 +6,6 @@ import '../../model/customers/customers_model.dart';
 import '../../model/invoice/cart_model.dart';
 import '../../network/rest_api.dart';
 import '../../view/ui/home/customers_screen.dart';
-import '../../view/ui/visit/visit_screen.dart';
 import '../customers/customers_controller.dart';
 
 class QuotationController extends GetxController {
@@ -111,9 +110,7 @@ class QuotationController extends GetxController {
       update();
 
       Utils.showSnackbar('Success', 'Quotation added successfully');
-      // Get.offAll(() => CustomersScreen());
-      Get.offAll(() => const VisitScreen(),arguments: customer);
-
+      Get.offAll(() => CustomersScreen());
     } else {
       Utils.hideLoadingDialog();
       Utils.showSnackbar(

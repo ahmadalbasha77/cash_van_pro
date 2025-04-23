@@ -1,0 +1,67 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../../../model/tracking/map_model.dart';
+
+class DeliveryMapScreen extends StatefulWidget {
+  final DeliveryAgent agent;
+
+  const DeliveryMapScreen({super.key, required this.agent});
+
+  @override
+  State<DeliveryMapScreen> createState() => _DeliveryMapScreenState();
+}
+
+class _DeliveryMapScreenState extends State<DeliveryMapScreen> {
+  late GoogleMapController mapController;
+  BitmapDescriptor? customIcon;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCustomMarker();
+  }
+
+  Future<void> _loadCustomMarker() async {
+    customIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(10, 10)),
+      'assets/images/marker.png',
+    );
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final agent = widget.agent;
+    final LatLng location = LatLng(agent.lat, agent.lng);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("موقع ${agent.name}"),
+        centerTitle: true,
+      ),
+      body: customIcon == null
+          ? const Center(child: CircularProgressIndicator())
+          : GoogleMap(
+              initialCameraPosition: CameraPosition(
+                target: location,
+                zoom: 15,
+              ),
+              markers: {
+                Marker(
+                  markerId: const MarkerId("agentMarker"),
+                  position: location,
+                  infoWindow: InfoWindow(
+                    title: agent.name,
+                    snippet: "نسبة الشحن : 34 %",
+                  ),
+                  icon: customIcon!,
+                ),
+              },
+              onMapCreated: (controller) {
+                mapController = controller;
+              },
+            ),
+    );
+  }
+}

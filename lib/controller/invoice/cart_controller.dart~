@@ -1,34 +1,38 @@
+import 'package:cash_van_app/core/my_shared_preferences.dart';
+import 'package:cash_van_app/core/utils.dart';
+import 'package:cash_van_app/model/customers/customers_model.dart';
+import 'package:cash_van_app/view/ui/home/customers_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../core/my_shared_preferences.dart';
-import '../../core/utils.dart';
-import '../../model/customers/customers_model.dart';
+import 'package:printing/printing.dart';
 import '../../model/invoice/cart_model.dart';
+import '../../model/invoice/invoice_model.dart';
 import '../../network/rest_api.dart';
-import '../../view/ui/home/customers_screen.dart';
-import '../../view/ui/visit/visit_screen.dart';
+import '../../view/ui/sales_invoice_pdf.dart';
 import '../customers/customers_controller.dart';
 
-class QuotationController extends GetxController {
+class CartController extends GetxController {
   final Map<int, CartModel> _cartMap = {};
   final RestApi restApi = RestApi();
 
+  int paymentType = 0;
+
+  List<CartModel> get cartList => _cartMap.values.toList();
+
   final GlobalKey<FormState> priceKey = GlobalKey<FormState>();
+
   final TextEditingController newPriceController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
 
-  int paymentType = 0;
-
-  void changePriceSales(int itemId) {
+  changePriceProduct(int itemId) {
     if (priceKey.currentState!.validate()) {
       _cartMap[itemId]!.priceAfterTax = double.parse(newPriceController.text);
       newPriceController.clear();
+
       Get.back();
       update();
     }
   }
-
-  List<CartModel> get cartList => _cartMap.values.toList();
 
   void addItem(CartModel item) {
     if (_cartMap.containsKey(item.itemId)) {
@@ -41,6 +45,11 @@ class QuotationController extends GetxController {
 
   void removeItem(int itemId) {
     _cartMap.remove(itemId);
+    update();
+  }
+
+  void updatePaymentType(int value) {
+    paymentType = value;
     update();
   }
 
@@ -62,16 +71,16 @@ class QuotationController extends GetxController {
     return _cartMap.values.fold(0, (sum, item) => sum + item.totalPrice);
   }
 
-  Future<void> addQuotation({
-    required CustomersModel customer,
-  }) async {
+  Future<void> addInvoice(
+      {required CustomersModel customer, required bool isRefund}) async {
+    Get.back();
     Utils.showLoadingDialog();
 
     String cartJson = _cartMap.values
         .map((item) => {
               "itemId": item.itemId,
-              "QTYIN": 0,
-              "QTYOUT": item.quantity,
+              "QTYIN": isRefund ? item.quantity : 0,
+              "QTYOUT": isRefund ? 0 : item.quantity,
               "PriceAfterTax": item.priceAfterTax,
               "TotalAfterTax": item.totalPrice,
               "DiscountAmount": 0,
@@ -82,38 +91,52 @@ class QuotationController extends GetxController {
         .toList()
         .toString();
 
-    bool result = await restApi.addEditQuotation({
+    final apiMethod =
+        isRefund ? restApi.addRefundInvoice : restApi.addSalesInvoice;
+    InvoiceModel result = await apiMethod({
       "ID": '0',
       "InvoiceDate": DateTime.now().toIso8601String(),
-      "SettelmentWayID": '0',
+      "SettelmentWayID": '$paymentType',
       "CustomerID": '${customer.id}',
       "CashID": '${mySharedPreferences.getUserData()!.cashId}',
       "TaxType": '1',
       "SalesManID": '1',
       "UserID": '${mySharedPreferences.getUserData()!.id}',
       "NumberCar": "",
-      "TranactionType": '33',
       "Notes": noteController.text.isEmpty ? "" : noteController.text,
+      "TranactionType": isRefund ? '14' : '33',
       "BranchID": '${mySharedPreferences.getUserData()!.branchId}',
       "StoreID": '${mySharedPreferences.getUserData()!.storeId}',
-      "SalesJson": cartJson,
+      isRefund ? "ReturnJson" : "SalesJson": cartJson,
     });
 
-    if (result == true) {
+    if (result.salesId != 0 || result.returnId != 0) {
       // Utils.hideLoadingDialog();
 
-      final controller = CustomersController.to;
+      final invoicePdf = await salesInvoicePdf(
+          invoiceId: isRefund ? result.returnId : result.salesId,
+          cartList: cartList,
+          invoiceType: isRefund ? 'Refund' : 'Sales',
+          paymentType: paymentType == 1 ? 'Cash' : 'Credit',
+          customerName: customer.aName,
+          note: noteController.text,
+          customerNumber: customer.telephone1,
+          representativeName: mySharedPreferences.getUserData()!.eName,
+          totalAmount: totalCartPrice);
+      await Printing.layoutPdf(
+        onLayout: (format) => invoicePdf.save(),
+      );
+
+      final controller = Get.find<CustomersController>();
       controller.getCustomers();
 
       paymentType = 0;
+      noteController.clear();
       cartList.clear();
       _cartMap.clear();
       update();
-
-      Utils.showSnackbar('Success', 'Quotation added successfully');
-      // Get.offAll(() => CustomersScreen());
-      Get.offAll(() => const VisitScreen(),arguments: customer);
-
+      Utils.showSnackbar('Success', 'Invoice added successfully');
+      Get.offAll(() => CustomersScreen());
     } else {
       Utils.hideLoadingDialog();
       Utils.showSnackbar(

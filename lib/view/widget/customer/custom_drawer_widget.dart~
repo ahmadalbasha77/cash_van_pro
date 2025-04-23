@@ -1,3 +1,4 @@
+import 'package:cash_van_app/view/ui/visit/history_visit_screen.dart';
 import 'package:cash_van_app/view/widget/customer/pin_settings_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ import '../../../core/my_shared_preferences.dart';
 import '../../../core/route/routes.dart';
 import '../../../core/text_style.dart';
 import '../../../core/utils.dart';
+import '../../ui/quotation history/quotation_history_screen.dart';
 import 'drawer_widget.dart';
 
 class CustomDrawerWidget extends StatelessWidget {
@@ -86,19 +88,43 @@ class CustomDrawerWidget extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: [
+                    DrawerWidget(
+                      title: 'تتبع المندوب',
+                      iconData: Icons.track_changes_outlined,
+                      onTap: () {
+                        Get.toNamed(Routes.report);
+                      },
+                    ),
+                    DrawerWidget(
+                      title: 'Reports',
+                      iconData: Icons.description_outlined,
+                      onTap: () {
+                        Get.toNamed(Routes.report);
+                      },
+                    ),
+                    // Divider(color: Colors.grey[300]),
                     // DrawerWidget(
-                    //   title: 'Reports',
-                    //   iconData: Icons.description_outlined,
+                    //   title: 'Invoice History',
+                    //   iconData: Icons.history,
                     //   onTap: () {
-                    //     Get.toNamed(Routes.report);
+                    //     Get.toNamed(Routes.history);
                     //   },
                     // ),
-                    // Divider(color: Colors.grey[300]),
+                    Divider(color: Colors.grey[300]),
                     DrawerWidget(
-                      title: 'Invoice History',
-                      iconData: Icons.history,
+                      title: 'Quotations History',
+                      iconData: Icons.request_page_outlined,
                       onTap: () {
-                        Get.toNamed(Routes.history);
+                        Get.to(() => QuotationHistoryScreen(),
+                            arguments: {'id': '0'});
+                      },
+                    ),
+                    Divider(color: Colors.grey[300]),
+                    DrawerWidget(
+                      title: 'سحل الزيارات',
+                      iconData: Icons.tour_outlined,
+                      onTap: () {
+                        Get.to(() =>  HistoryVisitScreen());
                       },
                     ),
                     Divider(color: Colors.grey[300]),

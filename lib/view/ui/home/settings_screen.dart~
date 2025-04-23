@@ -1,0 +1,140 @@
+import 'package:cash_van_app/core/app_color.dart';
+import 'package:cash_van_app/core/my_shared_preferences.dart';
+import 'package:cash_van_app/view/widget/custom_button.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:cash_van_app/controller/settings_controller.dart';
+
+class SettingsScreen extends StatelessWidget {
+  SettingsScreen({super.key});
+
+  final SettingsController controller = Get.put(SettingsController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Settings'.tr)),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: ListView(
+          children: [
+            GetBuilder<SettingsController>(
+                id: 'color',
+                assignId: true,
+                builder: (logic) {
+                  return ListTile(
+                    title: Text('Select App Color'.tr),
+                    trailing: Container(
+                      width: 30,
+                      height: 30,
+                      color: controller.appColor,
+                    ),
+                    onTap: () => controller.pickColor(),
+                  );
+                }),
+            const SizedBox(height: 16),
+            Text('Select Font Size'.tr),
+            GetBuilder<SettingsController>(
+                id: 'font',
+                assignId: true,
+                builder: (logic) {
+                  return Column(
+                    children: [
+                      Slider(
+                        min: 0.8,
+                        max: 1.4,
+                        divisions: 6,
+                        activeColor: AppColor.primaryColor,
+                        inactiveColor: AppColor.primaryColor.withOpacity(0.3),
+                        value: controller.fontSize,
+                        onChanged: controller.updateFontSize,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${'Font Size'.tr}: ${controller.fontSize.toStringAsFixed(2)}',
+                            style:
+                                TextStyle(fontSize: 16 * controller.fontSize),
+                          ),
+                          CustomButtonWidget(
+                            backgroundColor: mySharedPreferences.fontSize ==
+                                    controller.fontSize
+                                ? Colors.grey
+                                : AppColor.primaryColor,
+                            vertical: 0,
+                            title: 'save'.tr,
+                            onPressed: () {
+                              if (mySharedPreferences.fontSize !=
+                                  controller.fontSize) {
+                                controller.saveFontSize();
+                              }
+                            },
+                          )
+                        ],
+                      ),
+                    ],
+                  );
+                }),
+            const SizedBox(height: 16),
+            GetBuilder<SettingsController>(
+                id: 'fingerprint',
+                builder: (logic) {
+                  print('aaaaaaaaaaaaaaaaaaaaa');
+                  print('Enable Fingerprint');
+                  print('aaaaaaaaaaaaaaaaaaaaa');
+
+                  return _buildSwitchTile(
+                    title: 'Enable Fingerprint'.tr,
+                    value: controller.isFingerprintActive,
+                    onChanged: controller.toggleFingerprint,
+                  );
+                }),
+            GetBuilder<SettingsController>(
+                id: 'wholesalePrice',
+                builder: (logic) {
+                  print('aaaaaaaaaaaaaaaaaaaaa');
+                  print('wholesalePrice');
+                  print('aaaaaaaaaaaaaaaaaaaaa');
+
+                  return _buildSwitchTile(
+                    title: 'Dealing at Wholesale Price'.tr,
+                    value: controller.isWholesalePrice,
+                    onChanged: controller.toggleWholesalePrice,
+                  );
+                }),
+            GetBuilder<SettingsController>(
+                id: 'priceQuotation',
+                builder: (logic) {
+                  print('aaaaaaaaaaaaaaaaaaaaa');
+                  print('priceQuotation');
+                  print('aaaaaaaaaaaaaaaaaaaaa');
+                  return _buildSwitchTile(
+                    title: 'Show price in Quotation'.tr,
+                    value: controller.priceQuotation,
+                    onChanged: controller.togglePriceQuotation,
+                  );
+                }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSwitchTile({
+    required String title,
+    required bool value,
+    required Function(bool) onChanged,
+  }) {
+    return SwitchListTile(
+      activeTrackColor: AppColor.primaryColor.withOpacity(0.7),
+      inactiveTrackColor: Colors.white,
+      activeColor: AppColor.primaryColor,
+      title: Text(title),
+      value: value,
+      onChanged: (val) {
+        onChanged(val);
+      },
+    );
+  }
+}

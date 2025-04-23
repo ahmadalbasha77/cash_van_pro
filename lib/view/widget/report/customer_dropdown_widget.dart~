@@ -28,7 +28,7 @@ class CustomerDropdownWidget extends StatelessWidget {
       selectedItem: selectedClient,
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
-          labelText: label ?? 'Customer Name'.tr,
+          labelText: 'Customer Name'.tr,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
           ),

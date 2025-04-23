@@ -1,0 +1,47 @@
+import 'dart:async';
+import 'package:get/get.dart';
+
+class VisitController extends GetxController {
+  static VisitController get to => Get.isRegistered<VisitController>()
+      ? Get.find<VisitController>()
+      : Get.put(VisitController(), permanent: true);
+
+  DateTime? startTimeScreen;
+  Timer? timer;
+
+  DateTime get startTime => startTimeScreen ?? DateTime.now();
+
+  void startVisit() {
+    startTimeScreen = DateTime.now();
+  }
+
+  @override
+  void onInit() {
+    startVisit();
+
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      update();
+    });
+
+    super.onInit();
+  }
+
+  String getElapsedTime() {
+    final duration = DateTime.now().difference(startTime);
+    final minutes = duration.inMinutes.toString().padLeft(2, '0');
+    final seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+    return "$minutes:$seconds";
+  }
+
+  void resetVisit() {
+    startTimeScreen = null;
+    timer?.cancel();
+    update();
+  }
+
+  @override
+  void onClose() {
+    timer?.cancel();
+    super.onClose();
+  }
+}

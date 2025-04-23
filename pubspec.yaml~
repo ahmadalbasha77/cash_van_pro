@@ -62,7 +62,7 @@ dependencies:
   skeletonizer: ^1.4.3
   flutter_debouncer: ^2.0.0
   image_picker: ^1.1.2
-  google_maps_flutter: ^2.10.1
+  google_maps_flutter: ^2.12.1
 
 
 

@@ -6,16 +6,14 @@ import '../../model/customers/customers_model.dart';
 import '../../model/invoice/cart_model.dart';
 import '../../network/rest_api.dart';
 import '../../view/ui/home/customers_screen.dart';
-import '../../view/ui/visit/visit_screen.dart';
 import '../customers/customers_controller.dart';
 
-class QuotationController extends GetxController {
+class ProposalController extends GetxController {
   final Map<int, CartModel> _cartMap = {};
   final RestApi restApi = RestApi();
 
   final GlobalKey<FormState> priceKey = GlobalKey<FormState>();
   final TextEditingController newPriceController = TextEditingController();
-  final TextEditingController noteController = TextEditingController();
 
   int paymentType = 0;
 
@@ -70,8 +68,8 @@ class QuotationController extends GetxController {
     String cartJson = _cartMap.values
         .map((item) => {
               "itemId": item.itemId,
-              "QTYIN": 0,
-              "QTYOUT": item.quantity,
+              "QTYIN": item.quantity,
+              "QTYOUT": 0,
               "PriceAfterTax": item.priceAfterTax,
               "TotalAfterTax": item.totalPrice,
               "DiscountAmount": 0,
@@ -82,7 +80,7 @@ class QuotationController extends GetxController {
         .toList()
         .toString();
 
-    bool result = await restApi.addEditQuotation({
+    bool result = await restApi.addQuotation({
       "ID": '0',
       "InvoiceDate": DateTime.now().toIso8601String(),
       "SettelmentWayID": '0',
@@ -93,7 +91,6 @@ class QuotationController extends GetxController {
       "UserID": '${mySharedPreferences.getUserData()!.id}',
       "NumberCar": "",
       "TranactionType": '33',
-      "Notes": noteController.text.isEmpty ? "" : noteController.text,
       "BranchID": '${mySharedPreferences.getUserData()!.branchId}',
       "StoreID": '${mySharedPreferences.getUserData()!.storeId}',
       "SalesJson": cartJson,
@@ -109,11 +106,8 @@ class QuotationController extends GetxController {
       cartList.clear();
       _cartMap.clear();
       update();
-
       Utils.showSnackbar('Success', 'Quotation added successfully');
-      // Get.offAll(() => CustomersScreen());
-      Get.offAll(() => const VisitScreen(),arguments: customer);
-
+      Get.offAll(() => CustomersScreen());
     } else {
       Utils.hideLoadingDialog();
       Utils.showSnackbar(

@@ -1,3 +1,4 @@
+import 'package:cash_van_app/view/ui/visit/history_visit_screen.dart';
 import 'package:cash_van_app/view/widget/customer/pin_settings_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import '../../../core/route/routes.dart';
 import '../../../core/text_style.dart';
 import '../../../core/utils.dart';
 import '../../ui/quotation history/quotation_history_screen.dart';
+import '../../ui/tracking/users_screen.dart';
 import 'drawer_widget.dart';
 
 class CustomDrawerWidget extends StatelessWidget {
@@ -88,6 +90,13 @@ class CustomDrawerWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     DrawerWidget(
+                      title: 'تتبع المندوب',
+                      iconData: Icons.track_changes_outlined,
+                      onTap: () {
+                       Get.to(() => DeliveryListScreen());
+                      },
+                    ),
+                    DrawerWidget(
                       title: 'Reports',
                       iconData: Icons.description_outlined,
                       onTap: () {
@@ -109,6 +118,14 @@ class CustomDrawerWidget extends StatelessWidget {
                       onTap: () {
                         Get.to(() => QuotationHistoryScreen(),
                             arguments: {'id': '0'});
+                      },
+                    ),
+                    Divider(color: Colors.grey[300]),
+                    DrawerWidget(
+                      title: 'سحل الزيارات',
+                      iconData: Icons.tour_outlined,
+                      onTap: () {
+                        Get.to(() =>  HistoryVisitScreen());
                       },
                     ),
                     Divider(color: Colors.grey[300]),

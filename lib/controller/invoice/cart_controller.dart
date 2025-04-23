@@ -2,6 +2,7 @@ import 'package:cash_van_app/core/my_shared_preferences.dart';
 import 'package:cash_van_app/core/utils.dart';
 import 'package:cash_van_app/model/customers/customers_model.dart';
 import 'package:cash_van_app/view/ui/home/customers_screen.dart';
+import 'package:cash_van_app/view/ui/visit/visit_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:printing/printing.dart';
@@ -136,7 +137,7 @@ class CartController extends GetxController {
       _cartMap.clear();
       update();
       Utils.showSnackbar('Success', 'Invoice added successfully');
-      Get.offAll(() => CustomersScreen());
+      Get.offAll(() => const VisitScreen(),arguments: customer);
     } else {
       Utils.hideLoadingDialog();
       Utils.showSnackbar(

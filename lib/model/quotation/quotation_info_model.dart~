@@ -1,0 +1,60 @@
+class QuotationInfoModel {
+  int id;
+  int headerId;
+  int customerId;
+  int itemId;
+  String aName;
+  String eName;
+  double qtyIn;
+  double qtyOut;
+  double totalQty;
+  double priceBeforeTax;
+  double priceAfterTax;
+  double totalAfterTax;
+
+  QuotationInfoModel({
+    required this.id,
+    required this.headerId,
+    required this.customerId,
+    required this.itemId,
+    required this.aName,
+    required this.eName,
+    required this.qtyIn,
+    required this.qtyOut,
+    required this.totalQty,
+    required this.priceBeforeTax,
+    required this.priceAfterTax,
+    required this.totalAfterTax,
+  });
+
+  factory QuotationInfoModel.fromJson(Map<String, dynamic> json) =>
+      QuotationInfoModel(
+        id: json["ID"],
+        headerId: json["HeaderID"],
+        customerId: json["CustomerID"],
+        itemId: json["ItemID"],
+        aName: json["AName"],
+        eName: json["EName"],
+        qtyIn: json["QtyIn"],
+        qtyOut: json["QtyOut"],
+        totalQty: json["TotalQty"]?.toDouble(),
+        priceBeforeTax: json["PriceBeforeTax"]?.toDouble(),
+        priceAfterTax: json["PriceAfterTax"]?.toDouble(),
+        totalAfterTax: json["TotalAfterTax"]?.toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "ID": id,
+        "HeaderID": headerId,
+        "CustomerID": customerId,
+        "ItemID": itemId,
+        "AName": aName,
+        "EName": eName,
+        "QtyIn": qtyIn,
+        "QtyOut": qtyOut,
+        "TotalQty": totalQty,
+        "PriceBeforeTax": priceBeforeTax,
+        "PriceAfterTax": priceAfterTax,
+        "TotalAfterTax": totalAfterTax,
+      };
+}

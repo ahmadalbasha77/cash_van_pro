@@ -1,0 +1,254 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../../core/app_color.dart';
+import '../../../core/utils.dart';
+import '../../widget/auth/custom_text_filed.dart';
+import '../../widget/report/customer_dropdown_widget.dart';
+import '../../widget/report/filter_report_widget.dart';
+
+class VisitHistoryModel {
+  final String customerName;
+  final DateTime startTime;
+  final Duration duration;
+  final int batteryLevel;
+  final double lat;
+  final double lng;
+  final String imagePath;
+
+  VisitHistoryModel({
+    required this.customerName,
+    required this.startTime,
+    required this.duration,
+    required this.batteryLevel,
+    required this.lat,
+    required this.lng,
+    required this.imagePath,
+  });
+}
+
+class HistoryVisitScreen extends StatelessWidget {
+  HistoryVisitScreen({super.key});
+
+  final visits = [
+    VisitHistoryModel(
+      customerName: "أحمد الزعبي",
+      startTime: DateTime.now().subtract(const Duration(minutes: 42)),
+      duration: const Duration(minutes: 18),
+      batteryLevel: 82,
+      lat: 31.963158,
+      lng: 35.930359,
+      imagePath: 'assets/images/test.jpg',
+    ),
+    VisitHistoryModel(
+      customerName: "محمد العلي",
+      startTime: DateTime.now().subtract(const Duration(hours: 3)),
+      duration: const Duration(minutes: 25),
+      batteryLevel: 65,
+      lat: 31.968158,
+      lng: 35.935359,
+      imagePath: 'assets/images/test.jpg',
+    ),
+  ];
+  final TextEditingController fromDateController = TextEditingController(
+      text: Utils.formatDate(DateTime.now().subtract(const Duration(days: 1))));
+  final TextEditingController toDateController =
+      TextEditingController(text: Utils.formatDate(DateTime.now()));
+
+  final GlobalKey<FormState> formKey = GlobalKey();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF6F8FA),
+      appBar: AppBar(
+        title: const Text(
+          'سجل الزيارات',
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        backgroundColor: AppColor.primaryColor,
+        centerTitle: true,
+        elevation: 0,
+      ),
+      body: FilterReportWidget(
+          widgets: [
+            const SizedBox(height: 16),
+            CustomerDropdownWidget(
+              label: 'اسم المندوب',
+              onChanged: (p0) {},
+            ),
+            const SizedBox(height: 10),
+          ],
+          formKey: formKey,
+          fromDateController: fromDateController,
+          toDateController: toDateController,
+          onTap: () {
+            // _controller.getQuotation();
+          },
+          reportWidget: Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              itemCount: visits.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 16),
+              itemBuilder: (context, index) {
+                final visit = visits[index];
+                final formattedTime =
+                    DateFormat('yyyy/MM/dd – hh:mm a').format(visit.startTime);
+
+                return Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade200,
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      )
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // العميل + البطارية
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 24,
+                            backgroundColor:
+                                AppColor.primaryColor.withOpacity(0.1),
+                            child: Icon(Icons.person,
+                                color: AppColor.primaryColor, size: 24),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              visit.customerName,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Icon(Icons.battery_charging_full,
+                                  color: _getBatteryColor(visit.batteryLevel),
+                                  size: 18),
+                              const SizedBox(width: 4),
+                              Text("${visit.batteryLevel}%",
+                                  style: const TextStyle(fontSize: 12)),
+                            ],
+                          )
+                        ],
+                      ),
+                      const Divider(height: 24),
+                      Row(
+                        children: [
+                          Icon(Icons.schedule,
+                              size: 20, color: AppColor.primaryColor),
+                          const SizedBox(width: 8),
+                          Text("المدة: ${visit.duration.inMinutes} دقيقة"),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Icon(Icons.calendar_today_outlined,
+                              size: 20, color: AppColor.primaryColor),
+                          const SizedBox(width: 8),
+                          Text("التاريخ: $formattedTime"),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          _roundedIconButton(
+                            icon: Icons.map_outlined,
+                            label: 'الموقع',
+                            color: AppColor.primaryColor,
+                            onTap: () {
+                              final url =
+                                  'https://www.google.com/maps/search/?api=1&query=${visit.lat},${visit.lng}';
+                              launchUrl(Uri.parse(url),
+                                  mode: LaunchMode.externalApplication);
+                            },
+                          ),
+                          const SizedBox(width: 10),
+                          _roundedIconButton(
+                            icon: Icons.image_outlined,
+                            label: 'الصورة',
+                            color: Colors.deepOrange,
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (_) => Dialog(
+                                  backgroundColor: Colors.transparent,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(14),
+                                    child: Stack(
+                                      children: [
+                                        Image.asset(
+                                          visit.imagePath,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        Positioned(
+                                          right: 8,
+                                          top: 8,
+                                          child: IconButton(
+                                            icon: const Icon(Icons.close,
+                                                color: Colors.white),
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+          )),
+    );
+  }
+
+  Widget _roundedIconButton({
+    required IconData icon,
+    required String label,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    return ElevatedButton.icon(
+      onPressed: onTap,
+      icon: Icon(icon, size: 18),
+      label: Text(label),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color.withOpacity(0.1),
+        foregroundColor: color,
+        elevation: 0,
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+    );
+  }
+
+  Color _getBatteryColor(int level) {
+    if (level > 75) return Colors.green;
+    if (level > 40) return Colors.orange;
+    return Colors.red;
+  }
+}

@@ -1,5 +1,6 @@
 import 'package:cash_van_app/core/binding.dart';
 import 'package:cash_van_app/core/service.dart';
+import 'package:cash_van_app/view/ui/visit/visit_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,9 +41,9 @@ class MyApp extends StatelessWidget {
           theme: lightThemeApp(controller.appColor),
           translations: Translation(),
           locale: Locale(mySharedPreferences.language),
-          initialRoute: Routes.initial,
-          getPages: AppPages.pages,
-          // home: ProposalScreen(),
+          // initialRoute: Routes.initial,
+          // getPages: AppPages.pages,
+          home: VisitScreen(),
         );
       },
     );

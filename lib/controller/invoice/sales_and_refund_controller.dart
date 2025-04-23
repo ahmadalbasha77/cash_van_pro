@@ -11,6 +11,7 @@ import '../../network/rest_api.dart';
 import '../../view/ui/home/customers_screen.dart';
 import '../../view/ui/invoice/sales_and_refund_invoice_pdf.dart';
 import '../../view/ui/sales_invoice_pdf.dart';
+import '../../view/ui/visit/visit_screen.dart';
 import '../customers/customers_controller.dart';
 
 class SalesAndRefundController extends GetxController {
@@ -243,11 +244,13 @@ class SalesAndRefundController extends GetxController {
       _salesMap.clear();
       _refundMap.clear();
       update();
-      final controller = Get.find<CustomersController>();
+      final controller = CustomersController.to;
       controller.getCustomers();
 
       Utils.showSnackbar('Success', 'Invoice added successfully');
-      Get.offAll(() => CustomersScreen());
+      // Get.offAll(() => CustomersScreen());
+      Get.offAll(() => const VisitScreen(),arguments: customer);
+
     } else {
       Utils.hideLoadingDialog();
       Utils.showSnackbar(
